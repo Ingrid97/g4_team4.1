@@ -17,22 +17,26 @@ public class Game {
             System.exit(0);
 
         //for testing
-        //printMap(map);
+        printMap(map);
 
     }
 
-    /*
+
     public static void printMap(Map map){
         System.out.println("Map:");
         for (int i = 0; i < map.getX(); i++) {
             for (int j = 0; j < map.getY(); j++) {
-                if ()
-                map.getChar(i, j) instanceof Norhing ? ((Norhing) map.getChar(i, j)) : null;
-                System.out.print(map.getChar(i, j));
+                if (map.getChar(i, j) instanceof Player) {
+                    System.out.print('r');
+                } else if (map.getChar(i, j) instanceof Wall) {
+                    System.out.print('*');
+                } else {
+                    System.out.print(' ');
+                }
             }
             System.out.println();
         }
-    }*/
+    }
 
 
     /**
