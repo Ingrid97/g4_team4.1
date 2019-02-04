@@ -25,11 +25,5 @@ public class AppTest {
         assertEquals(map.getY(), 20);
     }
 
-    @Test
-    public void testForRobot(){
-        map.add('r', 5, 5);
-        assertTrue(map.isInstance('r', 5, 5));
-    }
-
 
 }

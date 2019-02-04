@@ -16,20 +16,30 @@ public class Game {
         if (map == null)
             System.exit(0);
 
-        printMap(map);
+        //for testing
+        //printMap(map);
 
     }
 
+    /*
     public static void printMap(Map map){
         System.out.println("Map:");
         for (int i = 0; i < map.getX(); i++) {
             for (int j = 0; j < map.getY(); j++) {
+                if ()
+                map.getChar(i, j) instanceof Norhing ? ((Norhing) map.getChar(i, j)) : null;
                 System.out.print(map.getChar(i, j));
             }
             System.out.println();
         }
-    }
+    }*/
 
+
+    /**
+     * making the map from a given file
+     * @param filename
+     * @return
+     */
     public static Map makeMap(String filename){
         BufferedReader br;
         try {
@@ -69,7 +79,13 @@ public class Game {
                 String line = br.readLine();
                 char[] lines = line.toCharArray();
                 for (int j = 0; j < y; j++) {
-                    map.add(lines[j], i, j);
+                    if (lines[j] == 'r'){
+                        map.add(new Player(i, j), i, j);
+                    } else if (lines[j] == '*'){
+                        map.add(new Wall(i, j), i, j);
+                    } else {
+                        map.add(new Norhing(i, j), i, j);
+                    }
                 }
             }
         } catch (IOException e) {
@@ -81,5 +97,78 @@ public class Game {
         System.out.println("Adding stuff to the map...");
 
         return map;
+    }
+}
+
+class Player implements IBoardObject{
+    int x;
+    int y;
+
+    public Player(int x, int y){
+        this.x = x;
+        this.y = y;
+    }
+    @Override
+    public int getX() {
+        return this.x;
+    }
+
+    @Override
+    public int getY() {
+        return this.y;
+    }
+
+    @Override
+    public int color() {
+        return 0;
+    }
+}
+
+class Wall implements IBoardObject{
+    int x;
+    int y;
+
+    public Wall(int x, int y){
+        this.x = x;
+        this.y = y;
+    }
+    @Override
+    public int getX() {
+        return this.x;
+    }
+
+    @Override
+    public int getY() {
+        return this.y;
+    }
+
+    @Override
+    public int color() {
+        return 0;
+    }
+}
+
+class Norhing implements IBoardObject{
+    int x;
+    int y;
+
+    public Norhing(int x, int y){
+        this.x = x;
+        this.y = y;
+    }
+
+    @Override
+    public int getX() {
+        return this.x;
+    }
+
+    @Override
+    public int getY() {
+        return this.y;
+    }
+
+    @Override
+    public int color() {
+        return 0;
     }
 }
