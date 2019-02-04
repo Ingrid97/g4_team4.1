@@ -1,19 +1,29 @@
 package inf112.skeleton.app;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import org.junit.Test;
 
 /**
  * Unit test for simple App.
  */
-public class AppTest 
-{
-    /**
-     * Rigorous Test :-)
-     */
+public class AppTest {
+
+    //make the map for testing
+    int mapX = 10;
+    int mapY = 20;
+    Map map = new Map(mapX, mapY);
+
+
+
     @Test
-    public void shouldAnswerWithTrue()
-    {
-        assertTrue( true );
+    public void testForX(){
+        assertEquals(map.getX(), 10);
     }
+
+    @Test
+    public void testForY(){
+        assertEquals(map.getY(), 20);
+    }
+
+
 }
