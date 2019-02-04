@@ -104,6 +104,9 @@ public class Game {
     }
 }
 
+/**
+ * Classes for testing
+ */
 class Player implements IBoardObject{
     int x;
     int y;
