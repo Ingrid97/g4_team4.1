@@ -1,46 +1,77 @@
-package main.java.inf112.skeleton.app;
+package inf112.skeleton.app;
 
+/**
+ * This class is useful for assigning x and y positions in the map
+ */
 public class Position {
-    /*This class is useful for assigning x and y positions in the map*/
 
-        /*x-coordinate*/
-        private int x;
-        /*y-coordinate*/
-        private int y;
+    private int x;
+    private int y;
 
-        /*Constructer that object can correspond with*/
-        public Position(int x, int y) {
-            this.x = x;
-            this.y = y;
-        }
-        /*Creat a copy of the this position and makes a copy*/
+    /**
+     * Constructer that object can correspond with
+     * @param x
+     * @param y
+     */
+    public Position(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
 
-        public Position copy() {
-            return new Position(x,y);
-        }
-        /*Gets the distance to another Position as the diference of X and Y*/
-        public int distantTo(Position another){
-            return Math.abs(this.x - another.x) + Math.abs(this.y - another.y);
+    /**
+     * Creat a copy of the this position and makes a copy
+     * @return position
+     */
+    public Position copy() {
+        return new Position(x,y);
+    }
 
-}
-        /* Gets X-coordiantes
+    /**
+     * Gets the distance to another Position as the diference of X and Y
+     * @param another
+     * @return dist
+     */
+    public int distantTo(Position another){
+        return Math.abs(this.x - another.x) + Math.abs(this.y - another.y);
+    }
 
-         */
-        public int getX(){
-            return x;
-        }
-        public int getY(){
-            return y; }
-    /* if Y and X is bigger than zero make a move*/
+
+    /**
+     * get X coordinate
+     * @return
+     */
+    public int getX(){
+        return x;
+    }
+
+    /**
+     * get Y coordinate
+     * @return y
+     */
+    public int getY() {
+        return y;
+    }
+
+
+    /**
+     * if Y and X is bigger than zero make a move
+     * @param dir
+     * @return canGo
+     */
     public boolean canGoHere(Directions dir){
-        if(dir == Directions.RIGHT){
+        if(dir == Directions.RIGHT)
             return x > 0;
-        }
-        if(dir == Directions.DOWN){
+
+        if(dir == Directions.DOWN)
             return y > 0;
-        }
+
         return true;
-}    /* Robot movement position*/
+    }
+
+    /**Robot movement position
+     * @param dir
+     * @return position
+     */
     public Position moveDirection(Directions dir){
         switch(dir){
             case RIGHT:
@@ -53,11 +84,6 @@ public class Position {
                 return new Position(x, y - 1);
             default:
                 throw new IllegalArgumentException();
-
-
-
-
         }
     }
-
 }
