@@ -15,6 +15,7 @@ public class Game {
         Map map = makeMap("testMap1.txt");
         if (map == null)
             System.exit(0);
+
         printMap(map);
 
     }
@@ -40,6 +41,7 @@ public class Game {
         }
 
 
+        //temporary solution since br.read() is fucked
         String xy;
         int split;
         try {
@@ -72,7 +74,7 @@ public class Game {
             }
         } catch (IOException e) {
             e.printStackTrace();
-            System.out.println("There arr someting wrong with the map");
+            System.out.println("There ar something wrong with the map");
             return null;
         }
 
