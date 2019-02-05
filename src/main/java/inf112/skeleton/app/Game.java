@@ -1,4 +1,4 @@
-package main.java.inf112.skeleton.app;//Created by ingridjohansen on 04/02/2019.
+package inf112.skeleton.app;//Created by ingridjohansen on 04/02/2019.
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -26,9 +26,9 @@ public class Game {
         System.out.println("Map:");
         for (int i = 0; i < map.getX(); i++) {
             for (int j = 0; j < map.getY(); j++) {
-                if (map.getChar(i, j) instanceof Player) {
+                if (map.getBoardObject(i, j) instanceof Robot) {
                     System.out.print('r');
-                } else if (map.getChar(i, j) instanceof Wall) {
+                } else if (map.getBoardObject(i, j) instanceof Wall) {
                     System.out.print('*');
                 } else {
                     System.out.print(' ');
@@ -84,11 +84,11 @@ public class Game {
                 char[] lines = line.toCharArray();
                 for (int j = 0; j < y; j++) {
                     if (lines[j] == 'r'){
-                        map.add(new Player(i, j), i, j);
+                        map.add(new Robot(i, j), i, j);
                     } else if (lines[j] == '*'){
                         map.add(new Wall(i, j), i, j);
                     } else {
-                        map.add(new Norhing(i, j), i, j);
+                        map.add(new Nothing(i, j), i, j);
                     }
                 }
             }
@@ -101,81 +101,5 @@ public class Game {
         System.out.println("Adding stuff to the map...");
 
         return map;
-    }
-}
-
-/**
- * Classes for testing
- */
-class Player implements IBoardObject{
-    int x;
-    int y;
-
-    public Player(int x, int y){
-        this.x = x;
-        this.y = y;
-    }
-    @Override
-    public int getX() {
-        return this.x;
-    }
-
-    @Override
-    public int getY() {
-        return this.y;
-    }
-
-    @Override
-    public int color() {
-        return 0;
-    }
-}
-
-class Wall implements IBoardObject{
-    int x;
-    int y;
-
-    public Wall(int x, int y){
-        this.x = x;
-        this.y = y;
-    }
-    @Override
-    public int getX() {
-        return this.x;
-    }
-
-    @Override
-    public int getY() {
-        return this.y;
-    }
-
-    @Override
-    public int color() {
-        return 0;
-    }
-}
-
-class Norhing implements IBoardObject{
-    int x;
-    int y;
-
-    public Norhing(int x, int y){
-        this.x = x;
-        this.y = y;
-    }
-
-    @Override
-    public int getX() {
-        return this.x;
-    }
-
-    @Override
-    public int getY() {
-        return this.y;
-    }
-
-    @Override
-    public int color() {
-        return 0;
     }
 }

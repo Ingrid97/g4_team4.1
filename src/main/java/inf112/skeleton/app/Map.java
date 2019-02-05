@@ -1,4 +1,4 @@
-package main.java.inf112.skeleton.app;//Created by ingridjohansen on 04/02/2019.
+package inf112.skeleton.app;//Created by ingridjohansen on 04/02/2019.
 
 public class Map {
 
@@ -20,7 +20,7 @@ public class Map {
         map[x][y] = c;
     }
 
-    IBoardObject getChar(int x, int y){
+    IBoardObject getBoardObject(int x, int y){
         return map[x][y];
     }
 

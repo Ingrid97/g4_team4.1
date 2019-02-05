@@ -26,4 +26,11 @@ public class AppTest {
     }
 
 
+    @Test
+    public void RobotOnMap(){
+        map.add(new Robot(5, 5), 5, 5);
+        assertTrue(map.getBoardObject(5, 5) instanceof Robot);
+    }
+
+
 }

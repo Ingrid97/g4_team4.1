@@ -1,6 +1,6 @@
-package main.java.inf112.skeleton.app;
+package inf112.skeleton.app;
 
-public interface IRobot {
+public interface IRobot extends IBoardObject {
 
         /*IRobot can get killed*/
         public boolean isKillable();
