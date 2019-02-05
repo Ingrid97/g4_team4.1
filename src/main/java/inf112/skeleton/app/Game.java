@@ -12,7 +12,7 @@ public class Game {
 
     public static void playGame(){
         //les inn map fra fil
-        Map map = makeMap("C:\\Users\\hfv\\git\\inf112_dalek\\src\\testMap1.txt");
+        Map map = makeMap("testMap1.txt");
         if (map == null)
             System.exit(0);
 
@@ -94,7 +94,7 @@ public class Game {
             }
         } catch (IOException e) {
             e.printStackTrace();
-            System.out.println("There ar something wrong with the map");
+            System.out.println("There's something wrong with the map");
             return null;
         }
 

@@ -7,5 +7,4 @@ public interface IBoardObject {
     int getY();
 
     int color();
-
 }
