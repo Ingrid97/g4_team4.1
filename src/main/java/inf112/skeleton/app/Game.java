@@ -12,7 +12,7 @@ public class Game {
 
     public static void playGame(){
         //les inn map fra fil
-        Map map = makeMap("testMap1.txt");
+        Map map = makeMap("C:\\Users\\hfv\\git\\inf112_dalek\\src\\testMap1.txt");
         if (map == null)
             System.exit(0);
 
@@ -50,7 +50,7 @@ public class Game {
             br = new BufferedReader(new FileReader(filename));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-            System.out.println("the file does not exist");
+            System.out.println("this file does not exist: " + filename);
             return null;
         }
 
