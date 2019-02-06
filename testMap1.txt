@@ -1,14 +1,32 @@
-10 20
-********************
-*                  *
-*                  *
-*                  *
-*                  *
-*                  *
-*         r        *
-*                  *
-*                  *
-********************
+14 14
+**************
+*s  b  b   y *
+*pbbb  b   y *
+*y  v    v y *
+*yy        y *
+*ly         l*
+* y   hh     *
+* y   hh   yy*
+*ly        yl*
+*yp        y *
+*   v    v y *
+*yy    yyyyy *
+* yl   y    s*
+**************
+
 
 
 vil dette komme med eller krasje programmet?
+'*' = Wall
+'r' = Robot
+'v' = Void
+' ' = Nothing
+'l' = laser
+'b' = blue bond
+'y' = yellow bond
+'s' = screwdriver
+'h' = hammer and screwdriver
+'f' = flag
+'p' = rotating plate
+
+
