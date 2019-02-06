@@ -24,12 +24,29 @@ public class Game {
 
     public static void printMap(Map map){
         System.out.println("Map:");
+        //TODO: make switch and fix GUI stuff
         for (int i = 0; i < map.getX(); i++) {
             for (int j = 0; j < map.getY(); j++) {
-                if (map.getBoardObject(i, j) instanceof Robot) {
-                    System.out.print('r');
-                } else if (map.getBoardObject(i, j) instanceof Wall) {
+                if (map.getBoardObject(i, j) instanceof Wall) {
                     System.out.print('*');
+                } else if (map.getBoardObject(i, j) instanceof Robot) {
+                    System.out.print('r');
+                } else if (map.getBoardObject(i, j) instanceof Void) {
+                    System.out.print('v');
+                } else if (map.getBoardObject(i, j) instanceof Laser) {
+                    System.out.print('l');
+                } else if (map.getBoardObject(i, j) instanceof Blue_Bond) {
+                    System.out.print('b');
+                } else if (map.getBoardObject(i, j) instanceof Yellow_bond) {
+                    System.out.print('y');
+                } else if (map.getBoardObject(i, j) instanceof Screwdriver) {
+                    System.out.print('s');
+                } else if (map.getBoardObject(i, j) instanceof Hammer_Screwdriver) {
+                    System.out.print('h');
+                } else if (map.getBoardObject(i, j) instanceof Flag) {
+                    System.out.print('f');
+                } else if (map.getBoardObject(i, j) instanceof Rotating_Plate) {
+                    System.out.print('r');
                 } else {
                     System.out.print(' ');
                 }
@@ -78,15 +95,32 @@ public class Game {
         int y = Integer.parseInt(xy.substring(split+1));
         Map map = new Map(x, y);
 
+        //TODO: make switch
         try {
             for (int i = 0; i < x; i++) {
                 String line = br.readLine();
                 char[] lines = line.toCharArray();
                 for (int j = 0; j < y; j++) {
-                    if (lines[j] == 'r'){
-                        map.add(new Robot(i, j), i, j);
-                    } else if (lines[j] == '*'){
+                    if (lines[j] == '*'){
                         map.add(new Wall(i, j), i, j);
+                    } else if (lines[j] == 'r'){
+                       map.add(new Robot(i, j), i, j);
+                    } else if  (lines[j] == 'v'){
+                        map.add(new Void(i, j), i, j);
+                    } else if  (lines[j] == 'l'){
+                        map.add(new Laser(i, j), i, j);
+                    } else if  (lines[j] == 'b'){
+                        map.add(new Blue_Bond(i, j), i, j);
+                    } else if  (lines[j] == 'y'){
+                        map.add(new Yellow_bond(i, j), i, j);
+                    } else if  (lines[j] == 's'){
+                        map.add(new Screwdriver(i, j), i, j);
+                    } else if  (lines[j] == 'h'){
+                        map.add(new Hammer_Screwdriver(i, j), i, j);
+                    }  else if  (lines[j] == 'f'){
+                        map.add(new Flag(i, j), i, j);
+                    } else if  (lines[j] == 'p'){
+                        map.add(new Rotating_Plate(i, j), i, j);
                     } else {
                         map.add(new Nothing(i, j), i, j);
                     }
