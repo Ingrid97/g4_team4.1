@@ -2,6 +2,7 @@ package inf112.skeleton.app;//Created by ingridjohansen on 04/02/2019.
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
@@ -22,6 +23,7 @@ public class MapGUI extends ApplicationAdapter {
     private SpriteBatch batch;
     private OrthographicCamera camera;
     private Rectangle[][] bucket;
+    private Rectangle robot;
 
     private Map map;
 
@@ -51,6 +53,14 @@ public class MapGUI extends ApplicationAdapter {
 
         // create a list of Rectangles to logically represent the objects
         bucket = new Rectangle[10][10];
+
+        //make the moving robot
+        robot = new Rectangle();
+        robot.x = 0;
+        robot.y = 0;
+        robot.height = 64;
+        robot.width = 64;
+
 
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j ++) {
@@ -107,14 +117,16 @@ public class MapGUI extends ApplicationAdapter {
             }
         }
 
+        batch.draw(robotImage, robot.x, robot.y);
+
         batch.end();
 
 
         //stuff for mooving
-        //if(Gdx.input.isKeyJustPressed(Keys.UP)) bucket.y += 64;
-        //if(Gdx.input.isKeyJustPressed(Keys.DOWN)) bucket.y -= 64;
-        //if(Gdx.input.isKeyJustPressed(Keys.LEFT)) bucket.x -= 64;
-        //if(Gdx.input.isKeyJustPressed(Keys.RIGHT)) bucket.x += 64;
+        if(Gdx.input.isKeyJustPressed(Input.Keys.UP)) robot.y += 64;
+        if(Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) robot.y -= 64;
+        if(Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) robot.x -= 64;
+        if(Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) robot.x += 64;
 
     }
 

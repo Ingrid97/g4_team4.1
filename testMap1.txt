@@ -4,12 +4,12 @@
 * s  bbbfy *
 * pbbb b y *
 * y  vv  y *
-* yy   r yy*
+* yy     yy*
 *  y hh  ly*
 *  y hh yyy*
 * ypf   y  *
 * s  vv ys *
-*  r    y v*
+*       y v*
 ************
 
 Symbols on the bord
