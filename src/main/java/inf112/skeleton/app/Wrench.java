@@ -1,8 +1,8 @@
 package inf112.skeleton.app;//Created by ingridjohansen on 06/02/2019.
 
-public class Blue_Bond implements IBoardObject{
+public class Wrench implements IBoardObject{
 
-    public Blue_Bond(int x, int y){
+    public Wrench(int x, int y){
 
     }
 
