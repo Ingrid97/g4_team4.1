@@ -1,5 +1,8 @@
 package inf112.skeleton.app;//Created by ingridjohansen on 04/02/2019.
 
+import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
+import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -7,18 +10,25 @@ import java.io.IOException;
 
 public class Game {
     public static void main(String[] args) {
-        playGame();
+        LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
+        cfg.title = "Robo Rally";
+        cfg.width = 640;
+        cfg.height = 640;
+
+        new LwjglApplication(new MapGUI(), cfg);
     }
 
-    public static void playGame(){
+    public static Map playGame() {
         //les inn map fra fil
         Map map = makeMap("testMap1.txt");
         if (map == null)
             System.exit(0);
 
-        //for testing
+
         printMap(map);
 
+        return map;
+        //for testing
     }
 
 
@@ -46,7 +56,7 @@ public class Game {
                 } else if (map.getBoardObject(i, j) instanceof Flag) {
                     System.out.print('f');
                 } else if (map.getBoardObject(i, j) instanceof Rotating_Plate) {
-                    System.out.print('r');
+                    System.out.print('p');
                 } else {
                     System.out.print(' ');
                 }
@@ -97,29 +107,30 @@ public class Game {
 
         //TODO: make switch
         try {
+            String line = br.readLine();
             for (int i = 0; i < x; i++) {
-                String line = br.readLine();
+                line = br.readLine();
                 char[] lines = line.toCharArray();
                 for (int j = 0; j < y; j++) {
-                    if (lines[j] == '*'){
+                    if (lines[j+1] == '*'){
                         map.add(new Wall(i, j), i, j);
-                    } else if (lines[j] == 'r'){
+                    } else if (lines[j+1] == 'r'){
                        map.add(new Robot(i, j), i, j);
-                    } else if  (lines[j] == 'v'){
+                    } else if  (lines[j+1] == 'v'){
                         map.add(new Void(i, j), i, j);
-                    } else if  (lines[j] == 'l'){
+                    } else if  (lines[j+1] == 'l'){
                         map.add(new Laser(i, j), i, j);
-                    } else if  (lines[j] == 'b'){
+                    } else if  (lines[j+1] == 'b'){
                         map.add(new Blue_Bond(i, j), i, j);
-                    } else if  (lines[j] == 'y'){
+                    } else if  (lines[j+1] == 'y'){
                         map.add(new Yellow_bond(i, j), i, j);
-                    } else if  (lines[j] == 's'){
+                    } else if  (lines[j+1] == 's'){
                         map.add(new Screwdriver(i, j), i, j);
-                    } else if  (lines[j] == 'h'){
+                    } else if  (lines[j+1] == 'h'){
                         map.add(new Hammer_Screwdriver(i, j), i, j);
-                    }  else if  (lines[j] == 'f'){
+                    }  else if  (lines[j+1] == 'f'){
                         map.add(new Flag(i, j), i, j);
-                    } else if  (lines[j] == 'p'){
+                    } else if  (lines[j+1] == 'p'){
                         map.add(new Rotating_Plate(i, j), i, j);
                     } else {
                         map.add(new Nothing(i, j), i, j);

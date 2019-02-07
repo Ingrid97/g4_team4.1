@@ -1,19 +1,19 @@
 10 10
-**********
-*s  bbb y*
-*pbbb b y*
-*y  vv  y*
-*yy     y*
-* y hh  l*
-* y hh yy*
-*yp    y *
-*s  vv ys*
-**********
-
-
+************
+*        yy*
+* s  bbbfy *
+* pbbb b y *
+* y  vv  y *
+* yy   r yy*
+*  y hh  ly*
+*  y hh yyy*
+* ypf   y  *
+* s  vv ys *
+*  r    y v*
+************
 
 Symbols on the bord
-'*' = Wall
+'*' = Wall ?
 'r' = Robot
 'v' = Void
 'l' = Laser
