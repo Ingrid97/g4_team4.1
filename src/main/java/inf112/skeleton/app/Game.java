@@ -55,7 +55,7 @@ public class Game {
                     System.out.print('h');
                 } else if (map.getBoardObject(i, j) instanceof Flag) {
                     System.out.print('f');
-                } else if (map.getBoardObject(i, j) instanceof Rotating_Plate) {
+                } else if (map.getBoardObject(i, j) instanceof Rotating_belt) {
                     System.out.print('p');
                 } else {
                     System.out.print(' ');
@@ -131,7 +131,7 @@ public class Game {
                     }  else if  (lines[j+1] == 'f'){
                         map.add(new Flag(i, j), i, j);
                     } else if  (lines[j+1] == 'p'){
-                        map.add(new Rotating_Plate(i, j), i, j);
+                        map.add(new Rotating_belt(i, j), i, j);
                     } else {
                         map.add(new Nothing(i, j), i, j);
                     }
