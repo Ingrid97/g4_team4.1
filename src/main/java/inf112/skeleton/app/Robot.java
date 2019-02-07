@@ -4,19 +4,16 @@ public class Robot implements IRobot{
     private Position positionOfRobot;
     private int healthPoints;
     private boolean alive;
+    private int laserStrength;
 
 
     public Robot(int x, int y){
         this.positionOfRobot = new Position(x, y);
         this.healthPoints = 3;
         this.alive = true;
+        this.laserStrength = 1;
     }
 
-
-    @Override
-    public boolean isKillable() {
-        return healthPoints == 1;
-    }
 
     @Override
     public Position getPosition() {
@@ -25,12 +22,12 @@ public class Robot implements IRobot{
 
     @Override
     public boolean isAlive() {
-        return this.healthPoints > 0;
+        return this.alive;
     }
 
     @Override
     public void shootLaser(Robot theRobotBeingShot) {
-        theRobotBeingShot.takeDamage();
+        theRobotBeingShot.takeDamage(this.laserStrength);
 
     }
 
@@ -52,9 +49,11 @@ public class Robot implements IRobot{
         this.positionOfRobot = this.positionOfRobot.moveDirection(direction);
     }
 
-    private void takeDamage () {
-        if (this.isKillable()) this.alive = false;
-        this.healthPoints--;
+    private void takeDamage (int laserStrength) {
+
+        this.healthPoints -= laserStrength;
+
+        this.alive = healthPoints > 0;
     }
 
     @Override

@@ -2,29 +2,36 @@ package inf112.skeleton.app;
 
 public interface IRobot extends IBoardObject {
 
-        /*IRobot can get killed*/
-        public boolean isKillable();
 
-        /* Gets the position of the object */
+        /**
+         *
+         * @return Position of the robot
+         */
         Position getPosition();
 
-        /*Checking if the robot is Alive*/
-        public boolean isAlive();
+        /**
+         *
+         * @return A boolean variable checking if the robot is alive or dead
+         */
+        boolean isAlive();
 
-        /*Method for killing other robots*/
-        public void shootLaser(Robot theRobotBeingShot);
+        /**
+         * Shoot your deadly laser at a robot
+         * @param theRobotBeingShot
+         */
+        void shootLaser(Robot theRobotBeingShot);
 
         /**
          * Move the robot in a given Direction
          * @param direction
          */
-        public void move (Directions direction);
+        void move (Directions direction);
 
         /**
          *
          * @return The current Position of the robot
          */
-        public Position getPositionOfRobot();
+        Position getPositionOfRobot();
 
 
 }
