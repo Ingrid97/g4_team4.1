@@ -16,6 +16,10 @@ public class Map {
         return map[0].length;
     }
 
+    IBoardObject[] getBoardRow(int i){
+        return map[i];
+    }
+
     void add(IBoardObject c, int x, int y){
         map[x][y] = c;
     }
