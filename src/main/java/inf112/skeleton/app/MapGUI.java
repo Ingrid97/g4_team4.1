@@ -32,8 +32,7 @@ public class MapGUI extends ApplicationAdapter {
 
         map = playGame();
 
-        // load the images for the droplet and the bucket, 64x64 pixels each
-
+        // load the images for the objects on the map, 64x64 pixels each
         robotImage = new Texture(Gdx.files.internal("wall_e.png"));
         voidImage = new Texture(Gdx.files.internal("void.png"));
         yellowImage = new Texture(Gdx.files.internal("yellow_arrow.png"));
@@ -90,13 +89,11 @@ public class MapGUI extends ApplicationAdapter {
                     batch.draw(voidImage, bucket[i][j].x, bucket[i][j].y);
                 } else if (map.getBoardObject(y, x) instanceof Laser){
                     batch.draw(laserImage, bucket[i][j].x, bucket[i][j].y);
-                } else if (map.getBoardObject(y, x) instanceof Blue_Bond){
+                } else if (map.getBoardObject(y, x) instanceof Conveyor_belt){
                     batch.draw(blueImage, bucket[i][j].x, bucket[i][j].y);
-                } else if (map.getBoardObject(y, x) instanceof Yellow_bond){
-                    batch.draw(yellowImage, bucket[i][j].x, bucket[i][j].y);
-                } else if (map.getBoardObject(y, x) instanceof Screwdriver){
+                } else if (map.getBoardObject(y, x) instanceof Wrench){
                     batch.draw(screwImage, bucket[i][j].x, bucket[i][j].y);
-                } else if (map.getBoardObject(y, x) instanceof Hammer_Screwdriver){
+                } else if (map.getBoardObject(y, x) instanceof Wrench_hammer){
                     batch.draw(hammer_ScrewImage, bucket[i][j].x, bucket[i][j].y);
                 } else if (map.getBoardObject(y, x) instanceof Flag){
                     batch.draw(flagImage, bucket[i][j].x, bucket[i][j].y);
