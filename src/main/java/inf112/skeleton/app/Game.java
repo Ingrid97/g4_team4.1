@@ -34,7 +34,7 @@ public class Game {
 
     public static void printMap(Map map){
         System.out.println("Map:");
-        //TODO: make switch and fix GUI stuff
+        //TODO: make switch and fix GUI stuffs
         for (int i = 0; i < map.getX(); i++) {
             for (int j = 0; j < map.getY(); j++) {
                 if (map.getBoardObject(i, j) instanceof Wall) {
