@@ -6,15 +6,26 @@ public interface IRobot extends IBoardObject {
         public boolean isKillable();
 
         /* Gets the position of the object */
-        Position getPostion();
+        Position getPosition();
 
         /*Checking if the robot is Alive*/
         public boolean isAlive();
 
         /*Method for killing other robots*/
-        public void shot();
+        public void shootLaser(Robot theRobotBeingShot);
+
+        /**
+         * Move the robot in a given Direction
+         * @param direction
+         */
+        public void move (Directions direction);
+
+        /**
+         *
+         * @return The current Position of the robot
+         */
+        public Position getPositionOfRobot();
 
 
-
-    }
+}
 
