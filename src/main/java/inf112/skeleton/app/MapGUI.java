@@ -4,6 +4,7 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -23,6 +24,7 @@ public class MapGUI extends ApplicationAdapter {
     private Rectangle[][] bucket;
 
     private Map map;
+    private Color color;
 
     @Override
     public void create() {
@@ -31,16 +33,18 @@ public class MapGUI extends ApplicationAdapter {
         map = playGame();
 
         // load the images for the droplet and the bucket, 64x64 pixels each
+
         robotImage = new Texture(Gdx.files.internal("wall_e.png"));
         voidImage = new Texture(Gdx.files.internal("void.png"));
-        yellowImage = new Texture(Gdx.files.internal("Yello_Arrow.png"));
-        blueImage = new Texture(Gdx.files.internal("Blue_Arrow.png"));
-        laserImage = new Texture(Gdx.files.internal("Laser.png"));
+        yellowImage = new Texture(Gdx.files.internal("yellow_arrow.png"));
+        blueImage = new Texture(Gdx.files.internal("blue_arrow.png"));
+        laserImage = new Texture(Gdx.files.internal("laser.png"));
         screwImage = new Texture(Gdx.files.internal("screw.png"));
         hammer_ScrewImage = new Texture(Gdx.files.internal("hammer_screw.png"));
         gearImmage = new Texture(Gdx.files.internal("gear.png"));
-        flagImage = new Texture(Gdx.files.internal("Flag.png"));
-        nothingImage = new Texture(Gdx.files.internal("Nothing.png"));
+        flagImage = new Texture(Gdx.files.internal("flag.png"));
+        nothingImage = new Texture(Gdx.files.internal("nothing.png"));
+        color = new Color(Color.BLUE);
 
         // create the camera and the SpriteBatch
         camera = new OrthographicCamera();

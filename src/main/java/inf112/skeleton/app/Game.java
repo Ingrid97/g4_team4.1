@@ -25,10 +25,10 @@ public class Game {
             System.exit(0);
 
 
+        //for testing
         printMap(map);
 
         return map;
-        //for testing
     }
 
 
