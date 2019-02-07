@@ -24,7 +24,6 @@ public class MapGUI extends ApplicationAdapter {
     private Rectangle[][] bucket;
 
     private Map map;
-    private Color color;
 
     @Override
     public void create() {
@@ -33,17 +32,16 @@ public class MapGUI extends ApplicationAdapter {
         map = playGame();
 
         // load the images for the objects on the map, 64x64 pixels each
-        robotImage = new Texture(Gdx.files.internal("wall_e.png"));
-        voidImage = new Texture(Gdx.files.internal("void.png"));
-        yellowImage = new Texture(Gdx.files.internal("yellow_arrow.png"));
-        blueImage = new Texture(Gdx.files.internal("blue_arrow.png"));
-        laserImage = new Texture(Gdx.files.internal("laser.png"));
-        screwImage = new Texture(Gdx.files.internal("screw.png"));
-        hammer_ScrewImage = new Texture(Gdx.files.internal("hammer_screw.png"));
-        gearImmage = new Texture(Gdx.files.internal("gear.png"));
-        flagImage = new Texture(Gdx.files.internal("flag.png"));
-        nothingImage = new Texture(Gdx.files.internal("nothing.png"));
-        color = new Color(Color.BLUE);
+        robotImage = getImage("wall_e.png");
+        voidImage = getImage("void.png");
+        yellowImage = getImage("yellow_arrow.png");
+        blueImage = getImage("blue_arrow.png");
+        laserImage = getImage("laser.png");
+        screwImage = getImage("screw.png");
+        hammer_ScrewImage = getImage("hammer_screw.png");
+        gearImmage = getImage("gear.png");
+        flagImage = getImage("flag.png");
+        nothingImage = getImage("nothing.png");
 
         // create the camera and the SpriteBatch
         camera = new OrthographicCamera();
@@ -63,6 +61,10 @@ public class MapGUI extends ApplicationAdapter {
                 bucket[i][j].height = 64;
             }
         }
+    }
+
+    public Texture getImage(String s) {
+        return new Texture(Gdx.files.internal(s));
     }
 
     @Override
