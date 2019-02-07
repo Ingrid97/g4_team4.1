@@ -45,13 +45,13 @@ public class Game {
                     System.out.print('v');
                 } else if (map.getBoardObject(i, j) instanceof Laser) {
                     System.out.print('l');
-                } else if (map.getBoardObject(i, j) instanceof Blue_Bond) {
+                } else if (map.getBoardObject(i, j) instanceof Conveyor_belt) {
                     System.out.print('b');
-                } else if (map.getBoardObject(i, j) instanceof Yellow_bond) {
+                } else if (map.getBoardObject(i, j) instanceof Conveyor_belt) {
                     System.out.print('y');
-                } else if (map.getBoardObject(i, j) instanceof Screwdriver) {
+                } else if (map.getBoardObject(i, j) instanceof Wrench) {
                     System.out.print('s');
-                } else if (map.getBoardObject(i, j) instanceof Hammer_Screwdriver) {
+                } else if (map.getBoardObject(i, j) instanceof Wrench_hammer) {
                     System.out.print('h');
                 } else if (map.getBoardObject(i, j) instanceof Flag) {
                     System.out.print('f');
@@ -121,13 +121,13 @@ public class Game {
                     } else if  (lines[j+1] == 'l'){
                         map.add(new Laser(i, j), i, j);
                     } else if  (lines[j+1] == 'b'){
-                        map.add(new Blue_Bond(i, j), i, j);
+                        map.add(new Conveyor_belt(i, j), i, j);
                     } else if  (lines[j+1] == 'y'){
-                        map.add(new Yellow_bond(i, j), i, j);
+                        map.add(new Conveyor_belt(i, j), i, j);
                     } else if  (lines[j+1] == 's'){
-                        map.add(new Screwdriver(i, j), i, j);
+                        map.add(new Wrench(i, j), i, j);
                     } else if  (lines[j+1] == 'h'){
-                        map.add(new Hammer_Screwdriver(i, j), i, j);
+                        map.add(new Wrench_hammer(i, j), i, j);
                     }  else if  (lines[j+1] == 'f'){
                         map.add(new Flag(i, j), i, j);
                     } else if  (lines[j+1] == 'p'){
