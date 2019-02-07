@@ -1,7 +1,8 @@
 package inf112.skeleton.app;//Created by ingridjohansen on 06/02/2019.
 
-public class Rotating_Plate implements IBoardObject{
-    public Rotating_Plate(int x, int y){
+public class Wrench implements IBoardObject{
+
+    public Wrench(int x, int y){
 
     }
 

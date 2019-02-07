@@ -1,8 +1,8 @@
 package inf112.skeleton.app;//Created by ingridjohansen on 06/02/2019.
 
-public class Screwdriver implements IBoardObject{
+public class Wrench_hammer implements IBoardObject{
 
-    public Screwdriver(int x, int y){
+    public Wrench_hammer(int x, int y){
 
     }
 

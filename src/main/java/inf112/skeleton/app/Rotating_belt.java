@@ -1,8 +1,7 @@
 package inf112.skeleton.app;//Created by ingridjohansen on 06/02/2019.
 
-public class Blue_Bond implements IBoardObject{
-
-    public Blue_Bond(int x, int y){
+public class Rotating_belt implements IBoardObject{
+    public Rotating_belt(int x, int y){
 
     }
 

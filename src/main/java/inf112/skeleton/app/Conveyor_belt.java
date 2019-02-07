@@ -1,8 +1,8 @@
 package inf112.skeleton.app;//Created by ingridjohansen on 06/02/2019.
 
-public class Yellow_bond implements IBoardObject{
+public class Conveyor_belt implements IBoardObject{
 
-    public Yellow_bond(int x, int y){
+    public Conveyor_belt(int x, int y){
 
     }
 
