@@ -60,6 +60,5 @@ public class Robot implements IRobot{
     @Override
     public int color() {
         return 0;
-
     }
 }
