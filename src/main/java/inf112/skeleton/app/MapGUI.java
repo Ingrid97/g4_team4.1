@@ -99,7 +99,7 @@ public class MapGUI extends ApplicationAdapter {
                     batch.draw(hammer_ScrewImage, bucket[i][j].x, bucket[i][j].y);
                 } else if (map.getBoardObject(y, x) instanceof Flag){
                     batch.draw(flagImage, bucket[i][j].x, bucket[i][j].y);
-                } else if (map.getBoardObject(y, x) instanceof Rotating_Plate){
+                } else if (map.getBoardObject(y, x) instanceof Rotating_belt){
                     batch.draw(gearImmage, bucket[i][j].x, bucket[i][j].y);
                 } else {
                     batch.draw(nothingImage, bucket[i][j].x, bucket[i][j].y);
