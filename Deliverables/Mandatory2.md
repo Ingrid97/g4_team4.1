@@ -53,7 +53,8 @@ Background using git:
 Mainly during subjects
 
 
-##Task 2:
+##Task 2:  
+
 The overall goal for the application will be to have a game where at least 2 people can play together, and there will be announced a winner and a loser at the end of the game.  
 Our requirements for the game will be as follows:  
 •	Able to play multiplayer  
