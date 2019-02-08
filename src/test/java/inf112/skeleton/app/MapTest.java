@@ -11,9 +11,7 @@ public class MapTest {
 
 
     public Map build(int x, int y) {
-        int mapX = x;
-        int mapY = y;
-        Map map = new Map(mapX, mapY);
+        Map map = new Map(x, y);
         return map;
     }
 
@@ -93,7 +91,7 @@ public class MapTest {
         IBoardObject[][] copyOfMap = map.getMap();
         for (int x = 0; x < 10; x++) {
             for (int y = 0; y < 10; y++) {
-                assertEquals(map.getBoardObject(x, y), copyOfMap[x][y] );
+                assertEquals(map.getBoardObject(x, y), copyOfMap[x][y]);
             }
         }
     }

@@ -14,6 +14,9 @@ public class Position {
      * @param y
      */
     public Position(int x, int y) {
+        if (x < 0 || y < 0) {
+            throw new IllegalArgumentException("position values cannot be less then zero : x = " + x + " y = " +y);
+        }
         this.x = x;
         this.y = y;
     }

@@ -5,13 +5,10 @@ public class Map {
     private IBoardObject[][] map;
 
     public Map(int x, int y){
-        if (x > 0) {
-            if (y > 0) {
-                map = new IBoardObject[x][y];
-                return;
-            }
+        if (x < 0 || y < 0) {
+                throw new IllegalArgumentException("the x or y value of the map cannot be less than zero");
         }
-        throw new IllegalArgumentException("the x or y value of the map cannot be less than zero");
+        map = new IBoardObject[x][y];
     }
 
     int getX(){
@@ -23,13 +20,13 @@ public class Map {
     }
 
     void add(IBoardObject c, int x, int y){
-        if (x >= 0 && y >= 0) {
-            if (x < getX() && y < getY()) {
-                map[x][y] = c;
-                return;
+        if (x < 0 || y < 0) {
+            if (x > getX() || y > getY()) {
+                throw new IllegalArgumentException("Cannot place object with these values: x= " + x +" y= "+y);
             }
         }
-        throw new IllegalArgumentException("Cannot place object with these values: x= " + x +" y= "+y) ;
+        map[x][y] = c;
+
     }
 
     IBoardObject getBoardObject(int x, int y){
