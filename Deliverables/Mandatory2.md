@@ -20,7 +20,7 @@ Relevant subjects:
 INF100
 INF101
 INF102 DAT103
-Strenghts:
+Strengths:
 General competence in java
 Platform:
 Mac, IntelliJ
@@ -30,7 +30,7 @@ Relevant subjects:
 INF100
 INF101
 INF102 DAT103
-Strenghts:
+Strengths:
 General competence in java
 Platform:
 Windows, IntelliJ
@@ -38,7 +38,7 @@ Windows, IntelliJ
 Ingrid
 Relevant subjects:
 INF100 INF101 INF102 INF115 INF122 INF142 INF214 INF222 INF226 DAT130 INF219
-Strenghts:
+Strengths:
 Creative, multiple prog. languages, summer project
 Platform:
 Mac, IntelliJ
@@ -46,7 +46,7 @@ Mac, IntelliJ
 Magnus
 Relevant subjects:
 INF100 INF101
-Strenghts:
+Strengths:
 General competence in java
 Platform:
 Mac, IntelliJ
@@ -54,7 +54,7 @@ Mac, IntelliJ
 Sandra
 Relevant subjects
 INF100 INF101 INF102 DAT103 INF142 INF20, INF281 INF285
-Strenghts:
+Strengths:
 Structure and design
 Platform:
 Windows, IntelliJ
