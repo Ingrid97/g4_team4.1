@@ -90,3 +90,13 @@ For sharing of documents, diagram and codebase we’ll have Google Docs, Github 
 Google Docs will be for document with notes from meetings and other diverse notes. Github will be where our codebase is and Slack will also be for sharing of documents.  
 
 
+### Retrospective -Group meeting 07.02.19
+We discussed how the project is going so far, how everybody is doing, issues we had and tasks we think we solved in a good way. 
+First the issues, we have had some problems and troubleshooting with git, first we made a private repo, before we got invited to the one from the group leader. 
+So we lost a some time due to this issue. But during the meeting we solved the issues and all members are now in the same repo and all of us are able to push. 
+We also agreed(last meeting) that the this week’s sprint would be difficult due to the limited task we’ve chosen, also because this is the first time we’ll work together. 
+So the greatest challenge has been in finding a balance  on the amount of work to put on the project board. 
+We have been struggling to make the tasks small enough so that the workload can easier distributed in the team.
+We have agreed on a structure on the project so far, and have made a skeleton of the game to make it easier in the coming weeks as well as to visualize the layout of the structure now. 
+We’ve agreed that the skeleton(all the smaller classes wrench, flag etc.) is not something we’re going to pursuit finishing at this point, they are only there now for us to have a better picture on how things may look further down the road. 
+So we agreed to stop adding functionality and focusing on making what we have as good as possible.This means mostly making documentation in form of tests, comments and the class diagram.
