@@ -100,4 +100,5 @@ So the greatest challenge has been in finding a balance  on the amount of work t
 We have been struggling to make the tasks small enough so that the workload can easier distributed in the team.
 We have agreed on a structure on the project so far, and have made a skeleton of the game to make it easier in the coming weeks as well as to visualize the layout of the structure now. 
 We’ve agreed that the skeleton(all the smaller classes wrench, flag etc.) is not something we’re going to pursuit finishing at this point, they are only there now for us to have a better picture on how things may look further down the road. 
-So we agreed to stop adding functionality and focusing on making what we have as good as possible.This means mostly making documentation in form of tests, comments and the class diagram.
+So we agreed to stop adding functionality and focusing on making what we have as good as possible.
+This means mostly making documentation in form of tests, comments and the class diagram.
