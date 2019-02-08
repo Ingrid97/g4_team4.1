@@ -15,7 +15,7 @@ import static inf112.skeleton.app.Game.playGame;
 
 public class MapGUI extends ApplicationAdapter {
 
-    private Texture robotImage, voidImage, yellowImage, blueImage, laserImage, screwImage, hammer_ScrewImage, gearImmage, flagImage, nothingImage;
+    private Texture robotImage, voidImage, yellowConveyor_beltImage, blueConveyor_beltImage, laserImage, wrenchImage, wrench_hammer, rotatin_plateImage, flagImage, nothingImage;
 
     private Sound dropSound;
     private Music rainMusic;
@@ -35,24 +35,24 @@ public class MapGUI extends ApplicationAdapter {
         // load the images for the objects on the map, 64x64 pixels each
         /*robotImage = getImage("wall_e.png");
         voidImage = getImage("void.png");
-        yellowImage = getImage("yellow_arrow.png");
-        blueImage = getImage("blue_arrow.png");
+        yellowConveyor_beltImage = getImage("yellow_arrow.png");
+        blueConveyor_beltImage = getImage("blue_arrow.png");
         laserImage = getImage("laser.png");
-        screwImage = getImage("screw.png");
-        hammer_ScrewImage = getImage("hammer_screw.png");
-        gearImmage = getImage("gear.png");
+        wrenchImage = getImage("Wrench.png");
+        wrench_hammer = getImage("Wrench_hammer.png");
+        rotatin_plateImage = getImage("Rotating_bond.png");
         flagImage = getImage("flag.png");
         nothingImage = getImage("nothing.png");*/
 
         //Testinf with other picture
         robotImage = getImage("r.png");
         voidImage = getImage("v.png");
-        yellowImage = getImage("y.png");
-        blueImage = getImage("b.png");
+        yellowConveyor_beltImage = getImage("y.png");
+        blueConveyor_beltImage = getImage("b.png");
         laserImage = getImage("l.png");
-        screwImage = getImage("s.png");
-        hammer_ScrewImage = getImage("s_h.png");
-        gearImmage = getImage("g.png");
+        wrenchImage = getImage("s.png");
+        wrench_hammer = getImage("s_h.png");
+        rotatin_plateImage = getImage("g.png");
         flagImage = getImage("f.png");
         nothingImage = getImage("n.png");
 
@@ -113,15 +113,15 @@ public class MapGUI extends ApplicationAdapter {
                 } else if (map.getBoardObject(y, x) instanceof Laser){
                     batch.draw(laserImage, tile[i][j].x, tile[i][j].y);
                 } else if (map.getBoardObject(y, x) instanceof Conveyor_belt){
-                    batch.draw(blueImage, tile[i][j].x, tile[i][j].y);
+                    batch.draw(blueConveyor_beltImage, tile[i][j].x, tile[i][j].y);
                 } else if (map.getBoardObject(y, x) instanceof Wrench){
-                    batch.draw(screwImage, tile[i][j].x, tile[i][j].y);
+                    batch.draw(wrenchImage, tile[i][j].x, tile[i][j].y);
                 } else if (map.getBoardObject(y, x) instanceof Wrench_hammer){
-                    batch.draw(hammer_ScrewImage, tile[i][j].x, tile[i][j].y);
+                    batch.draw(wrench_hammer, tile[i][j].x, tile[i][j].y);
                 } else if (map.getBoardObject(y, x) instanceof Flag){
                     batch.draw(flagImage, tile[i][j].x, tile[i][j].y);
                 } else if (map.getBoardObject(y, x) instanceof Rotating_belt){
-                    batch.draw(gearImmage, tile[i][j].x, tile[i][j].y);
+                    batch.draw(rotatin_plateImage, tile[i][j].x, tile[i][j].y);
                 } else {
                     batch.draw(nothingImage, tile[i][j].x, tile[i][j].y);
                 }
@@ -133,7 +133,7 @@ public class MapGUI extends ApplicationAdapter {
         batch.end();
 
 
-        //stuff for mooving
+        //stuff for moving
         if(Gdx.input.isKeyJustPressed(Input.Keys.UP)) robot.y += 64;
         if(Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) robot.y -= 64;
         if(Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) robot.x -= 64;
@@ -146,13 +146,13 @@ public class MapGUI extends ApplicationAdapter {
         // dispose of all
         robotImage.dispose();
         voidImage.dispose();
-        blueImage.dispose();
-        yellowImage.dispose();
+        blueConveyor_beltImage.dispose();
+        yellowConveyor_beltImage.dispose();
         laserImage.dispose();
         nothingImage.dispose();
-        gearImmage.dispose();
-        hammer_ScrewImage.dispose();
-        screwImage.dispose();
+        rotatin_plateImage.dispose();
+        wrench_hammer.dispose();
+        wrenchImage.dispose();
         flagImage.dispose();
         batch.dispose();
     }

@@ -39,8 +39,6 @@ public class Game {
                     System.out.print('l');
                 } else if (map.getBoardObject(i, j) instanceof Conveyor_belt) {
                     System.out.print('b');
-                } else if (map.getBoardObject(i, j) instanceof Conveyor_belt) {
-                    System.out.print('y');
                 } else if (map.getBoardObject(i, j) instanceof Wrench) {
                     System.out.print('s');
                 } else if (map.getBoardObject(i, j) instanceof Wrench_hammer) {
@@ -113,8 +111,6 @@ public class Game {
                     } else if  (lines[j+1] == 'l'){
                         map.add(new Laser(i, j), i, j);
                     } else if  (lines[j+1] == 'b'){
-                        map.add(new Conveyor_belt(i, j), i, j);
-                    } else if  (lines[j+1] == 'y'){
                         map.add(new Conveyor_belt(i, j), i, j);
                     } else if  (lines[j+1] == 's'){
                         map.add(new Wrench(i, j), i, j);

@@ -1,32 +1,30 @@
 10 10
 ************
-*        yy*
-* s  bbbfy *
-* pbbb b y *
-* y  vv  y *
-* yy     yy*
-*  y hh  ly*
-*  y hh yyy*
-* ypf   y  *
-* s  vv ys *
-*       y v*
+*        bb*
+* s  bbbfb *
+* pbbb b b *
+* b  vv  b *
+* bb     bb*
+*  b hh  lb*
+*  b hh bbb*
+* bpf   b  *
+* s  vv bs *
+*       b v*
 ************
 
 Symbols on the bord
-'*' = Wall ?
+'*' = Wall
 'r' = Robot
 'v' = Void
 'l' = Laser
-'b' = Blue_bond
-'y' = Yellow_bond
-'s' = Screwdriver
-'h' = Hammer_Screwdriver
+'b' = Conveyor_belt
+'s' = Wrench
+'h' = Wrench_Hammer
 'f' = Flag
-'p' = Rotating_Plate
+'p' = Rotating_belt
 ' ' = Nothing
 
 
-//TODO:
-Need a way to determine direction of the Rotating plate, bond and laser
+//TODO: Need a way to determine direction of the Rotating plate, bond and laser
 
 
