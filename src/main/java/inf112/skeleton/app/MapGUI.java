@@ -5,7 +5,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -22,7 +21,7 @@ public class MapGUI extends ApplicationAdapter {
     private Music rainMusic;
     private SpriteBatch batch;
     private OrthographicCamera camera;
-    private Rectangle[][] bucket;
+    private Rectangle[][] tile;
     private Rectangle robot;
 
     private Map map;
@@ -45,6 +44,18 @@ public class MapGUI extends ApplicationAdapter {
         flagImage = getImage("flag.png");
         nothingImage = getImage("nothing.png");
 
+        //Ingrid som tester med andre bilder
+        /*robotImage = getImage("r.png");
+        voidImage = getImage("v.png");
+        yellowImage = getImage("y.png");
+        blueImage = getImage("b.png");
+        laserImage = getImage("l.png");
+        screwImage = getImage("s.png");
+        hammer_ScrewImage = getImage("s_h.png");
+        gearImmage = getImage("g.png");
+        flagImage = getImage("f.png");
+        nothingImage = getImage("n.png");*/
+
         // create the camera and the SpriteBatch
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 640, 640);
@@ -52,7 +63,7 @@ public class MapGUI extends ApplicationAdapter {
 
 
         // create a list of Rectangles to logically represent the objects
-        bucket = new Rectangle[10][10];
+        tile = new Rectangle[10][10];
 
         //make the moving robot
         robot = new Rectangle();
@@ -64,11 +75,11 @@ public class MapGUI extends ApplicationAdapter {
 
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j ++) {
-                bucket[i][j] = new Rectangle();
-                bucket[i][j].x = i*64;
-                bucket[i][j].y = j*64;
-                bucket[i][j].width = 64;
-                bucket[i][j].height = 64;
+                tile[i][j] = new Rectangle();
+                tile[i][j].x = i*64;
+                tile[i][j].y = j*64;
+                tile[i][j].width = 64;
+                tile[i][j].height = 64;
             }
         }
     }
@@ -96,23 +107,23 @@ public class MapGUI extends ApplicationAdapter {
         for (int i = 0,x = 0; i < 10; i++, x++) {
             for (int j = 0, y = 9; j < 10; j++, y--) {
                 if (map.getBoardObject(y, x) instanceof Robot){
-                    batch.draw(robotImage, bucket[i][j].x, bucket[i][j].y);
+                    batch.draw(robotImage, tile[i][j].x, tile[i][j].y);
                 } else if (map.getBoardObject(y, x) instanceof Void){
-                    batch.draw(voidImage, bucket[i][j].x, bucket[i][j].y);
+                    batch.draw(voidImage, tile[i][j].x, tile[i][j].y);
                 } else if (map.getBoardObject(y, x) instanceof Laser){
-                    batch.draw(laserImage, bucket[i][j].x, bucket[i][j].y);
+                    batch.draw(laserImage, tile[i][j].x, tile[i][j].y);
                 } else if (map.getBoardObject(y, x) instanceof Conveyor_belt){
-                    batch.draw(blueImage, bucket[i][j].x, bucket[i][j].y);
+                    batch.draw(blueImage, tile[i][j].x, tile[i][j].y);
                 } else if (map.getBoardObject(y, x) instanceof Wrench){
-                    batch.draw(screwImage, bucket[i][j].x, bucket[i][j].y);
+                    batch.draw(screwImage, tile[i][j].x, tile[i][j].y);
                 } else if (map.getBoardObject(y, x) instanceof Wrench_hammer){
-                    batch.draw(hammer_ScrewImage, bucket[i][j].x, bucket[i][j].y);
+                    batch.draw(hammer_ScrewImage, tile[i][j].x, tile[i][j].y);
                 } else if (map.getBoardObject(y, x) instanceof Flag){
-                    batch.draw(flagImage, bucket[i][j].x, bucket[i][j].y);
+                    batch.draw(flagImage, tile[i][j].x, tile[i][j].y);
                 } else if (map.getBoardObject(y, x) instanceof Rotating_belt){
-                    batch.draw(gearImmage, bucket[i][j].x, bucket[i][j].y);
+                    batch.draw(gearImmage, tile[i][j].x, tile[i][j].y);
                 } else {
-                    batch.draw(nothingImage, bucket[i][j].x, bucket[i][j].y);
+                    batch.draw(nothingImage, tile[i][j].x, tile[i][j].y);
                 }
             }
         }
