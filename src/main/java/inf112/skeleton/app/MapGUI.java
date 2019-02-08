@@ -44,7 +44,7 @@ public class MapGUI extends ApplicationAdapter {
         flagImage = getImage("flag.png");
         nothingImage = getImage("nothing.png");*/
 
-        //Ingrid som tester med andre bilder
+        //Testinf with other picture
         robotImage = getImage("r.png");
         voidImage = getImage("v.png");
         yellowImage = getImage("y.png");
@@ -143,7 +143,7 @@ public class MapGUI extends ApplicationAdapter {
 
     @Override
     public void dispose() {
-        // dispose of all the native resources
+        // dispose of all
         robotImage.dispose();
         voidImage.dispose();
         blueImage.dispose();
