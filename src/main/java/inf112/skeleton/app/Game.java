@@ -9,14 +9,6 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class Game {
-    public static void main(String[] args) {
-        LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
-        cfg.title = "Robo Rally";
-        cfg.width = 640;
-        cfg.height = 640;
-
-        new LwjglApplication(new MapGUI(), cfg);
-    }
 
     public static Map playGame() {
         //les inn map fra fil
