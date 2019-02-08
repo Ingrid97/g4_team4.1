@@ -112,7 +112,7 @@ public class Game {
                         map.add(new Laser(i, j), i, j);
                     } else if  (lines[j+1] == 'b'){
                         map.add(new Conveyor_belt(i, j), i, j);
-                    } else if  (lines[j+1] == 's'){
+                    }  else if  (lines[j+1] == 's'){
                         map.add(new Wrench(i, j), i, j);
                     } else if  (lines[j+1] == 'h'){
                         map.add(new Wrench_hammer(i, j), i, j);
@@ -123,8 +123,8 @@ public class Game {
                     } else {
                         map.add(new Nothing(i, j), i, j);
                     }
-                }
-            }
+                  }
+              }
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("There's something wrong with the map");
