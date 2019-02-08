@@ -90,4 +90,3 @@ For sharing of documents, diagram and codebase we’ll have Google Docs, Github 
 Google Docs will be for document with notes from meetings and other diverse notes. Github will be where our codebase is and Slack will also be for sharing of documents.  
 
 
-
