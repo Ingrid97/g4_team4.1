@@ -33,7 +33,7 @@ public class MapGUI extends ApplicationAdapter {
         map = playGame();
 
         // load the images for the objects on the map, 64x64 pixels each
-        robotImage = getImage("wall_e.png");
+        /*robotImage = getImage("wall_e.png");
         voidImage = getImage("void.png");
         yellowImage = getImage("yellow_arrow.png");
         blueImage = getImage("blue_arrow.png");
@@ -42,10 +42,10 @@ public class MapGUI extends ApplicationAdapter {
         hammer_ScrewImage = getImage("hammer_screw.png");
         gearImmage = getImage("gear.png");
         flagImage = getImage("flag.png");
-        nothingImage = getImage("nothing.png");
+        nothingImage = getImage("nothing.png");*/
 
         //Ingrid som tester med andre bilder
-        /*robotImage = getImage("r.png");
+        robotImage = getImage("r.png");
         voidImage = getImage("v.png");
         yellowImage = getImage("y.png");
         blueImage = getImage("b.png");
@@ -54,7 +54,7 @@ public class MapGUI extends ApplicationAdapter {
         hammer_ScrewImage = getImage("s_h.png");
         gearImmage = getImage("g.png");
         flagImage = getImage("f.png");
-        nothingImage = getImage("n.png");*/
+        nothingImage = getImage("n.png");
 
         // create the camera and the SpriteBatch
         camera = new OrthographicCamera();
