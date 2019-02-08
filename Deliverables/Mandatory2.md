@@ -91,6 +91,7 @@ Google Docs will be for document with notes from meetings and other diverse note
 
 
 ### Retrospective -Group meeting 07.02.19
+
 We discussed how the project is going so far, how everybody is doing, issues we had and tasks we think we solved in a good way. 
 First the issues, we have had some problems and troubleshooting with git, first we made a private repo, before we got invited to the one from the group leader. 
 So we lost a some time due to this issue. But during the meeting we solved the issues and all members are now in the same repo and all of us are able to push. 
