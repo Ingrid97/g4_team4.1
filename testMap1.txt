@@ -27,6 +27,6 @@ Symbols on the bord
 
 
 //TODO:
-Need a way to determan direction of the Rotating plate, bond and laser
+Need a way to determine direction of the Rotating plate, bond and laser
 
 
