@@ -20,6 +20,8 @@ public class Robot implements IRobot{
         return this.positionOfRobot;
     }
 
+    public int getHealthPoints() { return this.healthPoints;}
+
     @Override
     public boolean isAlive() {
         return this.alive;
