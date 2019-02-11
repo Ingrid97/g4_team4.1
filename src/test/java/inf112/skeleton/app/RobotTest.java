@@ -83,6 +83,8 @@ public class RobotTest {
     public void takingOneDamageResultInOneHealthPointReduction() {
         Robot robotShooting = new Robot(5, 5);
         Robot theRobotGettingShot = new Robot(2, 2);
+
+        // 1 shot
         robotShooting.shootLaser(theRobotGettingShot);
 
         assertEquals(2, theRobotGettingShot.getHealthPoints());
@@ -92,6 +94,8 @@ public class RobotTest {
     public void takingTwoDamageResultInTwoHealthPointReduction() {
         Robot robotShooting = new Robot(5, 5);
         Robot theRobotGettingShot = new Robot(2, 2);
+
+        // 2 shots
         robotShooting.shootLaser(theRobotGettingShot);
         robotShooting.shootLaser(theRobotGettingShot);
 
@@ -102,6 +106,8 @@ public class RobotTest {
     public void takingThreeDamageResultInThreeHealthPointReduction() {
         Robot robotShooting = new Robot(5, 5);
         Robot theRobotGettingShot = new Robot(2, 2);
+
+        // 3 shots
         robotShooting.shootLaser(theRobotGettingShot);
         robotShooting.shootLaser(theRobotGettingShot);
         robotShooting.shootLaser(theRobotGettingShot);
@@ -113,6 +119,8 @@ public class RobotTest {
     public void takingThreeDamageResultInAliveStatusChanging() {
         Robot robotShooting = new Robot(5, 5);
         Robot theRobotGettingShot = new Robot(2, 2);
+
+        // 3 shots
         robotShooting.shootLaser(theRobotGettingShot);
         robotShooting.shootLaser(theRobotGettingShot);
         robotShooting.shootLaser(theRobotGettingShot);
