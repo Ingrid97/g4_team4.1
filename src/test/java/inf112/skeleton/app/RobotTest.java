@@ -22,61 +22,69 @@ public class RobotTest {
         assertEquals(5, robot.getY());
     }
 
-    /*
+
     // Testing X and Y value when moving up, down, right, left
 
     // Up
     @Test
     public void movingUpGiveRightX() {
         Robot robot = new Robot(5, 5);
+        robot.move(Directions.UP);
         assertEquals(5, robot.getX());
     }
 
     @Test
     public void movingUpGiveRightY() {
         Robot robot = new Robot(5, 5);
-        assertEquals(6, robot.getX());
+        robot.move(Directions.UP);
+        assertEquals(6, robot.getY());
     }
 
     // Down
     @Test
     public void movingDownGiveRightX() {
         Robot robot = new Robot(5, 5);
+        robot.move(Directions.DOWN);
         assertEquals(5, robot.getX());
     }
 
     @Test
     public void movingDownGiveRightY() {
         Robot robot = new Robot(5, 5);
-        assertEquals(4, robot.getX());
+        robot.move(Directions.DOWN);
+        assertEquals(4, robot.getY());
     }
 
     // Right
     @Test
     public void movingRightGiveRightX() {
         Robot robot = new Robot(5, 5);
+        robot.move(Directions.RIGHT);
         assertEquals(6, robot.getX());
     }
 
     @Test
     public void movingRightGiveRightY() {
         Robot robot = new Robot(5, 5);
-        assertEquals(5, robot.getX());
+        robot.move(Directions.RIGHT);
+        assertEquals(5, robot.getY());
     }
 
     // Left
     @Test
     public void movingLeftGiveRightX() {
         Robot robot = new Robot(5, 5);
+        robot.move(Directions.LEFT);
         assertEquals(4, robot.getX());
     }
 
     @Test
     public void movingLeftGiveRightY() {
         Robot robot = new Robot(5, 5);
-        assertEquals(5, robot.getX());
+        robot.move(Directions.LEFT);
+        assertEquals(5, robot.getY());
     }
-    */
+
 
     // Testing healthPoints of robots
     @Test
