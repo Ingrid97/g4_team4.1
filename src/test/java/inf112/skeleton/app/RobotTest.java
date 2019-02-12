@@ -2,8 +2,7 @@ package inf112.skeleton.app;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.*;
 
 /**
  * Unit test for Robot.
@@ -134,5 +133,32 @@ public class RobotTest {
         robotShooting.shootLaser(theRobotGettingShot);
 
         assertFalse(theRobotGettingShot.isAlive());
+    }
+
+    // Testing backUp
+
+    @Test
+    public void droppingBackUpDropsItAtRightLocation() {
+        Robot robot = new Robot(5, 5);
+        robot.dropBackUpAtCurrentPosition();
+        assertEquals(5, robot.getBackUpPosition().getX());
+        assertEquals(5, robot.getBackUpPosition().getY());
+    }
+
+    @Test
+    public void whenRobotGetKilledRespawnOnBackup() {
+        Robot robotShooting = new Robot(5, 5);
+        Robot theRobotGettingShot = new Robot(2, 2);
+
+        theRobotGettingShot.move(Directions.UP);
+        theRobotGettingShot.move(Directions.RIGHT);
+        theRobotGettingShot.dropBackUpAtCurrentPosition();
+
+        robotShooting.shootLaser(theRobotGettingShot);
+        robotShooting.shootLaser(theRobotGettingShot);
+        robotShooting.shootLaser(theRobotGettingShot);
+
+        assertEquals(3, theRobotGettingShot.getBackUpPosition().getX());
+        assertEquals(3, theRobotGettingShot.getBackUpPosition().getY());
     }
 }
