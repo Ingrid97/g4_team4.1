@@ -113,7 +113,11 @@ public class MapGUI extends ApplicationAdapter {
                 } else if (map.getBoardObject(y, x) instanceof Laser){
                     batch.draw(laserImage, tile[i][j].x, tile[i][j].y);
                 } else if (map.getBoardObject(y, x) instanceof Conveyor_belt){
-                    batch.draw(blueConveyor_beltImage, tile[i][j].x, tile[i][j].y);
+                    Conveyor_belt c = (Conveyor_belt) map.getBoardObject(y, x);
+                    if (c.isBlueBelt)
+                        batch.draw(blueConveyor_beltImage, tile[i][j].x, tile[i][j].y);
+                    else
+                        batch.draw(yellowConveyor_beltImage, tile[i][j].x, tile[i][j].y);
                 } else if (map.getBoardObject(y, x) instanceof Wrench){
                     batch.draw(wrenchImage, tile[i][j].x, tile[i][j].y);
                 } else if (map.getBoardObject(y, x) instanceof Wrench_hammer){
@@ -138,6 +142,7 @@ public class MapGUI extends ApplicationAdapter {
         if(Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) robot.y -= 64;
         if(Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) robot.x -= 64;
         if(Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) robot.x += 64;
+
 
     }
 

@@ -107,8 +107,13 @@ public class Game {
                         map.add(new Void(i, j), i, j);
                     } else if  (lines[j+1] == 'l'){
                         map.add(new Laser(i, j), i, j);
-                    } else if  (lines[j+1] == 'b'){
-                        map.add(new Conveyor_belt(i, j), i, j);
+                    } else if  (lines[j+1] == 'b' || lines[j+1] == 'y'){
+                        Conveyor_belt c = new Conveyor_belt(i, j);
+                        if (lines[j+1] == 'y')
+                            c.isYelloBelt();
+                        else
+                            c.isBlueBelt();
+                        map.add(c, i, j);
                     }  else if  (lines[j+1] == 's'){
                         map.add(new Wrench(i, j), i, j);
                     } else if  (lines[j+1] == 'h'){

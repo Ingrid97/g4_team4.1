@@ -1,15 +1,15 @@
 10 10
 ************
-*        bb*
-* s  bbbfb *
-* pbbb b b *
-* b  vv  b *
-* bb     bb*
-*  b hh  lb*
-*  b hh bbb*
-* bpf   b  *
-* s  vv bs *
-*       b v*
+*        yy*
+* s  bbbfy *
+* pbbb b y *
+* b  vv  y *
+* bb     yy*
+*  b hh  ly*
+*  b hh yyy*
+* bpf   y  *
+* s  vv ys *
+*       y v*
 ************
 
 Symbols on the bord
@@ -17,12 +17,15 @@ Symbols on the bord
 'r' = Robot
 'v' = Void
 'l' = Laser
-'b' = Conveyor_belt
+'b' = Blue_Belt
+'y' = Yellow_Belt
 's' = Wrench
 'h' = Wrench_Hammer
 'f' = Flag
 'p' = Rotating_belt
 ' ' = Nothing
+
+
 
 
 //TODO: Need a way to determine direction of the Rotating plate, bond and laser
