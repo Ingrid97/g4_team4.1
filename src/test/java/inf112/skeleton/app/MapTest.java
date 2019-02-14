@@ -1,7 +1,8 @@
 package inf112.skeleton.app;
 
-import static org.junit.Assert.*;
 import org.junit.Test;
+
+import static org.junit.Assert.*;
 
 /**
  * Unit test for Map.
@@ -18,7 +19,7 @@ public class MapTest {
     public Map addRobotToAllSquaresOnTheMap(Map map) {
         for (int x = 0; x < map.getX(); x++) {
             for (int y = 0; y < map.getY(); y++) {
-                map.add(new Robot(x, y), x, y);
+                map.add(new Robot(x, y, Directions.UP), x, y);
             }
         }
         return map;
@@ -47,13 +48,13 @@ public class MapTest {
     @Test(expected = IllegalArgumentException.class)
     public void placingObjectOutsideMapThrowsException(){
         Map map = build(10, 20);
-        map.add(new Robot(15, 10), 15, 10 );
+        map.add(new Robot(15, 10, Directions.UP), 15, 10 );
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void placingObjectOnBorderOfMapDontThrowException(){
         Map map = build(10, 20);
-        map.add(new Robot(10, 20), 10, 20 );
+        map.add(new Robot(10, 20, Directions.UP), 10, 20 );
     }
 
     @Test
@@ -80,7 +81,7 @@ public class MapTest {
     @Test
     public void RobotOnMap(){
         Map map = build(10, 20);
-        map.add(new Robot(5, 5), 5, 5);
+        map.add(new Robot(5, 5, Directions.UP), 5, 5);
         assertTrue(map.getBoardObject(5, 5) instanceof Robot);
     }
 

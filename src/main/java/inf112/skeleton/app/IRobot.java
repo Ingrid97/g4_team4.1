@@ -25,7 +25,7 @@ public interface IRobot extends IBoardObject {
          * Move the robot in a given Direction
          * @param direction
          */
-        void move (Directions direction);
+        void move (int numberOfSteps);
 
         /**
          *

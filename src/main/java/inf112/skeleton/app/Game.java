@@ -1,8 +1,5 @@
 package inf112.skeleton.app;//Created by ingridjohansen on 04/02/2019.
 
-import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
-import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -105,7 +102,7 @@ public class Game {
                     if (lines[j+1] == '*'){
                         map.add(new Wall(i, j), i, j);
                     } else if (lines[j+1] == 'r'){
-                       map.add(new Robot(i, j), i, j);
+                       map.add(new Robot(i, j, Directions.UP), i, j);
                     } else if  (lines[j+1] == 'v'){
                         map.add(new Void(i, j), i, j);
                     } else if  (lines[j+1] == 'l'){
