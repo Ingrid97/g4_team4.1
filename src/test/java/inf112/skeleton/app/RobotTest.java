@@ -145,22 +145,22 @@ public class RobotTest {
         assertEquals(5, robot.getBackUpPosition().getY());
     }
 
-    /*
+
     @Test
     public void whenRobotGetKilledRespawnOnBackup() {
         Robot robotShooting = new Robot(5, 5, Directions.UP);
         Robot theRobotGettingShot = new Robot(2, 2, Directions.UP);
 
-        theRobotGettingShot.move(1);
-        theRobotGettingShot.move(1);
-        theRobotGettingShot.dropBackUpAtCurrentPosition();
+        theRobotGettingShot.move(1);            // (2, 2)
+        theRobotGettingShot.dropBackUpAtCurrentPosition();    // (2, 3)
+        theRobotGettingShot.move(1);            // (2, 4)
 
         robotShooting.shootLaser(theRobotGettingShot);
         robotShooting.shootLaser(theRobotGettingShot);
         robotShooting.shootLaser(theRobotGettingShot);
 
-        assertEquals(3, theRobotGettingShot.getBackUpPosition().getX());
+        assertEquals(2, theRobotGettingShot.getBackUpPosition().getX());
         assertEquals(3, theRobotGettingShot.getBackUpPosition().getY());
     }
-    */
+
 }

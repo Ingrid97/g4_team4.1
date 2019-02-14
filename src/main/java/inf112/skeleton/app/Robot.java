@@ -19,6 +19,7 @@ public class Robot implements IRobot{
     }
 
 
+    // Getters
     @Override
     public Position getPosition() {
         return this.positionOfRobot;
@@ -28,20 +29,6 @@ public class Robot implements IRobot{
 
     public Position getBackUpPosition() {
         return backUpPosition;
-    }
-
-    @Override
-    public boolean isAlive() {
-        return this.alive;
-    }
-
-    @Override
-    public void shootLaser(Robot theRobotBeingShot) {
-        theRobotBeingShot.takeDamage(this.laserStrength);
-    }
-
-    public void dropBackUpAtCurrentPosition() {
-        this.backUpPosition = this.positionOfRobot;
     }
 
     @Override
@@ -58,10 +45,32 @@ public class Robot implements IRobot{
         return this.positionOfRobot;
     }
 
+    // Setters
+    public void setDirection(Directions direction) {
+        this.direction = direction;
+    }
+
+
+    // Methods
     public void move (int numberOfSteps) {
         for (int i = 0; i < numberOfSteps; i++) {
             this.positionOfRobot = this.positionOfRobot.moveDirection(this.direction);
         }
+        if (this.alive = false) this.positionOfRobot = backUpPosition;
+    }
+
+    @Override
+    public boolean isAlive() {
+        return this.alive;
+    }
+
+    @Override
+    public void shootLaser(Robot theRobotBeingShot) {
+        theRobotBeingShot.takeDamage(this.laserStrength);
+    }
+
+    public void dropBackUpAtCurrentPosition() {
+        this.backUpPosition = this.positionOfRobot;
     }
 
     private void takeDamage (int laserStrength) {
