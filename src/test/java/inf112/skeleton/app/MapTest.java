@@ -45,16 +45,17 @@ public class MapTest {
         build(3,-1);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = ArrayIndexOutOfBoundsException.class)
     public void placingObjectOutsideMapThrowsException(){
         Map map = build(10, 20);
         map.add(new Robot(15, 10, Directions.UP), 15, 10 );
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void placingObjectOnBorderOfMapDontThrowException(){
         Map map = build(10, 20);
-        map.add(new Robot(10, 20, Directions.UP), 10, 20 );
+        map.add(new Robot(9, 19, Directions.UP), 9, 19);
+        assertTrue(true);
     }
 
     @Test

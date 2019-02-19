@@ -29,6 +29,7 @@ public class Map {
 
     }
 
+    //test
     IBoardObject getBoardObject(int x, int y){
         return map[x][y];
     }
