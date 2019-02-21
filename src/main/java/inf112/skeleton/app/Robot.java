@@ -4,6 +4,7 @@ public class Robot implements IRobot{
     private Position positionOfRobot;
     private Position backUpPosition;
     private int healthPoints;
+    private int memoryCapacity;
     private boolean alive;
     private int laserStrength;
     private Directions direction;
@@ -13,6 +14,7 @@ public class Robot implements IRobot{
         this.positionOfRobot = new Position(x, y);
         this.backUpPosition = positionOfRobot;
         this.healthPoints = 3;
+        this.memoryCapacity = 9;
         this.alive = true;
         this.laserStrength = 1;
         this.direction = direction;
@@ -45,6 +47,10 @@ public class Robot implements IRobot{
         return this.positionOfRobot;
     }
 
+    public int getMemoryCapacity() {
+        return this.memoryCapacity;
+    }
+
     // Setters
     public void setDirection(Directions direction) {
         this.direction = direction;
@@ -75,9 +81,14 @@ public class Robot implements IRobot{
 
     private void takeDamage (int laserStrength) {
 
-        this.healthPoints -= laserStrength;
+        this.memoryCapacity -= laserStrength;
 
-        if (healthPoints < 1) {
+        if (memoryCapacity < 1) {
+            this.healthPoints--;
+            this.memoryCapacity = 9;
+            this.positionOfRobot = this.backUpPosition;
+        }
+        if (this.healthPoints < 1) {
             this.alive = false;
             this.positionOfRobot = this.backUpPosition;
         }

@@ -15,8 +15,8 @@ public class Player {
         this.robot = robot;
     }
 
-    public void giveMovementCardsToThePlayer(ArrayList<MovementCard> theCardsToChooseYourProgramFrom) {
-        this.theCardsToChooseYourProgramFrom = theCardsToChooseYourProgramFrom;
+    public void giveMovementCardsToThePlayer(MovementCard card) {
+        this.theCardsToChooseYourProgramFrom.add(card);
     }
 
     // TODO! Choosing the cards as a player
@@ -28,6 +28,10 @@ public class Player {
          */
 
         return null;
+    }
+
+    public int memoryCapacityForThisPlayer() {
+        return this.robot.getMemoryCapacity();
     }
 
 

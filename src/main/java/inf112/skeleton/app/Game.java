@@ -4,8 +4,12 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class Game {
+    private ArrayList<Player> players;
+    private ArrayList<MovementCard> theFullDeckOfAllMovementCards;
 
     public static Map playGame() {
         //les inn map fra fil
@@ -136,5 +140,28 @@ public class Game {
         System.out.println("Adding stuff to the map...");
 
         return map;
+    }
+
+    private void setUpTheFullDeckOfCards() {
+        this.theFullDeckOfAllMovementCards = new ArrayList<>();
+        // Random of the head made card
+        theFullDeckOfAllMovementCards.add(new MovementCard(Directions.UP, 2, 500));
+    }
+
+    private void addPlayers() {
+        // Random player
+        int numberOfFlags = 3;
+        this.players.add(new Player(numberOfFlags, new Robot(2, 3, Directions.UP)));
+    }
+
+    private void dealOutMovementCards() {
+        ArrayList<MovementCard> copy = new ArrayList<>(this.theFullDeckOfAllMovementCards);
+        Collections.shuffle(copy);
+        for (int i = 0; i < players.size(); i++) {
+            // TODO Make it take a part of the list instead of induvidual cards
+            for (int j = 0; j < players.get(i).memoryCapacityForThisPlayer(); j++) {
+                players.get(i).giveMovementCardsToThePlayer(copy.get(j));
+            }
+        }
     }
 }
