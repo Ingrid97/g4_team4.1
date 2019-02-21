@@ -6,6 +6,7 @@ public class Player {
     private ArrayList<MovementCard> theProgramForTheRobotToExecute;
     private boolean[] flagsWhichHasBeenVisited;
     private Robot robot;
+    private ArrayList<MovementCard> theCardsToChooseYourProgramFrom;
 
 
     public Player (int numberOfFlags, Robot robot) {
@@ -13,4 +14,21 @@ public class Player {
         this.theProgramForTheRobotToExecute = new ArrayList<>();
         this.robot = robot;
     }
+
+    public void giveMovementCardsToThePlayer(ArrayList<MovementCard> theCardsToChooseYourProgramFrom) {
+        this.theCardsToChooseYourProgramFrom = theCardsToChooseYourProgramFrom;
+    }
+
+    // TODO! Choosing the cards as a player
+    public ArrayList<MovementCard> theMovementCardsThePlayerChose () {
+
+        /*
+         * Metode for å vise & velge kortene du kan velge mellom
+         * Returnere disse kortene i rekkefølge
+         */
+
+        return null;
+    }
+
+
 }
