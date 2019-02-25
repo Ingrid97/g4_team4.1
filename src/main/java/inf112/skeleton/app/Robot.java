@@ -8,6 +8,7 @@ public class Robot implements IRobot{
     private boolean alive;
     private int laserStrength;
     private Directions direction;
+    private Robot robot;
 
 
     public Robot(int x, int y, Directions direction){
@@ -19,6 +20,7 @@ public class Robot implements IRobot{
         this.laserStrength = 1;
         this.direction = direction;
     }
+
 
 
     // Getters
@@ -64,7 +66,27 @@ public class Robot implements IRobot{
         }
         if (this.alive = false) this.positionOfRobot = backUpPosition;
     }
+/*
+    public void noticeOtherObjects(Robot robotObj){
 
+
+        //check if the Robot can walk at a given position or if there is an obstacle there
+        Position robotPos = this.positionOfRobot.moveDirection(this.direction);
+        boolean robotCanGo = true;
+
+        try{
+            if(move(!= 0) && this.positionOfRobot.moveDirection(this, this.direction);
+            IBoardObject obj =  this.robot.positionOfRobot.moveDirection(this, this.move());
+            if(obj instanceof Wall){
+                robotCanGo = false;
+            }
+        } catch(Exception e) {
+            System.out.println("Can not go here");
+
+
+        }
+    }
+*/
     @Override
     public boolean isAlive() {
         return this.alive;

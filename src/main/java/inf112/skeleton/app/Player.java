@@ -33,6 +33,4 @@ public class Player {
     public int memoryCapacityForThisPlayer() {
         return this.robot.getMemoryCapacity();
     }
-
-
 }

@@ -162,5 +162,12 @@ public class RobotTest {
         assertEquals(2, theRobotGettingShot.getBackUpPosition().getX());
         assertEquals(3, theRobotGettingShot.getBackUpPosition().getY());
     }
+/*
+    @Test
 
+    public void robotDoesNotGoThroughWalls(){
+        Robot robot = new Robot(5, 5, Directions.UP);
+        Robot theRobotHittingWall = new Robot(5, 5, Directions.UP);
+    }
+*/
 }
