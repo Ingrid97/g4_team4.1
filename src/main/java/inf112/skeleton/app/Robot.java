@@ -1,5 +1,6 @@
 package inf112.skeleton.app;//Created by ingridjohansen on 04/02/2019.
 
+
 public class Robot implements IRobot{
     private Position positionOfRobot;
     private Position backUpPosition;
@@ -65,28 +66,12 @@ public class Robot implements IRobot{
             this.positionOfRobot = this.positionOfRobot.moveDirection(this.direction);
         }
         if (this.alive = false) this.positionOfRobot = backUpPosition;
+
+
     }
-/*
-    public void noticeOtherObjects(Robot robotObj){
 
 
-        //check if the Robot can walk at a given position or if there is an obstacle there
-        Position robotPos = this.positionOfRobot.moveDirection(this.direction);
-        boolean robotCanGo = true;
 
-        try{
-            if(move(!= 0) && this.positionOfRobot.moveDirection(this, this.direction);
-            IBoardObject obj =  this.robot.positionOfRobot.moveDirection(this, this.move());
-            if(obj instanceof Wall){
-                robotCanGo = false;
-            }
-        } catch(Exception e) {
-            System.out.println("Can not go here");
-
-
-        }
-    }
-*/
     @Override
     public boolean isAlive() {
         return this.alive;

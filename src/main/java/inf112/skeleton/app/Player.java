@@ -33,4 +33,38 @@ public class Player {
     public int memoryCapacityForThisPlayer() {
         return this.robot.getMemoryCapacity();
     }
+    /*
+
+    //Have to import keyBoard function.
+
+    protected Position askedToGo;
+    public void keyPressed(Directions dir) {
+        if (key == Directions.LEFT) {
+            askedToGo = Directions.LEFT;
+        } else if(key == Directions.RIGHT){
+            askedToGo = Directions.RIGHT;
+        } else if(key == KeyCode.UP){
+            askedToGo = Directions.UP;
+        } else if(key == KeyCode.DOWN){
+            askedToGo = Directions.DOWN;
+        }
+    }
+
+    public void noticeWalls(){
+
+
+        //check if the Robot can walk at a given position or if there is an obstacle there
+        Position robotPos = this.robot.moveDirection(this.direction);
+        boolean robotCanGo = true;
+
+
+            if(askedToGo != null && this.robot.moveDirection(this.askedToGo);
+            IBoardObject obj =  this.robot.get(robotPos.moveDirection(this.askedToGo));
+            if(obj instanceof Wall){
+                robotCanGo = false;
+
+            }
+        }
+  */
+
 }
