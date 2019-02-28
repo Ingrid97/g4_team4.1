@@ -11,7 +11,7 @@ import java.io.InputStream;
 
 
 
-public class Player {
+public class Player implements KeyListener {
     private ArrayList<MovementCard> theProgramForTheRobotToExecute;
     private boolean[] flagsWhichHasBeenVisited;
     private Robot robot;
@@ -58,19 +58,19 @@ public class Player {
 
     public void keyPressed(KeyEvent key) {
 
-     if(key == KeyEvent.VK_W){
+     if(key.getKeyChar() == KeyEvent.VK_W){
          canGO = Directions.UP;
 
      }
-     else if(key == KeyEvent.VK_S){
+     else if(key.getKeyChar() == KeyEvent.VK_S){
          canGO = Directions.DOWN;
 
      }
-     else if(key == KeyEvent.VK_D){
+     else if(key.getKeyChar() == KeyEvent.VK_D){
          canGO = Directions.RIGHT;
 
      }
-     else if(key == KeyEvent.VK_A){
+     else if(key.getKeyChar() == KeyEvent.VK_A){
          canGO = Directions.LEFT;
 
      }
