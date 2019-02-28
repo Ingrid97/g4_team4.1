@@ -21,6 +21,7 @@ public class PlayerTest {
     //Set up game and objects for test in this class
     @Before
 
+    //can be smart to creat map here so that i don't need it to do so in every test
     public static void setupMapBefore() throws Exception{
         Map map = new Map(10, 20);
     }
@@ -59,14 +60,16 @@ public class PlayerTest {
 
     //TODO check if legal inputs are okay
 
-    public void playerMovement(KeyEvent key){
+    public void playerMovement(){
+        //creating map
+        Map map = new Map(10, 20);
 
+        //Creating robot and  a player
+        Robot robot = new Robot(5,5, Directions.UP);
+        Player testRobot = new Player(5, robot );
+        testRobot
 
-        Player testRobot = new Player(5, 5,5, Directions.UP  );
-        testRobot.keyPressed(KeyEvent.VK_W);
-        testRobot.keyReleased(KeyEvent.VK_W);
-
-        assertTrue(true, movingUP);
+        assertTrue();
 
 
     }

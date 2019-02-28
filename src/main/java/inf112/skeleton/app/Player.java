@@ -80,8 +80,8 @@ public class Player implements KeyListener {
     }
 
 
-    public boolean noticeWalls(Directions dir) {
-        Map map = MapGUI.map;
+    public boolean noticeWalls(Directions dir, Map map) {
+        //Map map = MapGUI.map;
 
 
         if (dir == Directions.UP) {
