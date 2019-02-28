@@ -1,6 +1,6 @@
 package inf112.skeleton.app;
 
-import javax.swing.text.JTextComponent;
+
 import java.util.ArrayList;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
