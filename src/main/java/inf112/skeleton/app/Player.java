@@ -1,14 +1,9 @@
 package inf112.skeleton.app;
 
-import org.graalvm.compiler.loop.InductionVariable;
-
+import javax.swing.text.JTextComponent;
 import java.util.ArrayList;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.InputStream;
-
-
-
 
 
 public class Player implements KeyListener {
@@ -78,8 +73,14 @@ public class Player implements KeyListener {
     }
 
     @Override
-    public void keyReleased(KeyEvent e) {
+    public void keyReleased(KeyEvent key) {
+        if(key.getKeyChar() == KeyEvent.CHAR_UNDEFINED){
+            canGO = null;
+        }
 
+    }
+
+    private boolean keyPressed(int keyCode) {
     }
 
     public boolean noticeWalls(Directions dir) {
