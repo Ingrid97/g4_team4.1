@@ -1,21 +1,24 @@
 package inf112.skeleton.app;
 
+import org.graalvm.compiler.loop.InductionVariable;
+
 import java.util.ArrayList;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.InputStream;
 
 
 
 
-public class Player implements KeyListener{
+
+public class Player {
     private ArrayList<MovementCard> theProgramForTheRobotToExecute;
     private boolean[] flagsWhichHasBeenVisited;
     private Robot robot;
     private ArrayList<MovementCard> theCardsToChooseYourProgramFrom;
-    private Position positionOfRobot;
+    private Position move;
     private Directions direction;
 
-    protected Position askedToGo;
 
 
     public Player(int numberOfFlags, Robot robot) {
@@ -51,22 +54,27 @@ public class Player implements KeyListener{
     public void keyTyped(KeyEvent e) {
 
     }
+    public Position canGO;
 
-    public void keyPressed(KeyEvent e) {
+    public void keyPressed(KeyEvent key) {
 
-        int keyUP = KeyEvent.VK_W;
-        int keyDown = KeyEvent.VK_D;
-        int key
+     if(key == KeyEvent.VK_W){
+         canGO = Directions.UP;
 
+     }
+     else if(key == KeyEvent.VK_S){
+         canGO = Directions.DOWN;
 
-            askedToGo = Directions.LEFT;
-        } else if(key == Directions.RIGHT){
-            askedToGo = Directions.RIGHT;
-        } else if(key == KeyCode.UP){
-            askedToGo = Directions.UP;
-        } else if(key == KeyCode.DOWN){
-            askedToGo = Directions.DOWN;
-        }
+     }
+     else if(key == KeyEvent.VK_D){
+         canGO = Directions.RIGHT;
+
+     }
+     else if(key == KeyEvent.VK_A){
+         canGO = Directions.LEFT;
+
+     }
+
     }
 
     @Override
@@ -104,6 +112,13 @@ public class Player implements KeyListener{
 
         return true;
     }
+
+
+
+
+
+
+
 }
 
 
