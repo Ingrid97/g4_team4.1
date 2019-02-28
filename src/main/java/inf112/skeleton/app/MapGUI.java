@@ -24,7 +24,7 @@ public class MapGUI extends ApplicationAdapter {
     private Rectangle[][] tile;
     private Rectangle robot;
 
-    private Map map;
+    public static Map map;
 
     @Override
     public void create() {

@@ -2,6 +2,9 @@ package inf112.skeleton.app;
 
 import java.util.ArrayList;
 
+import static org.lwjgl.input.Mouse.getY;
+import static org.lwjgl.opengl.Display.getX;
+
 public class Player {
     private ArrayList<MovementCard> theProgramForTheRobotToExecute;
     private boolean[] flagsWhichHasBeenVisited;
@@ -10,8 +13,10 @@ public class Player {
     private Position positionOfRobot;
     private Directions direction;
 
+    protected Position askedToGo;
 
-    public Player (int numberOfFlags, Robot robot) {
+
+    public Player(int numberOfFlags, Robot robot) {
         this.flagsWhichHasBeenVisited = new boolean[numberOfFlags];
         this.theProgramForTheRobotToExecute = new ArrayList<>();
         this.robot = robot;
@@ -22,7 +27,7 @@ public class Player {
     }
 
     // TODO! Choosing the cards as a player
-    public ArrayList<MovementCard> theMovementCardsThePlayerChose () {
+    public ArrayList<MovementCard> theMovementCardsThePlayerChose() {
 
         /*
          * Metode for å vise & velge kortene du kan velge mellom
@@ -35,10 +40,10 @@ public class Player {
     public int memoryCapacityForThisPlayer() {
         return this.robot.getMemoryCapacity();
     }
-    
 
-   //Have to import keyBoard function.
 
+    //Have to import keyBoard function.
+/*
     protected Position askedToGo;
     public void keyPressed(Directions dir) {
         if (key == Directions.LEFT) {
@@ -50,23 +55,38 @@ public class Player {
         } else if(key == KeyCode.DOWN){
             askedToGo = Directions.DOWN;
         }
-    }
+    } */
 
-    public void noticeWalls(){
-
-
-        //check if the Robot can walk at a given position or if there is an obstacle there
-        Position robotPos = this.robot.moveDirection(this.direction);
-        boolean robotCanGo = true;
+    public boolean noticeWalls(Directions dir) {
+        Map map = MapGUI.map;
 
 
-            if(askedToGo != null && this.robot.moveDirection(this.askedToGo);
-            IBoardObject obj =  this.robot.get(robotPos.moveDirection(this.askedToGo));
-            if(obj instanceof Wall){
-                robotCanGo = false;
+        if (dir == Directions.UP) {
+            if (map.getBoardObject(getX(), getY() + 1) instanceof Wall) {
+            }
+            return false;
 
+        } else if (dir == Directions.DOWN) {
+            if (map.getBoardObject(getX(), getY() - 1) instanceof Wall) {
+
+            }
+            return false;
+        } else if (dir == Directions.RIGHT) {
+            if (map.getBoardObject(getX() + 1, getY()) instanceof Wall) {
+
+
+            }
+            return false;
+        } else if (dir == Directions.LEFT) {
+            if (map.getBoardObject(getX() - 1, getY()) instanceof Wall) {
+                return false;
             }
         }
 
 
+
+        return true;
+    }
 }
+
+
