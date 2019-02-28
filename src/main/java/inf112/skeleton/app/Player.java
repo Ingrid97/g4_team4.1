@@ -33,9 +33,9 @@ public class Player {
     public int memoryCapacityForThisPlayer() {
         return this.robot.getMemoryCapacity();
     }
-    /*
+    
 
-    //Have to import keyBoard function.
+  /*  //Have to import keyBoard function.
 
     protected Position askedToGo;
     public void keyPressed(Directions dir) {
@@ -65,6 +65,6 @@ public class Player {
 
             }
         }
-  */
+*/
 
 }
