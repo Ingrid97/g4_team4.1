@@ -11,8 +11,7 @@ public class Player implements KeyListener {
     private boolean[] flagsWhichHasBeenVisited;
     private Robot robot;
     private ArrayList<MovementCard> theCardsToChooseYourProgramFrom;
-    private Position move;
-    private Directions direction;
+
 
 
 
@@ -80,8 +79,6 @@ public class Player implements KeyListener {
 
     }
 
-    private boolean keyPressed(int keyCode) {
-    }
 
     public boolean noticeWalls(Directions dir) {
         Map map = MapGUI.map;
