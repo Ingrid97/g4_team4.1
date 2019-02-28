@@ -9,7 +9,7 @@ public class Robot implements IRobot{
     private boolean alive;
     private int laserStrength;
     private Directions direction;
-    private Robot robot;
+
 
 
     public Robot(int x, int y, Directions direction){

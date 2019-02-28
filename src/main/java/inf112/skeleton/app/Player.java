@@ -7,6 +7,8 @@ public class Player {
     private boolean[] flagsWhichHasBeenVisited;
     private Robot robot;
     private ArrayList<MovementCard> theCardsToChooseYourProgramFrom;
+    private Position positionOfRobot;
+    private Directions direction;
 
 
     public Player (int numberOfFlags, Robot robot) {
@@ -35,7 +37,7 @@ public class Player {
     }
     
 
-  /*  //Have to import keyBoard function.
+   //Have to import keyBoard function.
 
     protected Position askedToGo;
     public void keyPressed(Directions dir) {
@@ -65,6 +67,6 @@ public class Player {
 
             }
         }
-*/
+
 
 }
