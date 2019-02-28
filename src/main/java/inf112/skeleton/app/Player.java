@@ -1,11 +1,13 @@
 package inf112.skeleton.app;
 
 import java.util.ArrayList;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
-import static org.lwjgl.input.Mouse.getY;
-import static org.lwjgl.opengl.Display.getX;
 
-public class Player {
+
+
+public class Player implements KeyListener{
     private ArrayList<MovementCard> theProgramForTheRobotToExecute;
     private boolean[] flagsWhichHasBeenVisited;
     private Robot robot;
@@ -43,10 +45,20 @@ public class Player {
 
 
     //Have to import keyBoard function.
-/*
-    protected Position askedToGo;
-    public void keyPressed(Directions dir) {
-        if (key == Directions.LEFT) {
+
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+
+    }
+
+    public void keyPressed(KeyEvent e) {
+
+        int keyUP = KeyEvent.VK_W;
+        int keyDown = KeyEvent.VK_D;
+        int key
+
+
             askedToGo = Directions.LEFT;
         } else if(key == Directions.RIGHT){
             askedToGo = Directions.RIGHT;
@@ -55,7 +67,12 @@ public class Player {
         } else if(key == KeyCode.DOWN){
             askedToGo = Directions.DOWN;
         }
-    } */
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+
+    }
 
     public boolean noticeWalls(Directions dir) {
         Map map = MapGUI.map;
