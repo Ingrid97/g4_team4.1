@@ -54,7 +54,7 @@ public class Player {
     public void keyTyped(KeyEvent e) {
 
     }
-    public Position canGO;
+    public Directions canGO;
 
     public void keyPressed(KeyEvent key) {
 
@@ -115,9 +115,13 @@ public class Player {
 
 
 
+    public int getX() {
+        return robot.getX();
+    }
 
-
-
+    public int getY() {
+        return robot.getY();
+    }
 
 }
 
