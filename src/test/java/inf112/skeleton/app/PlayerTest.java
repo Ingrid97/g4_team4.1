@@ -9,10 +9,12 @@ import java.awt.event.KeyEvent;
 
 import static org.junit.Assert.*;
 
+/* Test for player */
 
-public class GametTest {
+
+public class PlayerTest {
     private MapGUI map;
-    private Robot robot;
+    private static Wall wallsOnTheMap;
 
 
 
@@ -58,9 +60,13 @@ public class GametTest {
     //TODO check if legal inputs are okay
 
     public void playerMovement(KeyEvent key){
-        Player testRobot = new Player(2, )
 
 
+        Player testRobot = new Player(5, 5,5, Directions.UP  );
+        testRobot.keyPressed(KeyEvent.VK_W);
+        testRobot.keyReleased(KeyEvent.VK_W);
+
+        assertTrue(true, movingUP);
 
 
     }
@@ -72,19 +78,15 @@ public class GametTest {
 
     //Todo check if player goes through walls
 
-    public void robotDoesNotGoThroughWalls(){
+    public void robotDoesNotGoThroughWallsDown(){
        Player testRobot = new Player(0, 5, 5, Directions.DOWN);
+      (testRobot.noticeWalls(Directions.DOWN))
 
+      }
 
-       assertFalse(testRobot.noticeWalls(Directions.DOWN));
-
-
-       Player noticeWalls = new Player(int numberOfFlags, Robot robot);
-        robot.keyPressed(Directions.RIGHT);
-
-        Robot robot = new Robot(5, 5, Directions.UP);
-
-     assertFalse(noticeWalls.canGO(Directions.UP, instanceOf Wall));
+       if(IBoardObject  = instanceOf Wall){
+       assertFalse(testRobot.canGO = true);
+       assertTrue(testRobot.canGO = false);
 
 
     }
@@ -104,6 +106,7 @@ public class GametTest {
     public void  testMemoryCapacityForThisPlayer(){
 
     }
+
 
 
 
