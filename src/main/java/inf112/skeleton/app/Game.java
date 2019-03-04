@@ -14,6 +14,9 @@ public class Game {
     private static ArrayList<Player> players;
     private static ArrayList<MovementCard> theFullDeckOfAllMovementCards;
     private static boolean gameOver;
+    public static int[][] robotPositions;
+    public static int numberOfRobots;
+    private static int numberOfPlayers;
 
 
     public static void playGame() {
@@ -21,6 +24,9 @@ public class Game {
         setUpTheFullDeckOfCards();
 
         //leser inn map fra fil
+        robotPositions = new int[4][2];
+        numberOfRobots = 0;
+        numberOfPlayers = 0;
         Map map = makeMap("testMap1.txt");
         if (map == null)
             System.exit(0);
@@ -33,16 +39,32 @@ public class Game {
 
         players = new ArrayList<>();
         gameOver = true;
-        Player player1 = new Player(0, (Robot) map.getBoardObject(0, 0));
+        Player player1 = new Player(0, (Robot) map.getBoardObject(robotPositions[0][0], robotPositions[0][1]));
         setUpTheFullDeckOfCards();
+        addPlayers();
         addPlayers();
         dealOutMovementCards();
         while (gameOver) {
-            players.get(0).theMovementCardsThePlayerChose();
+            ArrayList<ArrayList> listOfListsToBe = new ArrayList<>();
+            for (int i = 0; i < players.size(); i++) {
+                ArrayList<MovementCard> movementCardsToBeExecuted = new ArrayList<>();
+                movementCardsToBeExecuted = players.get(i).theMovementCardsThePlayerChose();
+                listOfListsToBe.add(movementCardsToBeExecuted);
+            }
+            //har nå to en liste med lister av programkort som skal utføres i rekkefølge, neste steg er å finne ut hvilken robot/player som skal beveges osv.
+
+
+//
+//            int j = 0;
+//            for (int i = 0; i < numberOfPlayers; i++) {
+//                listOfListsToBe.get(i).get(j);
+//            }
+
         }
 
 
     }
+
 
 
 
@@ -116,7 +138,6 @@ public class Game {
         int x = Integer.parseInt(xy.substring(0, split));
         int y = Integer.parseInt(xy.substring(split+1));
         Map map = new Map(x, y);
-
         //TODO: make switch
         try {
             String line = br.readLine();
@@ -128,6 +149,8 @@ public class Game {
                         map.add(new Wall(i, j), i, j);
                     } else if (lines[j+1] == 'r'){
                        map.add(new Robot(i, j, Directions.UP), i, j);
+                        robotPositions[numberOfRobots][0] = i;
+                        robotPositions[numberOfRobots][1] = j;
                     } else if  (lines[j+1] == 'v'){
                         map.add(new Void(i, j), i, j);
                     } else if  (lines[j+1] == 'l'){
@@ -203,8 +226,10 @@ public class Game {
 
     private static void addPlayers() {
         // Random player
-        int numberOfFlags = 3;
-        players.add(new Player(numberOfFlags, new Robot(2, 3, Directions.UP)));
+        int numberOfFlags = 0;
+        numberOfPlayers++;
+        numberOfRobots--;
+        players.add(new Player(numberOfFlags, new Robot(robotPositions[numberOfRobots][0], robotPositions[numberOfRobots][1], Directions.UP)));
     }
 
     private static void dealOutMovementCards() {
