@@ -136,7 +136,6 @@ public class MapGUI extends ApplicationAdapter {
 
         batch.end();
 
-
         //stuff for moving
         if(Gdx.input.isKeyJustPressed(Input.Keys.UP)) robot.y += 64;
         if(Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) robot.y -= 64;

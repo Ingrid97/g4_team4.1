@@ -11,5 +11,9 @@ public class MovementCard {
         this.priority = priority;
     }
 
-
+    @Override
+    public String toString() {
+        String stringToPrint = ("Direction: " + direction + " Number of steps: " + numberOfSteps + " Priority" + priority);
+        return stringToPrint;
+    }
 }

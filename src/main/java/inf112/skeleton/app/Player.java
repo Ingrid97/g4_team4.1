@@ -1,9 +1,12 @@
 package inf112.skeleton.app;
 
 
-import java.util.ArrayList;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 
 
 public class Player implements KeyListener {
@@ -27,14 +30,48 @@ public class Player implements KeyListener {
 
     // TODO! Choosing the cards as a player
     public ArrayList<MovementCard> theMovementCardsThePlayerChose() {
+        for (int i = 0; i < theCardsToChooseYourProgramFrom.size(); i++) {
+            System.out.println("Alt" + (i + 1));
+            System.out.println(theCardsToChooseYourProgramFrom.get(i).toString());
+        }
+        ArrayList<MovementCard> programForRobotToExecute = new ArrayList<>();
+        while (!Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
+            if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_1)) {
+                programForRobotToExecute.add(theCardsToChooseYourProgramFrom.get(1 - 1));
+            }
+            if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_2)) {
+                programForRobotToExecute.add(theCardsToChooseYourProgramFrom.get(2 - 1));
+            }
+            if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_3)) {
+                programForRobotToExecute.add(theCardsToChooseYourProgramFrom.get(3 - 1));
+            }
+            if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_4)) {
+                programForRobotToExecute.add(theCardsToChooseYourProgramFrom.get(4 - 1));
+            }
+            if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_5)) {
+                programForRobotToExecute.add(theCardsToChooseYourProgramFrom.get(5 - 1));
+            }
+            if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_6)) {
+                programForRobotToExecute.add(theCardsToChooseYourProgramFrom.get(6 - 1));
+            }
+            if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_7)) {
+                programForRobotToExecute.add(theCardsToChooseYourProgramFrom.get(7 - 1));
+            }
+            if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_8)) {
+                programForRobotToExecute.add(theCardsToChooseYourProgramFrom.get(8 - 1));
+            }
+            if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_9)) {
+                programForRobotToExecute.add(theCardsToChooseYourProgramFrom.get(9 - 1));
+            }
+            if (Gdx.input.isKeyJustPressed(Input.Keys.BACKSPACE)) {
+                programForRobotToExecute.remove(programForRobotToExecute.size());
+            }
+            for (int i = 0; i < theProgramForTheRobotToExecute.size(); i++) {
+                System.out.println(theProgramForTheRobotToExecute.get(i).toString());
+            }
+        }
 
-        /*
-         * Metode for å vise & velge kortene du kan velge mellom
-         * Returnere disse kortene i rekkefølge
-         * Legg de til i theProgramForTheRobotToExecute
-         */
-
-        return null;
+        return theProgramForTheRobotToExecute;
     }
 
     public int memoryCapacityForThisPlayer() {
@@ -102,9 +139,7 @@ public class Player implements KeyListener {
             }
             return false;
         } else if (dir == Directions.LEFT) {
-            if (map.getBoardObject(getX() - 1, getY()) instanceof Wall) {
-                return false;
-            }
+            return !(map.getBoardObject(getX() - 1, getY()) instanceof Wall);
         }
 
 
