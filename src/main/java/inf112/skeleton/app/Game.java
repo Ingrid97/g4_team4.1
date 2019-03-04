@@ -9,9 +9,13 @@ import java.util.Collections;
 
 public class Game {
     private ArrayList<Player> players;
-    private ArrayList<MovementCard> theFullDeckOfAllMovementCards;
+    private static ArrayList<MovementCard> theFullDeckOfAllMovementCards;
+
 
     public static Map playGame() {
+        // Lage alle kortene
+        setUpTheFullDeckOfCards();
+
         //les inn map fra fil
         Map map = makeMap("testMap1.txt");
         if (map == null)
@@ -142,10 +146,42 @@ public class Game {
         return map;
     }
 
-    private void setUpTheFullDeckOfCards() {
-        this.theFullDeckOfAllMovementCards = new ArrayList<>();
-        // Random of the head made card
-        theFullDeckOfAllMovementCards.add(new MovementCard(Directions.UP, 2, 500));
+    private static void setUpTheFullDeckOfCards() {
+        theFullDeckOfAllMovementCards = new ArrayList<>();
+
+        // Rotate cards
+        // Left rotation, right rotation, forward movement 1
+        int priorityForLeft = 80;
+        int priorityForRight = 70;
+        int priorityForMovementForward = 490;
+        for (int i = 0; i < 18; i++) {
+            theFullDeckOfAllMovementCards.add(new MovementCard(Directions.LEFT, 0,  priorityForLeft));
+            theFullDeckOfAllMovementCards.add(new MovementCard(Directions.RIGHT, 0,  priorityForRight));
+            theFullDeckOfAllMovementCards.add(new MovementCard(Directions.NODIRECTION, 1, priorityForMovementForward));
+            priorityForLeft += 20;
+            priorityForRight += 20;
+            priorityForMovementForward += 20;
+        }
+
+        // Movement forward 2
+        priorityForMovementForward = 670;
+        for (int i = 0; i < 12; i++) {
+            theFullDeckOfAllMovementCards.add(new MovementCard(Directions.NODIRECTION, 2, priorityForMovementForward));
+            priorityForMovementForward += 20;
+        }
+
+        // Movement forward 3, movement backwards 1 & 180 turn
+        priorityForMovementForward = 790;
+        int priorityForMovementBackwards = 430;
+        int priorityFor180Turn = 10;
+        for (int i = 0; i < 6; i++) {
+            theFullDeckOfAllMovementCards.add(new MovementCard(Directions.NODIRECTION, 3, priorityForMovementForward));
+            theFullDeckOfAllMovementCards.add(new MovementCard(Directions.DOWN, 0, priorityFor180Turn));
+            theFullDeckOfAllMovementCards.add(new MovementCard(Directions.DOWN, 1, priorityForMovementBackwards));
+            priorityForMovementForward += 10;
+            priorityFor180Turn += 10;
+            priorityForMovementBackwards += 10;
+        }
     }
 
     private void addPlayers() {
@@ -155,10 +191,10 @@ public class Game {
     }
 
     private void dealOutMovementCards() {
-        ArrayList<MovementCard> copy = new ArrayList<>(this.theFullDeckOfAllMovementCards);
+        ArrayList<MovementCard> copy = new ArrayList<>(theFullDeckOfAllMovementCards);
         Collections.shuffle(copy);
         for (int i = 0; i < players.size(); i++) {
-            // TODO Make it take a part of the list instead of induvidual cards
+            // TODO Make it take a part of the list instead of individual cards
             for (int j = 0; j < players.get(i).memoryCapacityForThisPlayer(); j++) {
                 players.get(i).giveMovementCardsToThePlayer(copy.get(j));
             }

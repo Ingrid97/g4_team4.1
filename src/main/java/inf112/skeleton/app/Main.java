@@ -12,5 +12,6 @@ public class Main {
         cfg.height = 640;
 
         new LwjglApplication(new MapGUI(), cfg);
+
     }
 }

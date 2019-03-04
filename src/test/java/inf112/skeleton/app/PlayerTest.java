@@ -1,3 +1,4 @@
+/* ----------------------------------
 package inf112.skeleton.app;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
@@ -11,7 +12,7 @@ import static org.junit.Assert.*;
 
 /* Test for player */
 
-
+/*
 public class PlayerTest {
     private MapGUI map;
     private static Wall wallsOnTheMap;
@@ -114,3 +115,4 @@ public class PlayerTest {
 
 
 }
+*/
