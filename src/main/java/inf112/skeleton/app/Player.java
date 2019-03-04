@@ -31,6 +31,7 @@ public class Player implements KeyListener {
         /*
          * Metode for å vise & velge kortene du kan velge mellom
          * Returnere disse kortene i rekkefølge
+         * Legg de til i theProgramForTheRobotToExecute
          */
 
         return null;
