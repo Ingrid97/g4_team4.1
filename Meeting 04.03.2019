@@ -1,0 +1,19 @@
+Meeting 4 of march 2019
+Attendance: Brede, Faltin, Sandra and Ingrid
+Written by: Sandra
+
+We started of the meeting by orientating each other about what we have been doing in the code until this meeting. Afterwards we discussed how we should be able to structure our code better as many of the classes we made has not fulfilled its given purpose, for example as the map is supposed to correlate with player and robot but it is not at the given moment. 
+Another problem we need to solve is related to our game engine. All of the group members need to shift from Lwjgl Application Configuration to Libgdx as we are required to do. 
+
+The map was originally made to show the demo of how we wanted the game to look. As a result, we made a map that took an image and moved it rather than making a map that takes the robot object to a given position. Therefore we need to change the basic structures of the map in order to make the game work. In other words, we have a lot of things to do before Friday. 
+ 
+ During this meeting we also argued rather we needed multiple separate branches rather than letting everyone push to one master branch. We concluded that this will in the long run make it more difficult as it may prevent people from committing what they have worked on that branch to the master branch. That may result in people working on the same things and pushing them to the master branch at the same time. We will work on other branches if needed for a big commit that can effect the functionality of game. 
+We also talked about the how we need to make a more structural class diagram for out project. As for now it is not as easy to understand and structural as we would like.
+At the end of out meeting we needed to give everyone something to work on. 
+
+We divided the work like this:
+Magnus – Should think of some other interfaces we may need in the game as well as adding to the class diagram
+Brede – Making more test that will give our project more “testing dept” 
+Sandra – Making test for player and maybe add some other features to the game
+Ingrid – Work on the map and help everyone with the changing in game engine
+ 
