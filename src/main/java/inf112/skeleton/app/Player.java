@@ -1,12 +1,10 @@
 package inf112.skeleton.app;
 
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 
 public class Player implements KeyListener {
@@ -22,6 +20,7 @@ public class Player implements KeyListener {
         this.flagsWhichHasBeenVisited = new boolean[numberOfFlags];
         this.theProgramForTheRobotToExecute = new ArrayList<>();
         this.robot = robot;
+        theCardsToChooseYourProgramFrom = new ArrayList<>();
     }
 
     public void giveMovementCardsToThePlayer(MovementCard card) {
@@ -35,39 +34,25 @@ public class Player implements KeyListener {
             System.out.println(theCardsToChooseYourProgramFrom.get(i).toString());
         }
         ArrayList<MovementCard> programForRobotToExecute = new ArrayList<>();
-        while (!Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
-            if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_1)) {
-                programForRobotToExecute.add(theCardsToChooseYourProgramFrom.get(1 - 1));
+        System.out.println("write down your program with number and no spaces, to be executed from left to right, and press enter");
+        Scanner sc = new Scanner(System.in);
+        ArrayList<Integer> arr = new ArrayList<Integer>();
+        boolean notDone = false;
+        System.out.println("choose your movementcards by typing the number of the card you would like to use first, then press enter ");
+        System.out.println("When you are finished write a number greater then 100");
+        while (!notDone) {
+            if (sc.hasNextInt()) {
+                int number = sc.nextInt();
+                if (number > 100) {
+                    notDone = true;
+                } else {
+                    programForRobotToExecute.add(theCardsToChooseYourProgramFrom.get(number - 1));
+                }
             }
-            if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_2)) {
-                programForRobotToExecute.add(theCardsToChooseYourProgramFrom.get(2 - 1));
-            }
-            if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_3)) {
-                programForRobotToExecute.add(theCardsToChooseYourProgramFrom.get(3 - 1));
-            }
-            if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_4)) {
-                programForRobotToExecute.add(theCardsToChooseYourProgramFrom.get(4 - 1));
-            }
-            if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_5)) {
-                programForRobotToExecute.add(theCardsToChooseYourProgramFrom.get(5 - 1));
-            }
-            if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_6)) {
-                programForRobotToExecute.add(theCardsToChooseYourProgramFrom.get(6 - 1));
-            }
-            if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_7)) {
-                programForRobotToExecute.add(theCardsToChooseYourProgramFrom.get(7 - 1));
-            }
-            if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_8)) {
-                programForRobotToExecute.add(theCardsToChooseYourProgramFrom.get(8 - 1));
-            }
-            if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_9)) {
-                programForRobotToExecute.add(theCardsToChooseYourProgramFrom.get(9 - 1));
-            }
-            if (Gdx.input.isKeyJustPressed(Input.Keys.BACKSPACE)) {
-                programForRobotToExecute.remove(programForRobotToExecute.size());
-            }
-            for (int i = 0; i < theProgramForTheRobotToExecute.size(); i++) {
-                System.out.println(theProgramForTheRobotToExecute.get(i).toString());
+
+            for (int i = 0; i < programForRobotToExecute.size(); i++) {
+                System.out.println("your choises so far:");
+                System.out.println(programForRobotToExecute.get(i).toString());
             }
         }
 

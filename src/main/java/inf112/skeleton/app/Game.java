@@ -1,5 +1,8 @@
 package inf112.skeleton.app;//Created by ingridjohansen on 04/02/2019.
 
+import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
+import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -8,25 +11,39 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class Game {
-    private ArrayList<Player> players;
+    private static ArrayList<Player> players;
     private static ArrayList<MovementCard> theFullDeckOfAllMovementCards;
+    private static boolean gameOver;
 
 
-    public static Map playGame() {
-        // Lage alle kortene
+    public static void playGame() {
+        // Lager alle kortene
         setUpTheFullDeckOfCards();
 
-        //les inn map fra fil
+        //leser inn map fra fil
         Map map = makeMap("testMap1.txt");
         if (map == null)
             System.exit(0);
 
+        LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
+        cfg.title = "Robo Rally";
+        cfg.width = 640;
+        cfg.height = 640;
+        new LwjglApplication(new MapGUI(map), cfg);//instantiating MapGUI and updating the map it prints
 
-        //for testing
-        printMap(map);
+        players = new ArrayList<>();
+        gameOver = true;
+        Player player1 = new Player(0, (Robot) map.getBoardObject(0, 0));
+        setUpTheFullDeckOfCards();
+        addPlayers();
+        dealOutMovementCards();
+        while (gameOver) {
+            players.get(0).theMovementCardsThePlayerChose();
+        }
 
-        return map;
+
     }
+
 
 
     public static void printMap(Map map){
@@ -184,13 +201,13 @@ public class Game {
         }
     }
 
-    private void addPlayers() {
+    private static void addPlayers() {
         // Random player
         int numberOfFlags = 3;
-        this.players.add(new Player(numberOfFlags, new Robot(2, 3, Directions.UP)));
+        players.add(new Player(numberOfFlags, new Robot(2, 3, Directions.UP)));
     }
 
-    private void dealOutMovementCards() {
+    private static void dealOutMovementCards() {
         ArrayList<MovementCard> copy = new ArrayList<>(theFullDeckOfAllMovementCards);
         Collections.shuffle(copy);
         for (int i = 0; i < players.size(); i++) {

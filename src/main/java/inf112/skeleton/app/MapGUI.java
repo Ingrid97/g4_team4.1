@@ -11,8 +11,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 
-import static inf112.skeleton.app.Game.playGame;
-
 public class MapGUI extends ApplicationAdapter {
 
     private Texture robotImage, voidImage, yellowConveyor_beltImage, blueConveyor_beltImage, laserImage, wrenchImage, wrench_hammer, rotatin_plateImage, flagImage, nothingImage;
@@ -23,14 +21,15 @@ public class MapGUI extends ApplicationAdapter {
     private OrthographicCamera camera;
     private Rectangle[][] tile;
     private Rectangle robot;
-
     public static Map map;
+
+    public MapGUI(Map map) {
+        MapGUI.map = map;
+    }
 
     @Override
     public void create() {
 
-
-        map = playGame();
 
         // load the images for the objects on the map, 64x64 pixels each
         /*robotImage = getImage("wall_e.png");
