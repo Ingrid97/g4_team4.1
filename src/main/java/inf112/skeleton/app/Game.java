@@ -53,7 +53,6 @@ public class Game {
             for (int i = 0; i < numberOfPlayers; i++) {
                 listOfPrioritizedListsOfMovementCardsFromPlayers.get(i).get(j);
             }
-
         }
 
 
