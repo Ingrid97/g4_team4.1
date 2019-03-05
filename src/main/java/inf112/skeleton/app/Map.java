@@ -39,7 +39,10 @@ public class Map {
 
     //test
     IBoardObject getBoardObject(Position position) {
-        return (IBoardObject) map[position.getX()][position.getY()].get(0);
+        if (isValidPosition(position)) {
+            return (IBoardObject) map[position.getX()][position.getY()].get(0);
+        }
+        return null;
     }
 
     public ArrayList[][] getMap() {
@@ -57,6 +60,11 @@ public class Map {
     }
 
     public boolean isValidPosition(Position position) {
-        return position.getY() >= 0 && position.getX() >= 0 && position.getX() <= getX() && position.getY() <= getY();
+        return (position.getY() >= 0 || position.getX() >= 0 || position.getX() <= getX() || position.getY() <= getY());
+    }
+
+    public void moveRobot(Robot robot, Position newPosition) {
+        map[robot.getPosition().getX()][robot.getPosition().getY()].remove(robot);
+        map[newPosition.getX()][newPosition.getY()].add(robot);
     }
 }

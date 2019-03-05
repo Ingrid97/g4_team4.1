@@ -30,20 +30,19 @@ public class Player implements KeyListener {
     // TODO! Choosing the cards as a player
     public ArrayList<MovementCard> theMovementCardsThePlayerChose() {
         for (int i = 0; i < theCardsToChooseYourProgramFrom.size(); i++) {
+            System.out.println();
             System.out.println("Alt" + (i + 1));
             System.out.println(theCardsToChooseYourProgramFrom.get(i).toString());
         }
         ArrayList<MovementCard> programForRobotToExecute = new ArrayList<>();
-        System.out.println("write down your program with number and no spaces, to be executed from left to right, and press enter");
         Scanner sc = new Scanner(System.in);
-        ArrayList<Integer> arr = new ArrayList<Integer>();
         boolean notDone = false;
-        System.out.println("choose your movementcards by typing the number of the card you would like to use first, then press enter ");
-        System.out.println("When you are finished write a number greater then 100");
+        System.out.println("choose your movement cards by typing the number of the card you would like to use first, then press enter ");
+        System.out.println("When you are finished write a number greater then 10");
         while (!notDone) {
             if (sc.hasNextInt()) {
                 int number = sc.nextInt();
-                if (number > 100) {
+                if (number > 10) {
                     notDone = true;
                 } else {
                     programForRobotToExecute.add(theCardsToChooseYourProgramFrom.get(number - 1));
@@ -53,10 +52,12 @@ public class Player implements KeyListener {
             for (int i = 0; i < programForRobotToExecute.size(); i++) {
                 System.out.println("your choises so far:");
                 System.out.println(programForRobotToExecute.get(i).toString());
+
             }
+            System.out.println();
         }
 
-        return theProgramForTheRobotToExecute;
+        return programForRobotToExecute;
     }
 
     public int memoryCapacityForThisPlayer() {

@@ -27,6 +27,10 @@ public class MapGUI extends ApplicationAdapter {
         MapGUI.map = map;
     }
 
+    public void updateMap(Map map) {
+        MapGUI.map = map;
+    }
+
     @Override
     public void create() {
 

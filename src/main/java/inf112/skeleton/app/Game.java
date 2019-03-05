@@ -28,6 +28,7 @@ public class Game {
         robotPositions = new int[4][2];
         numberOfRobots = 0;
         numberOfPlayers = 0;
+        players = new ArrayList<>();
         map = makeMap("testMap1.txt");
         if (map == null)
             System.exit(0);
@@ -36,12 +37,13 @@ public class Game {
         cfg.title = "Robo Rally";
         cfg.width = 640;
         cfg.height = 640;
-        new LwjglApplication(new MapGUI(map), cfg);//instantiating MapGUI and updating the map it prints
+        MapGUI mapGUI = new MapGUI(map);
+        new LwjglApplication(mapGUI, cfg);//instantiating MapGUI and updating the map it prints
 
-        players = new ArrayList<>();
         gameOver = true;
         setUpTheFullDeckOfCards();
         dealOutMovementCards();
+        printMap(map);
         while (gameOver) {
             ArrayList<ArrayList> listOfPrioritizedListsOfMovementCardsFromPlayers = new ArrayList<>();
             for (int i = 0; i < players.size(); i++) {
@@ -49,9 +51,12 @@ public class Game {
                 movementCardsToBeExecuted = players.get(i).theMovementCardsThePlayerChose();
                 listOfPrioritizedListsOfMovementCardsFromPlayers.add(movementCardsToBeExecuted);
             }
-            int j = 0;
-            for (int i = 0; i < numberOfPlayers; i++) {
-                listOfPrioritizedListsOfMovementCardsFromPlayers.get(i).get(j);
+            for (int j = 0; j < 3; j++) {
+                for (int i = 0; i < players.size(); i++) {
+                    playMovementCard((MovementCard) listOfPrioritizedListsOfMovementCardsFromPlayers.get(i).get(j), players.get(i));
+                    mapGUI.updateMap(map);
+                }
+                printMap(map);
             }
         }
 
@@ -61,30 +66,34 @@ public class Game {
 
     public static void playMovementCard(MovementCard movCard, Player player) {
         Position currentPos = player.getRobot().getPosition();
-        if (movCard.getNumberOfSteps() != 0 && movCard.getDirection() == Directions.NODIRECTION) {
-            Position newPos;
+        Position newPos = new Position(1000, 1000);
             if (movCard.getDirection() == Directions.NODIRECTION) {
-                newPos = new Position(currentPos.getX(), (currentPos.getY() + movCard.getNumberOfSteps()));
+                try {
+                    newPos = new Position(currentPos.getX(), (currentPos.getY() + movCard.getNumberOfSteps()));
+                } catch (IllegalArgumentException e) {
+                    System.out.println("A robot has fallen");
+                }
             } else if (movCard.getDirection() == Directions.DOWN) {
-                newPos = new Position(currentPos.getX(), (currentPos.getY() - movCard.getNumberOfSteps()));
+                try {
+                    newPos = new Position(currentPos.getX(), (currentPos.getY() - movCard.getNumberOfSteps()));
+                } catch (IllegalArgumentException e) {
+                    System.out.println("A robot has fallen");
+                }
             } else {
                 player.getRobot().setDirection(movCard.getDirection());
                 newPos = currentPos;
             }
             if (legalPosition(newPos)) {
-                //MOVE THE PIECES
+                map.moveRobot(player.getRobot(), newPos);
             }
-
-        }
-
     }
 
     public static boolean legalPosition(Position position) {
-        if (map.getBoardObject(position) instanceof Wall) {
+        if (map.isValidPosition(position)) {
             return false;
         } else if (map.getBoardObject(position) instanceof Robot) {
             return false;
-        } else return !map.isValidPosition(position);
+        } else return !(map.getBoardObject(position) instanceof Wall);
     }
 
 
