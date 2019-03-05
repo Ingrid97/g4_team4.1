@@ -151,6 +151,11 @@ public class Game {
                        map.add(new Robot(i, j, Directions.UP), i, j);
                         robotPositions[numberOfRobots][0] = i;
                         robotPositions[numberOfRobots][1] = j;
+                        if (numberOfRobots < 4) {
+                            if (numberOfRobots != 4) {
+                                numberOfRobots++;
+                            }
+                        }
                     } else if  (lines[j+1] == 'v'){
                         map.add(new Void(i, j), i, j);
                     } else if  (lines[j+1] == 'l'){
