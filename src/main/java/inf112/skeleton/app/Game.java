@@ -49,8 +49,6 @@ public class Game {
                 movementCardsToBeExecuted = players.get(i).theMovementCardsThePlayerChose();
                 listOfPrioritizedListsOfMovementCardsFromPlayers.add(movementCardsToBeExecuted);
             }
-            //har nå to en liste med lister av programkort som skal utføres i rekkefølge, neste steg er å finne ut hvilken robot/player som skal beveges osv.
-
             int j = 0;
             for (int i = 0; i < numberOfPlayers; i++) {
                 listOfPrioritizedListsOfMovementCardsFromPlayers.get(i).get(j);
@@ -72,14 +70,22 @@ public class Game {
                 newPos = new Position(currentPos.getX(), (currentPos.getY() - movCard.getNumberOfSteps()));
             } else {
                 player.getRobot().setDirection(movCard.getDirection());
+                newPos = currentPos;
             }
+            if (legalPosition(newPos)) {
+                //MOVE THE PIECES
+            }
+
         }
 
     }
 
     public static boolean legalPosition(Position position) {
-
-        return false;
+        if (map.getBoardObject(position) instanceof Wall) {
+            return false;
+        } else if (map.getBoardObject(position) instanceof Robot) {
+            return false;
+        } else return !map.isValidPosition(position);
     }
 
 
@@ -88,23 +94,23 @@ public class Game {
         //TODO: make switch and fix GUI stuffs
         for (int i = 0; i < map.getX(); i++) {
             for (int j = 0; j < map.getY(); j++) {
-                if (map.getBoardObject(i, j) instanceof Wall) {
+                if (map.getBoardObject(new Position(i, j)) instanceof Wall) {
                     System.out.print('*');
-                } else if (map.getBoardObject(i, j) instanceof Robot) {
+                } else if (map.getBoardObject(new Position(i, j)) instanceof Robot) {
                     System.out.print('r');
-                } else if (map.getBoardObject(i, j) instanceof Void) {
+                } else if (map.getBoardObject(new Position(i, j)) instanceof Void) {
                     System.out.print('v');
-                } else if (map.getBoardObject(i, j) instanceof Laser) {
+                } else if (map.getBoardObject(new Position(i, j)) instanceof Laser) {
                     System.out.print('l');
-                } else if (map.getBoardObject(i, j) instanceof Conveyor_belt) {
+                } else if (map.getBoardObject(new Position(i, j)) instanceof Conveyor_belt) {
                     System.out.print('b');
-                } else if (map.getBoardObject(i, j) instanceof Wrench) {
+                } else if (map.getBoardObject(new Position(i, j)) instanceof Wrench) {
                     System.out.print('s');
-                } else if (map.getBoardObject(i, j) instanceof Wrench_hammer) {
+                } else if (map.getBoardObject(new Position(i, j)) instanceof Wrench_hammer) {
                     System.out.print('h');
-                } else if (map.getBoardObject(i, j) instanceof Flag) {
+                } else if (map.getBoardObject(new Position(i, j)) instanceof Flag) {
                     System.out.print('f');
-                } else if (map.getBoardObject(i, j) instanceof Rotating_belt) {
+                } else if (map.getBoardObject(new Position(i, j)) instanceof Rotating_belt) {
                     System.out.print('p');
                 } else {
                     System.out.print(' ');

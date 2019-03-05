@@ -108,23 +108,23 @@ public class Player implements KeyListener {
 
 
         if (dir == Directions.UP) {
-            if (map.getBoardObject(getX(), getY() + 1) instanceof Wall) {
+            if (map.getBoardObject(new Position(getX(), getY() + 1)) instanceof Wall) {
             }
             return false;
 
         } else if (dir == Directions.DOWN) {
-            if (map.getBoardObject(getX(), getY() - 1) instanceof Wall) {
+            if (map.getBoardObject(new Position(getX(), getY() - 1)) instanceof Wall) {
 
             }
             return false;
         } else if (dir == Directions.RIGHT) {
-            if (map.getBoardObject(getX() + 1, getY()) instanceof Wall) {
+            if (map.getBoardObject(new Position(getX() + 1, getY())) instanceof Wall) {
 
 
             }
             return false;
         } else if (dir == Directions.LEFT) {
-            return !(map.getBoardObject(getX() - 1, getY()) instanceof Wall);
+            return !(map.getBoardObject(new Position(getX() - 1, getY())) instanceof Wall);
         }
 
 

@@ -105,25 +105,25 @@ public class MapGUI extends ApplicationAdapter {
         //TODO: make switch
         for (int i = 0,x = 0; i < 10; i++, x++) {
             for (int j = 0, y = 9; j < 10; j++, y--) {
-                if (map.getBoardObject(y, x) instanceof Robot){
+                if (map.getBoardObject(new Position(i, j)) instanceof Robot) {
                     batch.draw(robotImage, tile[i][j].x, tile[i][j].y);
-                } else if (map.getBoardObject(y, x) instanceof Void){
+                } else if (map.getBoardObject(new Position(i, j)) instanceof Void) {
                     batch.draw(voidImage, tile[i][j].x, tile[i][j].y);
-                } else if (map.getBoardObject(y, x) instanceof Laser){
+                } else if (map.getBoardObject(new Position(i, j)) instanceof Laser) {
                     batch.draw(laserImage, tile[i][j].x, tile[i][j].y);
-                } else if (map.getBoardObject(y, x) instanceof Conveyor_belt){
-                    Conveyor_belt c = (Conveyor_belt) map.getBoardObject(y, x);
+                } else if (map.getBoardObject(new Position(i, j)) instanceof Conveyor_belt) {
+                    Conveyor_belt c = (Conveyor_belt) map.getBoardObject(new Position(i, j));
                     if (c.isBlueBelt)
                         batch.draw(blueConveyor_beltImage, tile[i][j].x, tile[i][j].y);
                     else
                         batch.draw(yellowConveyor_beltImage, tile[i][j].x, tile[i][j].y);
-                } else if (map.getBoardObject(y, x) instanceof Wrench){
+                } else if (map.getBoardObject(new Position(i, j)) instanceof Wrench) {
                     batch.draw(wrenchImage, tile[i][j].x, tile[i][j].y);
-                } else if (map.getBoardObject(y, x) instanceof Wrench_hammer){
+                } else if (map.getBoardObject(new Position(i, j)) instanceof Wrench_hammer) {
                     batch.draw(wrench_hammer, tile[i][j].x, tile[i][j].y);
-                } else if (map.getBoardObject(y, x) instanceof Flag){
+                } else if (map.getBoardObject(new Position(i, j)) instanceof Flag) {
                     batch.draw(flagImage, tile[i][j].x, tile[i][j].y);
-                } else if (map.getBoardObject(y, x) instanceof Rotating_belt){
+                } else if (map.getBoardObject(new Position(i, j)) instanceof Rotating_belt) {
                     batch.draw(rotatin_plateImage, tile[i][j].x, tile[i][j].y);
                 } else {
                     batch.draw(nothingImage, tile[i][j].x, tile[i][j].y);

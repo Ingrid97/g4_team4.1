@@ -38,8 +38,8 @@ public class Map {
     }
 
     //test
-    IBoardObject getBoardObject(int x, int y){
-        return (IBoardObject) map[x][y].get(0);
+    IBoardObject getBoardObject(Position position) {
+        return (IBoardObject) map[position.getX()][position.getY()].get(0);
     }
 
     public ArrayList[][] getMap() {
@@ -54,5 +54,9 @@ public class Map {
 
     public boolean isEmpty(int x, int y) {
         return map[x][y].contains(null);
+    }
+
+    public boolean isValidPosition(Position position) {
+        return position.getY() >= 0 && position.getX() >= 0 && position.getX() <= getX() && position.getY() <= getY();
     }
 }
