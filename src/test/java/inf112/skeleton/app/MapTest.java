@@ -2,6 +2,8 @@ package inf112.skeleton.app;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.Assert.*;
 
 /**
@@ -90,7 +92,7 @@ public class MapTest {
     public void allSquaresInGetMapEqualsSquaresInOriginal() {
         Map map = build(10, 10);
         map = addRobotToAllSquaresOnTheMap(map);
-        IBoardObject[][] copyOfMap = map.getMap();
+        ArrayList[][] copyOfMap = map.getMap();
         for (int x = 0; x < 10; x++) {
             for (int y = 0; y < 10; y++) {
                 assertEquals(map.getBoardObject(x, y), copyOfMap[x][y]);
