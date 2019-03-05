@@ -24,6 +24,8 @@ public class Game {
         // Lager alle kortene
         setUpTheFullDeckOfCards();
 
+        players = new ArrayList<>();
+
         //leser inn map fra fil
         robotPositions = new int[4][2];
         numberOfRobots = 0;
