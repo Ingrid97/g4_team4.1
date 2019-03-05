@@ -34,7 +34,7 @@ public class Position {
      * @param another
      * @return dist
      */
-    public int distantTo(Position another){
+    public int distansTo(Position another) {
         return Math.abs(this.x - another.x) + Math.abs(this.y - another.y);
     }
 

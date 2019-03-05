@@ -17,6 +17,7 @@ public class Game {
     public static int[][] robotPositions;
     public static int numberOfRobots;
     private static int numberOfPlayers;
+    private static Map map;
 
 
     public static void playGame() {
@@ -27,7 +28,7 @@ public class Game {
         robotPositions = new int[4][2];
         numberOfRobots = 0;
         numberOfPlayers = 0;
-        Map map = makeMap("testMap1.txt");
+        map = makeMap("testMap1.txt");
         if (map == null)
             System.exit(0);
 
@@ -39,26 +40,21 @@ public class Game {
 
         players = new ArrayList<>();
         gameOver = true;
-        Player player1 = new Player(0, (Robot) map.getBoardObject(robotPositions[0][0], robotPositions[0][1]));
         setUpTheFullDeckOfCards();
-        addPlayers();
-        addPlayers();
         dealOutMovementCards();
         while (gameOver) {
-            ArrayList<ArrayList> listOfListsToBe = new ArrayList<>();
+            ArrayList<ArrayList> listOfPrioritizedListsOfMovementCardsFromPlayers = new ArrayList<>();
             for (int i = 0; i < players.size(); i++) {
                 ArrayList<MovementCard> movementCardsToBeExecuted = new ArrayList<>();
                 movementCardsToBeExecuted = players.get(i).theMovementCardsThePlayerChose();
-                listOfListsToBe.add(movementCardsToBeExecuted);
+                listOfPrioritizedListsOfMovementCardsFromPlayers.add(movementCardsToBeExecuted);
             }
             //har nå to en liste med lister av programkort som skal utføres i rekkefølge, neste steg er å finne ut hvilken robot/player som skal beveges osv.
 
-
-//
-//            int j = 0;
-//            for (int i = 0; i < numberOfPlayers; i++) {
-//                listOfListsToBe.get(i).get(j);
-//            }
+            int j = 0;
+            for (int i = 0; i < numberOfPlayers; i++) {
+                listOfPrioritizedListsOfMovementCardsFromPlayers.get(i).get(j);
+            }
 
         }
 
@@ -66,6 +62,25 @@ public class Game {
     }
 
 
+    public static void playMovementCard(MovementCard movCard, Player player) {
+        Position currentPos = player.getRobot().getPosition();
+        if (movCard.getNumberOfSteps() != 0 && movCard.getDirection() == Directions.NODIRECTION) {
+            Position newPos;
+            if (movCard.getDirection() == Directions.NODIRECTION) {
+                newPos = new Position(currentPos.getX(), (currentPos.getY() + movCard.getNumberOfSteps()));
+            } else if (movCard.getDirection() == Directions.DOWN) {
+                newPos = new Position(currentPos.getX(), (currentPos.getY() - movCard.getNumberOfSteps()));
+            } else {
+                player.getRobot().setDirection(movCard.getDirection());
+            }
+        }
+
+    }
+
+    public static boolean legalPosition(Position position) {
+
+        return false;
+    }
 
 
     public static void printMap(Map map){
@@ -148,14 +163,9 @@ public class Game {
                     if (lines[j+1] == '*'){
                         map.add(new Wall(i, j), i, j);
                     } else if (lines[j+1] == 'r'){
-                       map.add(new Robot(i, j, Directions.UP), i, j);
-                        robotPositions[numberOfRobots][0] = i;
-                        robotPositions[numberOfRobots][1] = j;
-                        if (numberOfRobots < 4) {
-                            if (numberOfRobots != 4) {
-                                numberOfRobots++;
-                            }
-                        }
+                        Player player = new Player(0, new Robot(i, j, Directions.UP));
+                        players.add(player);
+                        map.add(player.getRobot(), i, j);
                     } else if  (lines[j+1] == 'v'){
                         map.add(new Void(i, j), i, j);
                     } else if  (lines[j+1] == 'l'){
@@ -227,14 +237,6 @@ public class Game {
             priorityFor180Turn += 10;
             priorityForMovementBackwards += 10;
         }
-    }
-
-    private static void addPlayers() {
-        // Random player
-        int numberOfFlags = 0;
-        numberOfPlayers++;
-        numberOfRobots--;
-        players.add(new Player(numberOfFlags, new Robot(robotPositions[numberOfRobots][0], robotPositions[numberOfRobots][1], Directions.UP)));
     }
 
     private static void dealOutMovementCards() {

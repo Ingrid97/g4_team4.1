@@ -142,6 +142,10 @@ public class Player implements KeyListener {
         return robot.getY();
     }
 
+    public Robot getRobot() {
+        return robot;
+    }
+
 }
 
 
