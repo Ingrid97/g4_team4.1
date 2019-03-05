@@ -24,6 +24,8 @@ public class Game {
         // Lager alle kortene
         setUpTheFullDeckOfCards();
 
+        players = new ArrayList<>();
+
         //leser inn map fra fil
         robotPositions = new int[4][2];
         numberOfRobots = 0;
@@ -38,7 +40,6 @@ public class Game {
         cfg.height = 640;
         new LwjglApplication(new MapGUI(map), cfg);//instantiating MapGUI and updating the map it prints
 
-        players = new ArrayList<>();
         gameOver = true;
         setUpTheFullDeckOfCards();
         dealOutMovementCards();
