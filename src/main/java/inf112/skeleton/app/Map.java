@@ -59,6 +59,7 @@ public class Map {
         return map[x][y].contains(null);
     }
 
+
     public boolean isValidPosition(Position position) {
         return (position.getY() >= 0 || position.getX() >= 0 || position.getX() <= getX() || position.getY() <= getY());
     }
