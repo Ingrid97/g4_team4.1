@@ -11,6 +11,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 
+import java.util.ArrayList;
+
 public class MapGUI extends ApplicationAdapter {
 
     private Texture robotImage, voidImage, yellowConveyor_beltImage, blueConveyor_beltImage, laserImage, wrenchImage, wrench_hammer, rotatin_plateImage, flagImage, nothingImage;
@@ -22,9 +24,11 @@ public class MapGUI extends ApplicationAdapter {
     private Rectangle[][] tile;
     private Rectangle robot;
     public static Map map;
+    public ArrayList<Player> listOfPLayers;
 
-    public MapGUI(Map map) {
+    public MapGUI(Map map, ArrayList<Player> listOfPLayers) {
         MapGUI.map = map;
+        this.listOfPLayers = listOfPLayers;
     }
 
     public void updateMap(Map map) {
@@ -47,7 +51,7 @@ public class MapGUI extends ApplicationAdapter {
         flagImage = getImage("flag.png");
         nothingImage = getImage("nothing.png");*/
 
-        //Testinf with other picture
+        //Testing with other picture
         robotImage = getImage("r.png");
         voidImage = getImage("v.png");
         yellowConveyor_beltImage = getImage("y.png");
@@ -140,10 +144,10 @@ public class MapGUI extends ApplicationAdapter {
         batch.end();
 
         //stuff for moving
-        if(Gdx.input.isKeyJustPressed(Input.Keys.UP)) robot.y += 64;
-        if(Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) robot.y -= 64;
-        if(Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) robot.x -= 64;
-        if(Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) robot.x += 64;
+        if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) robot.y += 64;
+        if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) robot.y -= 64;
+        if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) robot.x -= 64;
+        if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) robot.x += 64;
 
 
     }

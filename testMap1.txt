@@ -9,7 +9,7 @@
 *  b hh yyy*
 * bpf   y  *
 * s  vv ys *
-*      y v*
+*r     y v *
 ************
 
 Symbols on the bord

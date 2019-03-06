@@ -27,7 +27,6 @@ public class Player implements KeyListener {
         this.theCardsToChooseYourProgramFrom.add(card);
     }
 
-    // TODO! Choosing the cards as a player
     public ArrayList<MovementCard> theMovementCardsThePlayerChose() {
         for (int i = 0; i < theCardsToChooseYourProgramFrom.size(); i++) {
             System.out.println();

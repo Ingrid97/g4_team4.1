@@ -1,12 +1,6 @@
 package inf112.skeleton.app;
 
 import org.junit.Before;
-import org.junit.Test;
-
-import java.awt.event.KeyEvent;
-
-import static inf112.skeleton.app.MapGUI.map;
-import static org.junit.Assert.*;
 
 /* Test for player */
 
@@ -22,7 +16,7 @@ public class PlayerTest {
         map = new Map(10, 20);
         return map;
     }
-
+/*
 
     @Test
 
@@ -131,12 +125,12 @@ public class PlayerTest {
 
         //TODO make the method and then make the test
 
-        public void testMemoryCapacityForThisPlayer () {
+        public void testMemoryCapacityForThisPlayer() {
 
         }
 
 
     }
    
-
+*/
 }

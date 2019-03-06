@@ -39,26 +39,28 @@ public class Game {
         cfg.title = "Robo Rally";
         cfg.width = 640;
         cfg.height = 640;
-        MapGUI mapGUI = new MapGUI(map);
+        MapGUI mapGUI = new MapGUI(map, players);
         new LwjglApplication(mapGUI, cfg);//instantiating MapGUI and updating the map it prints
 
         gameOver = true;
         setUpTheFullDeckOfCards();
         dealOutMovementCards();
-        printMap(map);
         while (gameOver) {
+            //getting movement cars from player/s
             ArrayList<ArrayList> listOfPrioritizedListsOfMovementCardsFromPlayers = new ArrayList<>();
             for (int i = 0; i < players.size(); i++) {
-                ArrayList<MovementCard> movementCardsToBeExecuted = new ArrayList<>();
+                ArrayList<MovementCard> movementCardsToBeExecuted;
                 movementCardsToBeExecuted = players.get(i).theMovementCardsThePlayerChose();
                 listOfPrioritizedListsOfMovementCardsFromPlayers.add(movementCardsToBeExecuted);
             }
+
+            //playing movement cards from players
             for (int j = 0; j < 3; j++) {
                 for (int i = 0; i < players.size(); i++) {
                     playMovementCard((MovementCard) listOfPrioritizedListsOfMovementCardsFromPlayers.get(i).get(j), players.get(i));
                     mapGUI.updateMap(map);
                 }
-                printMap(map);
+                //printMap(map);
             }
         }
 
@@ -71,27 +73,72 @@ public class Game {
         Position newPos = new Position(1000, 1000);
             if (movCard.getDirection() == Directions.NODIRECTION) {
                 try {
-                    newPos = new Position(currentPos.getX(), (currentPos.getY() + movCard.getNumberOfSteps()));
+                    for (int i = 0; i < movCard.getNumberOfSteps(); i++) {
+                        newPos = new Position(currentPos.getX(), (currentPos.getY() + 1));
+                        if (!legalPosition(newPos)) break;
+                    }
                 } catch (IllegalArgumentException e) {
                     System.out.println("A robot has fallen");
                 }
             } else if (movCard.getDirection() == Directions.DOWN) {
                 try {
-                    newPos = new Position(currentPos.getX(), (currentPos.getY() - movCard.getNumberOfSteps()));
+                    if (movCard.getNumberOfSteps() == 1) {
+                        newPos = new Position(currentPos.getX(), (currentPos.getY() - 1));
+                    } else {
+                        Directions direction = player.getRobot().getDirection();
+                        newPos = currentPos;
+                        switch (direction) {
+                            case UP:
+                                player.getRobot().setDirection(Directions.DOWN);
+                            case RIGHT:
+                                player.getRobot().setDirection(Directions.LEFT);
+                            case LEFT:
+                                player.getRobot().setDirection(Directions.RIGHT);
+                            case DOWN:
+                                player.getRobot().setDirection(Directions.UP);
+                        }
+                    }
                 } catch (IllegalArgumentException e) {
                     System.out.println("A robot has fallen");
                 }
-            } else {
-                player.getRobot().setDirection(movCard.getDirection());
+            } else if (movCard.getDirection() == Directions.LEFT) {
                 newPos = currentPos;
+                Directions direction = player.getRobot().getDirection();
+                newPos = currentPos;
+                switch (direction) {
+                    case UP:
+                        player.getRobot().setDirection(Directions.LEFT);
+                    case RIGHT:
+                        player.getRobot().setDirection(Directions.UP);
+                    case LEFT:
+                        player.getRobot().setDirection(Directions.DOWN);
+                    case DOWN:
+                        player.getRobot().setDirection(Directions.RIGHT);
+                }
+            } else {
+                newPos = currentPos;
+                Directions direction = player.getRobot().getDirection();
+                newPos = currentPos;
+                switch (direction) {
+                    case UP:
+                        player.getRobot().setDirection(Directions.RIGHT);
+                    case RIGHT:
+                        player.getRobot().setDirection(Directions.DOWN);
+                    case LEFT:
+                        player.getRobot().setDirection(Directions.UP);
+                    case DOWN:
+                        player.getRobot().setDirection(Directions.LEFT);
+                }
             }
+
             if (legalPosition(newPos)) {
                 map.moveRobot(player.getRobot(), newPos);
+                player.getRobot().setPosition(newPos);
             }
     }
 
     public static boolean legalPosition(Position position) {
-        if (map.isValidPosition(position)) {
+        if (!map.isValidPosition(position)) {
             return false;
         } else if (map.getBoardObject(position) instanceof Robot) {
             return false;
