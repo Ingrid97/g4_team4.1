@@ -1,4 +1,3 @@
-/* ----------------------------------
 package inf112.skeleton.app;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
@@ -32,7 +31,6 @@ public class PlayerTest {
 
 
 
-
     @Test
 
     //TODO check if flags been visited
@@ -48,7 +46,7 @@ public class PlayerTest {
 
 
 
-    //TODO check if an KeyBoardEvent is a legal input
+   //TODO check if an KeyBoardEvent is a legal input
    @Test (expected = IllegalArgumentException.class)
 
    public void illegalKeyBoardCode(){
@@ -80,7 +78,7 @@ public class PlayerTest {
 
     @Test
 
-    //Todo check if player goes through walls
+   //Todo check if player goes through walls
 
     public void robotDoesNotGoThroughWallsDown(){
        Player testRobot = new Player(0, 5, 5, Directions.DOWN);
@@ -114,5 +112,4 @@ public class PlayerTest {
 
 
 
-}
-*/
+} */

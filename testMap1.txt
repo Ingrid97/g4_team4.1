@@ -1,6 +1,6 @@
 10 10
 ************
-*r       yy*
+*        yy*
 * s  bbbfy *
 * pbbb b y *
 * b  vv  y *
@@ -9,7 +9,7 @@
 *  b hh yyy*
 * bpf   y  *
 * s  vv ys *
-*r      y r*
+*      y v*
 ************
 
 Symbols on the bord
