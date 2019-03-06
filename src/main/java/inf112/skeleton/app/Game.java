@@ -106,32 +106,37 @@ public class Game {
             for (int i = 0; i < x; i++) {
                 line = br.readLine();
                 char[] lines = line.toCharArray();
-                for (int j = 0; j < y; j++) {
+                System.out.println(line);
+                for (int j = 1; j < y; j += 2) {
+                    System.out.println("j: " + j + "   j+1: " + (j+1));
+                    System.out.println("i: " + i + "   x: " + x);
                     if (lines[j+1] == '*'){
-                        map.add(new Wall(i, j), i, j);
+                        map.add(new Wall(i, j/2), i, j/2);
                     } else if (lines[j+1] == 'r'){
-                       map.add(new Robot(i, j, Directions.UP), i, j);
+                       map.add(new Robot(i, j/2, Directions.UP), i,j/2);
                     } else if  (lines[j+1] == 'v'){
-                        map.add(new Void(i, j), i, j);
+                        map.add(new Void(i, j/2), i, j/2);
                     } else if  (lines[j+1] == 'l'){
-                        map.add(new Laser(i, j), i, j);
+                        map.add(new Laser(i, j/2), i, j/2);
                     } else if  (lines[j+1] == 'b' || lines[j+1] == 'y'){
-                        Conveyor_belt c = new Conveyor_belt(i, j);
+                        Conveyor_belt c = new Conveyor_belt(i, j/2);
+                        c.setPlaceDir((int)lines[j]);
                         if (lines[j+1] == 'y')
                             c.isYelloBelt();
                         else
                             c.isBlueBelt();
-                        map.add(c, i, j);
+                        map.add(c, i, j/2);
+
                     }  else if  (lines[j+1] == 's'){
-                        map.add(new Wrench(i, j), i, j);
+                        map.add(new Wrench(i, j/2), i, j/2);
                     } else if  (lines[j+1] == 'h'){
-                        map.add(new Wrench_hammer(i, j), i, j);
+                        map.add(new Wrench_hammer(i, j/2), i, j/2);
                     }  else if  (lines[j+1] == 'f'){
-                        map.add(new Flag(i, j), i, j);
+                        map.add(new Flag(i, j/2), i, j/2);
                     } else if  (lines[j+1] == 'p'){
-                        map.add(new Rotating_belt(i, j), i, j);
+                        map.add(new Rotating_belt(i, j/2), i, j/2);
                     } else {
-                        map.add(new Nothing(i, j), i, j);
+                        map.add(new Nothing(i, j/2), i, j/2);
                     }
                   }
               }

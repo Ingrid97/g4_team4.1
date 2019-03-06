@@ -4,10 +4,13 @@ public class Conveyor_belt implements IBoardObject{
 
     boolean isBlueBelt;
     boolean isYelloBelt;
+    Directions dir;
+    int placeDir;
 
     public Conveyor_belt(int x, int y){
         isBlueBelt = false;
         isYelloBelt = false;
+
     }
 
     public void isBlueBelt(){
@@ -22,6 +25,14 @@ public class Conveyor_belt implements IBoardObject{
         if (isYelloBelt)
             return 1;
         return 2;
+    }
+
+    public void getDirection(){
+
+    }
+
+    public void setPlaceDir(int d){
+        this.placeDir = d;
     }
 
     @Override

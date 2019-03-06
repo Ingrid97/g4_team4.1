@@ -143,7 +143,6 @@ public class MapGUI extends ApplicationAdapter {
         if(Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) robot.x -= 64;
         if(Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) robot.x += 64;
 
-
     }
 
     @Override
