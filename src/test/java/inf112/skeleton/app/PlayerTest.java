@@ -6,8 +6,7 @@ import org.junit.Test;
 import java.awt.event.KeyEvent;
 
 import static inf112.skeleton.app.MapGUI.map;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /* Test for player */
 
@@ -39,6 +38,7 @@ public class PlayerTest {
 
         for(int x = 0; x > 10; x++ ){
             for(int y = 0; y > 20; y++ ){
+                assertEquals(map.getBoardObject(new Position(x, y)) instanceof Player);
             }
         }
 
@@ -47,6 +47,8 @@ public class PlayerTest {
 
 
     }
+    
+    
 
     @Test
 
@@ -57,7 +59,7 @@ public class PlayerTest {
         Player testRobot = new Player(0, robot);
         for(int x = 0; x > 10; x++ ){
             for(int y = 0; y > 20; y++ ){
-
+                assertEquals(map.getBoardObject(new Position(x, y)) instanceof Player);
             }
         }
         map.add(Player(null, testRobot));
@@ -73,13 +75,16 @@ public class PlayerTest {
 
         Robot robot = new Robot(10, 20, Directions.RIGHT);
         Player testRobot = new Player(0, robot);
-        for(int i = 0; i > 10; i++ ){
-            for(int j = 0; j > 20; j++ ){
-
+        for(int x = 0; x > 10; x++ ){
+            for(int y = 0; y > 20; y++ ){
+                assertEquals(map.getBoardObject(new Position(x, y)) instanceof Player);
             }
         }
         map.add(Player(null, testRobot));
         assertFalse(map.getBoardObject(new Position(10,20)) instanceof  Wall);
+    }
+
+    private void assertEquals(boolean b) {
     }
 
 
@@ -90,9 +95,9 @@ public class PlayerTest {
 
      Robot robot = new Robot(10,20, Directions.LEFT);
         Player testRobot = new Player(0, robot);
-        for(int i = 0; i > 10; i++ ){
-            for(int j = 0; j > 20; j++ ){
-
+        for(int x = 0; x > 10; x++ ){
+            for(int y = 0; y > 20; y++ ){
+                assertEquals(map.getBoardObject(new Position(x, y)) instanceof Player);
             }
         }
         map.add(Player(null, testRobot));
@@ -132,5 +137,6 @@ public class PlayerTest {
 
 
     }
+   
 
 }
