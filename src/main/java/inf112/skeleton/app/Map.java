@@ -39,8 +39,18 @@ public class Map {
 
     //test
     IBoardObject getBoardObject(Position position) {
+        ArrayList listOfObjects = map[position.getX()][position.getY()];
         if (isValidPosition(position)) {
-            return (IBoardObject) map[position.getX()][position.getY()].get(0);
+            for (int i = 0; i < listOfObjects.size(); i++) {
+                if (listOfObjects.get(i) instanceof Robot) {
+                    return (IBoardObject) listOfObjects.get(i);
+                }
+            }
+            if (listOfObjects.size() == 0) {
+                return null;
+            } else {
+                return (IBoardObject) listOfObjects.get(0);
+            }
         }
         return null;
     }
@@ -61,11 +71,14 @@ public class Map {
 
 
     public boolean isValidPosition(Position position) {
-        return (position.getY() >= 0 || position.getX() >= 0 || position.getX() <= getX() || position.getY() <= getY());
+        if (position.getY() < 0) return false;
+        if (position.getX() < 0) return false;
+        if (position.getX() > getX()) return false;
+        return position.getY() <= getY();
     }
 
     public void moveRobot(Robot robot, Position newPosition) {
-        map[robot.getPosition().getX()][robot.getPosition().getY()].remove(robot);
         map[newPosition.getX()][newPosition.getY()].add(robot);
+        map[robot.getPosition().getX()][robot.getPosition().getY()].remove(robot);
     }
 }

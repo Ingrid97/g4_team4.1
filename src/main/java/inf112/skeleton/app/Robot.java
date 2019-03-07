@@ -54,9 +54,17 @@ public class Robot implements IRobot{
         return this.memoryCapacity;
     }
 
+    public Directions getDirection() {
+        return direction;
+    }
+
     // Setters
     public void setDirection(Directions direction) {
         this.direction = direction;
+    }
+
+    public void setPosition(Position position) {
+        this.positionOfRobot = position;
     }
 
 
