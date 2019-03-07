@@ -1,5 +1,8 @@
 package inf112.skeleton.app;//Created by ingridjohansen on 04/02/2019.
 
+import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
+import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -8,24 +11,91 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class Game {
-    private ArrayList<Player> players;
+    private static ArrayList<Player> players;
     private static ArrayList<MovementCard> theFullDeckOfAllMovementCards;
+    private static boolean gameOver;
+    public static int[][] robotPositions;
+    public static int numberOfRobots;
+    private static int numberOfPlayers;
+    private static Map map;
 
 
-    public static Map playGame() {
-        // Lage alle kortene
+    public static void playGame() {
+        // Lager alle kortene
         setUpTheFullDeckOfCards();
 
-        //les inn map fra fil
-        Map map = makeMap("testMap1.txt");
+        players = new ArrayList<>();
+
+        //leser inn map fra fil
+        robotPositions = new int[4][2];
+        numberOfRobots = 0;
+        numberOfPlayers = 0;
+        players = new ArrayList<>();
+        map = makeMap("testMap1.txt");
         if (map == null)
             System.exit(0);
 
+        LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
+        cfg.title = "Robo Rally";
+        cfg.width = 640;
+        cfg.height = 640;
+        MapGUI mapGUI = new MapGUI(map);
+        new LwjglApplication(mapGUI, cfg);//instantiating MapGUI and updating the map it prints
 
-        //for testing
+        gameOver = true;
+        setUpTheFullDeckOfCards();
+        dealOutMovementCards();
         printMap(map);
+        while (gameOver) {
+            ArrayList<ArrayList> listOfPrioritizedListsOfMovementCardsFromPlayers = new ArrayList<>();
+            for (int i = 0; i < players.size(); i++) {
+                ArrayList<MovementCard> movementCardsToBeExecuted = new ArrayList<>();
+                movementCardsToBeExecuted = players.get(i).theMovementCardsThePlayerChose();
+                listOfPrioritizedListsOfMovementCardsFromPlayers.add(movementCardsToBeExecuted);
+            }
+            for (int j = 0; j < 3; j++) {
+                for (int i = 0; i < players.size(); i++) {
+                    playMovementCard((MovementCard) listOfPrioritizedListsOfMovementCardsFromPlayers.get(i).get(j), players.get(i));
+                    mapGUI.updateMap(map);
+                }
+                printMap(map);
+            }
+        }
 
-        return map;
+
+    }
+
+
+    public static void playMovementCard(MovementCard movCard, Player player) {
+        Position currentPos = player.getRobot().getPosition();
+        Position newPos = new Position(1000, 1000);
+            if (movCard.getDirection() == Directions.NODIRECTION) {
+                try {
+                    newPos = new Position(currentPos.getX(), (currentPos.getY() + movCard.getNumberOfSteps()));
+                } catch (IllegalArgumentException e) {
+                    System.out.println("A robot has fallen");
+                }
+            } else if (movCard.getDirection() == Directions.DOWN) {
+                try {
+                    newPos = new Position(currentPos.getX(), (currentPos.getY() - movCard.getNumberOfSteps()));
+                } catch (IllegalArgumentException e) {
+                    System.out.println("A robot has fallen");
+                }
+            } else {
+                player.getRobot().setDirection(movCard.getDirection());
+                newPos = currentPos;
+            }
+            if (legalPosition(newPos)) {
+                map.moveRobot(player.getRobot(), newPos);
+            }
+    }
+
+    public static boolean legalPosition(Position position) {
+        if (map.isValidPosition(position)) {
+            return false;
+        } else if (map.getBoardObject(position) instanceof Robot) {
+            return false;
+        } else return !(map.getBoardObject(position) instanceof Wall);
     }
 
 
@@ -34,23 +104,23 @@ public class Game {
         //TODO: make switch and fix GUI stuffs
         for (int i = 0; i < map.getX(); i++) {
             for (int j = 0; j < map.getY(); j++) {
-                if (map.getBoardObject(i, j) instanceof Wall) {
+                if (map.getBoardObject(new Position(i, j)) instanceof Wall) {
                     System.out.print('*');
-                } else if (map.getBoardObject(i, j) instanceof Robot) {
+                } else if (map.getBoardObject(new Position(i, j)) instanceof Robot) {
                     System.out.print('r');
-                } else if (map.getBoardObject(i, j) instanceof Void) {
+                } else if (map.getBoardObject(new Position(i, j)) instanceof Void) {
                     System.out.print('v');
-                } else if (map.getBoardObject(i, j) instanceof Laser) {
+                } else if (map.getBoardObject(new Position(i, j)) instanceof Laser) {
                     System.out.print('l');
-                } else if (map.getBoardObject(i, j) instanceof Conveyor_belt) {
+                } else if (map.getBoardObject(new Position(i, j)) instanceof Conveyor_belt) {
                     System.out.print('b');
-                } else if (map.getBoardObject(i, j) instanceof Wrench) {
+                } else if (map.getBoardObject(new Position(i, j)) instanceof Wrench) {
                     System.out.print('s');
-                } else if (map.getBoardObject(i, j) instanceof Wrench_hammer) {
+                } else if (map.getBoardObject(new Position(i, j)) instanceof Wrench_hammer) {
                     System.out.print('h');
-                } else if (map.getBoardObject(i, j) instanceof Flag) {
+                } else if (map.getBoardObject(new Position(i, j)) instanceof Flag) {
                     System.out.print('f');
-                } else if (map.getBoardObject(i, j) instanceof Rotating_belt) {
+                } else if (map.getBoardObject(new Position(i, j)) instanceof Rotating_belt) {
                     System.out.print('p');
                 } else {
                     System.out.print(' ');
@@ -99,7 +169,6 @@ public class Game {
         int x = Integer.parseInt(xy.substring(0, split));
         int y = Integer.parseInt(xy.substring(split+1));
         Map map = new Map(x, y);
-
         //TODO: make switch
         try {
             String line = br.readLine();
@@ -113,7 +182,9 @@ public class Game {
                     if (lines[j+1] == '*'){
                         map.add(new Wall(i, j/2), i, j/2);
                     } else if (lines[j+1] == 'r'){
-                       map.add(new Robot(i, j/2, Directions.UP), i,j/2);
+                        Player player = new Player(0, new Robot(i, j, Directions.UP));
+                        players.add(player);
+                        map.add(player.getRobot(), i, j);
                     } else if  (lines[j+1] == 'v'){
                         map.add(new Void(i, j/2), i, j/2);
                     } else if  (lines[j+1] == 'l'){
@@ -189,13 +260,7 @@ public class Game {
         }
     }
 
-    private void addPlayers() {
-        // Random player
-        int numberOfFlags = 3;
-        this.players.add(new Player(numberOfFlags, new Robot(2, 3, Directions.UP)));
-    }
-
-    private void dealOutMovementCards() {
+    private static void dealOutMovementCards() {
         ArrayList<MovementCard> copy = new ArrayList<>(theFullDeckOfAllMovementCards);
         Collections.shuffle(copy);
         for (int i = 0; i < players.size(); i++) {

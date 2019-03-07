@@ -1,9 +1,10 @@
 package inf112.skeleton.app;
 
 
-import java.util.ArrayList;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 
 public class Player implements KeyListener {
@@ -19,6 +20,7 @@ public class Player implements KeyListener {
         this.flagsWhichHasBeenVisited = new boolean[numberOfFlags];
         this.theProgramForTheRobotToExecute = new ArrayList<>();
         this.robot = robot;
+        theCardsToChooseYourProgramFrom = new ArrayList<>();
     }
 
     public void giveMovementCardsToThePlayer(MovementCard card) {
@@ -27,14 +29,35 @@ public class Player implements KeyListener {
 
     // TODO! Choosing the cards as a player
     public ArrayList<MovementCard> theMovementCardsThePlayerChose() {
+        for (int i = 0; i < theCardsToChooseYourProgramFrom.size(); i++) {
+            System.out.println();
+            System.out.println("Alt" + (i + 1));
+            System.out.println(theCardsToChooseYourProgramFrom.get(i).toString());
+        }
+        ArrayList<MovementCard> programForRobotToExecute = new ArrayList<>();
+        Scanner sc = new Scanner(System.in);
+        boolean notDone = false;
+        System.out.println("choose your movement cards by typing the number of the card you would like to use first, then press enter ");
+        System.out.println("When you are finished write a number greater then 10");
+        while (!notDone) {
+            if (sc.hasNextInt()) {
+                int number = sc.nextInt();
+                if (number > 10) {
+                    notDone = true;
+                } else {
+                    programForRobotToExecute.add(theCardsToChooseYourProgramFrom.get(number - 1));
+                }
+            }
 
-        /*
-         * Metode for å vise & velge kortene du kan velge mellom
-         * Returnere disse kortene i rekkefølge
-         * Legg de til i theProgramForTheRobotToExecute
-         */
+            for (int i = 0; i < programForRobotToExecute.size(); i++) {
+                System.out.println("your choises so far:");
+                System.out.println(programForRobotToExecute.get(i).toString());
 
-        return null;
+            }
+            System.out.println();
+        }
+
+        return programForRobotToExecute;
     }
 
     public int memoryCapacityForThisPlayer() {
@@ -86,25 +109,23 @@ public class Player implements KeyListener {
 
 
         if (dir == Directions.UP) {
-            if (map.getBoardObject(getX(), getY() + 1) instanceof Wall) {
+            if (map.getBoardObject(new Position(getX(), getY() + 1)) instanceof Wall) {
             }
             return false;
 
         } else if (dir == Directions.DOWN) {
-            if (map.getBoardObject(getX(), getY() - 1) instanceof Wall) {
+            if (map.getBoardObject(new Position(getX(), getY() - 1)) instanceof Wall) {
 
             }
             return false;
         } else if (dir == Directions.RIGHT) {
-            if (map.getBoardObject(getX() + 1, getY()) instanceof Wall) {
+            if (map.getBoardObject(new Position(getX() + 1, getY())) instanceof Wall) {
 
 
             }
             return false;
         } else if (dir == Directions.LEFT) {
-            if (map.getBoardObject(getX() - 1, getY()) instanceof Wall) {
-                return false;
-            }
+            return !(map.getBoardObject(new Position(getX() - 1, getY())) instanceof Wall);
         }
 
 
@@ -120,6 +141,10 @@ public class Player implements KeyListener {
 
     public int getY() {
         return robot.getY();
+    }
+
+    public Robot getRobot() {
+        return robot;
     }
 
 }
