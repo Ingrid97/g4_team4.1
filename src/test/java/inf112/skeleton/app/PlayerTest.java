@@ -28,15 +28,14 @@ public class PlayerTest {
 
         //Creating robot and  a player
         Robot robot = new Robot(10, 20, Directions.UP);
-        Player testRobot = new Player(0, robot);
 
         for(int x = 0; x > 10; x++ ){
             for(int y = 0; y > 20; y++ ){
-                assertEquals(map.getBoardObject(new Position(x, y)) instanceof Player);
+                assertEquals(map.getBoardObject(new Position(x, y)) instanceof Robot);
             }
         }
 
-        map.add(Player(null , testRobot));
+        map.add(new Robot())
         assertFalse(map.getBoardObject(new Position(10, 20)) instanceof Wall);
 
 
