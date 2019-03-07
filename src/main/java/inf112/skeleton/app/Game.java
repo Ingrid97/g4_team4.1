@@ -38,7 +38,7 @@ public class Game {
         LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
         cfg.title = "Robo Rally";
         cfg.width = 640;
-        cfg.height = 640;
+        cfg.height = 940;
         MapGUI mapGUI = new MapGUI(map, players);
         new LwjglApplication(mapGUI, cfg);//instantiating MapGUI and updating the map it prints
 

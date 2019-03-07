@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -15,15 +16,19 @@ import java.util.ArrayList;
 
 public class MapGUI extends ApplicationAdapter {
 
-    private Texture robotImage, voidImage, yellowConveyor_beltImage, blueConveyor_beltImage, laserImage, wrenchImage, wrench_hammer, rotatin_plateImage, flagImage, nothingImage;
+    private Texture robotImage, voidImage, yellowConveyor_beltImage, blueConveyor_beltImage, laserImage, wrenchImage, wrench_hammer, rotatin_plateImage, flagImage, nothingImage, cardTester;
 
     private Sound dropSound;
     private Music rainMusic;
     private SpriteBatch batch;
     private OrthographicCamera camera;
     private Rectangle[][] tile;
-    private Rectangle robot;
+    private Rectangle[] robot;
+    private Rectangle[] cards;
+    private int roboid;
     public static Map map;
+    public static boolean drawnTable = false;
+    public static int witchRobot = 0;
     public ArrayList<Player> listOfPLayers;
 
     public MapGUI(Map map, ArrayList<Player> listOfPLayers) {
@@ -62,22 +67,27 @@ public class MapGUI extends ApplicationAdapter {
         rotatin_plateImage = getImage("g.png");
         flagImage = getImage("f.png");
         nothingImage = getImage("n.png");
+        cardTester = getImage("card_Tester.png");
 
         // create the camera and the SpriteBatch
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, 640, 640);
+        camera.setToOrtho(false, 640, 940);
+
         batch = new SpriteBatch();
 
 
         // create a list of Rectangles to logically represent the objects
         tile = new Rectangle[10][10];
+        robot = new Rectangle[10];
+        cards = new Rectangle[9];
 
-        //make the moving robot
-        robot = new Rectangle();
-        robot.x = 0;
-        robot.y = 0;
-        robot.height = 64;
-        robot.width = 64;
+        for (int i = 0; i < 10; i++) {
+            robot[i] = new Rectangle();
+            robot[i].x = -1;
+            robot[i].y = -1;
+            robot[i].height = 64;
+            robot[i].width = 64;
+        }
 
 
         for (int i = 0; i < 10; i++) {
@@ -89,6 +99,16 @@ public class MapGUI extends ApplicationAdapter {
                 tile[i][j].height = 64;
             }
         }
+
+        for (int i = 0; i < 9; i++) {
+            cards[i] = new Rectangle();
+            cards[i].x = 32+i*64;
+            cards[i].y = 700;
+            cards[i].height = 96;
+            cards[i].width = 64;
+        }
+
+
     }
 
     public Texture getImage(String s) {
@@ -110,44 +130,72 @@ public class MapGUI extends ApplicationAdapter {
         // begin a new batch and draw the board
         batch.begin();
 
-        //TODO: make switch
-        for (int i = 0,x = 0; i < 10; i++, x++) {
-            for (int j = 0, y = 9; j < 10; j++, y--) {
-                if (map.getBoardObject(new Position(i, j)) instanceof Robot) {
-                    batch.draw(robotImage, tile[i][j].x, tile[i][j].y);
-                } else if (map.getBoardObject(new Position(i, j)) instanceof Void) {
-                    batch.draw(voidImage, tile[i][j].x, tile[i][j].y);
-                } else if (map.getBoardObject(new Position(i, j)) instanceof Laser) {
-                    batch.draw(laserImage, tile[i][j].x, tile[i][j].y);
-                } else if (map.getBoardObject(new Position(i, j)) instanceof Conveyor_belt) {
-                    Conveyor_belt c = (Conveyor_belt) map.getBoardObject(new Position(i, j));
-                    if (c.isBlueBelt)
-                        batch.draw(blueConveyor_beltImage, tile[i][j].x, tile[i][j].y);
-                    else
-                        batch.draw(yellowConveyor_beltImage, tile[i][j].x, tile[i][j].y);
-                } else if (map.getBoardObject(new Position(i, j)) instanceof Wrench) {
-                    batch.draw(wrenchImage, tile[i][j].x, tile[i][j].y);
-                } else if (map.getBoardObject(new Position(i, j)) instanceof Wrench_hammer) {
-                    batch.draw(wrench_hammer, tile[i][j].x, tile[i][j].y);
-                } else if (map.getBoardObject(new Position(i, j)) instanceof Flag) {
-                    batch.draw(flagImage, tile[i][j].x, tile[i][j].y);
-                } else if (map.getBoardObject(new Position(i, j)) instanceof Rotating_belt) {
-                    batch.draw(rotatin_plateImage, tile[i][j].x, tile[i][j].y);
-                } else {
-                    batch.draw(nothingImage, tile[i][j].x, tile[i][j].y);
-                }
-            }
+
+        drawTable();
+
+        roboid = 0;
+        for (int i = 0, k = 9; i < 2; i++, k--) {
+            batch.draw(robotImage, robot[roboid].x, robot[roboid].y);
+            roboid++;
         }
 
-        batch.draw(robotImage, robot.x, robot.y);
+        for (int i = 0; i < 9; i++) {
+            batch.draw(cardTester, cards[i].x, cards[i].y);
+        }
 
         batch.end();
 
         //stuff for moving
-        if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) robot.y += 64;
-        if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) robot.y -= 64;
-        if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) robot.x -= 64;
-        if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) robot.x += 64;
+        witchRobot++;
+        if (witchRobot > 2) {
+            witchRobot = 0;
+        }
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) robot[1].y += 64;
+        if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) robot[1].y -= 64;
+        if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) robot[1].x -= 64;
+        if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) robot[1].x += 64;
+    }
+
+    public void drawTable(){
+
+        //TODO: make switch or nicer?
+        drawnTable = true;
+        roboid = 0;
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0, k = 9; j < 10; j++, k--) {
+                if (map.getBoardObject(new Position(j, i)) instanceof Robot) {
+                    //make thes pessial robot object
+                    batch.draw(nothingImage, tile[i][k].x, tile[i][k].y);
+                    if (robot[roboid].x == -1) {
+                        robot[roboid].x = i*64;
+                        robot[roboid].y = k*64;
+                    }
+                    batch.draw(robotImage, robot[roboid].x, robot[roboid].y);
+                    roboid++;
+                } else if (map.getBoardObject(new Position(j, i)) instanceof Void) {
+                    batch.draw(voidImage, tile[i][k].x, tile[i][k].y);
+                } else if (map.getBoardObject(new Position(j, i)) instanceof Laser) {
+                    batch.draw(laserImage, tile[i][k].x, tile[i][k].y);
+                } else if (map.getBoardObject(new Position(j, i)) instanceof Conveyor_belt) {
+                    Conveyor_belt c = (Conveyor_belt) map.getBoardObject(new Position(j, i));
+                    if (c.isBlueBelt)
+                        batch.draw(blueConveyor_beltImage, tile[i][k].x, tile[i][k].y);
+                    else
+                        batch.draw(yellowConveyor_beltImage, tile[i][k].x, tile[i][k].y);
+                } else if (map.getBoardObject(new Position(j, i)) instanceof Wrench) {
+                    batch.draw(wrenchImage, tile[i][k].x, tile[i][k].y);
+                } else if (map.getBoardObject(new Position(j, i)) instanceof Wrench_hammer) {
+                    batch.draw(wrench_hammer, tile[i][k].x, tile[i][k].y);
+                } else if (map.getBoardObject(new Position(j, i)) instanceof Flag) {
+                    batch.draw(flagImage, tile[i][k].x, tile[i][k].y);
+                } else if (map.getBoardObject(new Position(j, i)) instanceof Rotating_belt) {
+                    batch.draw(rotatin_plateImage, tile[i][k].x, tile[i][k].y);
+                } else {
+                    batch.draw(nothingImage, tile[i][k].x, tile[i][k].y);
+                }
+            }
+        }
 
     }
 

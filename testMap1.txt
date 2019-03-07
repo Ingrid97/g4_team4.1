@@ -9,7 +9,7 @@
 *    1b   h h  4y4y1y *
 *  4b p f      1y     *
 *   s     v v  1y s   *
-*              1y   v *
+* r     r      1y   v *
 * * * * * * * * * * * *
 
 Symbols on the bord
@@ -26,9 +26,5 @@ Symbols on the bord
 ' ' = Nothing
 
 1: north, 2: south, 3:east, 4: west
-
-
-
-//TODO: Need a way to determine direction of the Rotating plate, bond and laser
 
 
