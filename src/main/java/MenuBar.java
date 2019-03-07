@@ -1,9 +1,11 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,6 +19,8 @@ public class MenuBar extends JFrame {
     private String clickedItem;
     private List<String> menuItem;
     private String selectMenuItem;
+    private int delta;
+
 
 
     private MenuPaint painter;
@@ -83,4 +87,57 @@ public class MenuBar extends JFrame {
     public Dimension getSize(){
         return new Dimension(640, 640);
     }
+
+    protected void giveColorBackground(Graphics g) {
+        Graphics2D g2d = (Graphics2D) g.create();
+        if (menuBounds == null) {
+            menuBounds = new HashMap<>(menuItem.size());
+            int width = 0;
+            int height = 0;
+            for (String text : menuItem) {
+                Dimension dim = painter.getSize(g2d, text);
+                width = Math.max(width, dim.width);
+                height = Math.max(height, dim.height);
+            }
+
+            int x = (getWidth() - (width + 10)) / 2;
+
+            int totalHeight = (height + 10) * menuItem.size();
+            totalHeight += 5 * (menuItem.size() - 1);
+
+            int y = (getHeight() - totalHeight) / 2;
+
+            for (String text : menuItem) {
+                menuBounds.put(text, new Rectangle(x, y, width + 10, height + 10));
+                y += height + 10 + 5;
+            }
+
+        }
+        for (String text : menuItem) {
+            Rectangle bounds = menuBounds.get(text);
+            boolean isSelected = text.equals(selectMenuItem);
+            boolean isFocused = text.equals(clickedItem);
+            painter.paint(g2d, text, bounds, isSelected, isFocused);
+        }
+        g2d.dispose();
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        int index = menuItem.indexOf(selectMenuItem);
+        if (index < 0) {
+            selectMenuItem = menuItem.get(0);
+        }
+        index += delta;
+        if (index < 0) {
+            selectMenuItem = menuItem.get(menuItem.size() - 1);
+        } else if (index >= menuItem.size()) {
+            selectMenuItem = menuItem.get(0);
+        } else {
+            selectMenuItem = menuItem.get(index);
+        }
+        repaint();
+    }
+
+
+
 }

@@ -20,7 +20,7 @@ public class MenuPainterClass implements MenuPaint {
         g2d.drawString(text, x, y);
     }
 
-    protected void giveColorBackground(Graphics2D g2d, Rectangle bounds, Color background,Color front){
+    public void giveColorBackground(Graphics2D g2d, Rectangle bounds, Color background,Color front){
         g2d.setColor(background);
         g2d.fill(bounds);
         g2d.setColor(front);
