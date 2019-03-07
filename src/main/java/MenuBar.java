@@ -1,10 +1,15 @@
-/*import javax.swing.*;
+import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import static javax.swing.JComponent.WHEN_IN_FOCUSED_WINDOW;
+import static javax.swing.plaf.basic.BasicPopupMenuUI.getActionMap;
+import static javax.swing.plaf.basic.BasicPopupMenuUI.getInputMap;
 
 public class MenuBar extends JFrame {
 
@@ -14,7 +19,7 @@ public class MenuBar extends JFrame {
     private String selectMenuItem;
 
 
-    private MenuPainterClass painter;
+    private MenuPaint painter;
     private Map<String, Rectangle> menuBounds;
 
     public MenuBar(){
@@ -62,10 +67,20 @@ public class MenuBar extends JFrame {
         addMouseListener(mouse);
         addMouseMotionListener(mouse);
 
-        InputMap inn = getInputMap();
+        InputMap inn = getInputMap(WHEN_IN_FOCUSED_WINDOW);
         ActionMap out = getActionMap();
+
+        inn.put(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0), "arrowGoingDown");
+        inn.put(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0), "arrowGoingUp");
+
+        out.put("arrowDown", new GameState(1));
+        out.put("arrowUp", new GameState(-1));
+
+
 
 
     }
+    public Dimension getSize(){
+        return new Dimension(640, 640);
+    }
 }
-*/
