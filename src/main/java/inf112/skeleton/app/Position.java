@@ -22,7 +22,7 @@ public class Position {
     }
 
     /**
-     * Creat a copy of the this position and makes a copy
+     * Create a copy of the this position and makes a copy
      * @return position
      */
     public Position copy() {
@@ -30,11 +30,11 @@ public class Position {
     }
 
     /**
-     * Gets the distance to another Position as the diference of X and Y
+     * Gets the distance to another Position as the difference of X and Y
      * @param another
      * @return dist
      */
-    public int distansTo(Position another) {
+    public int distanceTo(Position another) {
         return Math.abs(this.x - another.x) + Math.abs(this.y - another.y);
     }
 

@@ -236,7 +236,7 @@ public class Game {
                     } else if  (lines[j+1] == 'b' || lines[j+1] == 'y'){
                         Conveyor_belt c = new Conveyor_belt(i, j);
                         if (lines[j+1] == 'y')
-                            c.isYelloBelt();
+                            c.isYellowBelt();
                         else
                             c.isBlueBelt();
                         map.add(c, i, j);

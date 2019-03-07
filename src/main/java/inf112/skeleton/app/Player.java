@@ -49,7 +49,7 @@ public class Player implements KeyListener {
             }
 
             for (int i = 0; i < programForRobotToExecute.size(); i++) {
-                System.out.println("your choises so far:");
+                System.out.println("your choices so far:");
                 System.out.println(programForRobotToExecute.get(i).toString());
 
             }
