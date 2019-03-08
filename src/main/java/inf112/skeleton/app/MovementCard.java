@@ -5,7 +5,7 @@ public class MovementCard {
     private int numberOfSteps;
     private int priority;
 
-    public MovementCard (Directions direction, int numberOfSteps, int priority) {
+    public MovementCard(Directions direction, int numberOfSteps, int priority) {
         this.direction = direction;
         this.numberOfSteps = numberOfSteps;
         this.priority = priority;

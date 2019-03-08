@@ -12,7 +12,6 @@ import static org.junit.Assert.*;
 public class MapTest {
 
 
-
     public Map build(int x, int y) {
         Map map = new Map(x, y);
         return map;
@@ -28,33 +27,33 @@ public class MapTest {
     }
 
     @Test
-    public void testThatGivenInputXOnMapIsCorrect(){
-        assertEquals(build(10,20).getX(), 10);
+    public void testThatGivenInputXOnMapIsCorrect() {
+        assertEquals(build(10, 20).getX(), 10);
     }
 
     @Test
-    public void testThatGivenInputYOnMapIsCorrect(){
-        assertEquals(build(10,20).getY(), 20);
+    public void testThatGivenInputYOnMapIsCorrect() {
+        assertEquals(build(10, 20).getY(), 20);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testInitializingMapWithXValueLessThanZeroThrowsException() {
-        build(-1,3);
+        build(-1, 3);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testInitializingMapWithYValueLessThanZeroThrowsException() {
-        build(3,-1);
+        build(3, -1);
     }
 
     @Test(expected = ArrayIndexOutOfBoundsException.class)
-    public void placingObjectOutsideMapThrowsException(){
+    public void placingObjectOutsideMapThrowsException() {
         Map map = build(10, 20);
-        map.add(new Robot(15, 10, Directions.UP), 15, 10 );
+        map.add(new Robot(15, 10, Directions.UP), 15, 10);
     }
 
     @Test
-    public void placingObjectOnBorderOfMapDontThrowException(){
+    public void placingObjectOnBorderOfMapDontThrowException() {
         Map map = build(10, 20);
         map.add(new Robot(9, 19, Directions.UP), 9, 19);
         assertTrue(true);
@@ -82,7 +81,7 @@ public class MapTest {
     }
 
     @Test
-    public void RobotOnMap(){
+    public void RobotOnMap() {
         Map map = build(10, 20);
         map.add(new Robot(5, 5, Directions.UP), 5, 5);
         assertTrue(map.getBoardObject(new Position(5, 5)) instanceof Robot);
@@ -95,10 +94,50 @@ public class MapTest {
         ArrayList[][] copyOfMap = map.getMap();
         for (int x = 0; x < 10; x++) {
             for (int y = 0; y < 10; y++) {
-                assertEquals(map.getBoardObject(new Position(x, y)), copyOfMap[x][y]);
+                assertEquals(map.getBoardObject(new Position(x, y)), copyOfMap[x][y].get(0));
             }
         }
     }
+
+    @Test
+    public void moveRobotLeavesAEmptySquare() {
+        Map map = build(10, 10);
+        Robot robot = new Robot(5, 5, Directions.UP);
+        map.add(robot, 5, 5);
+        map.moveRobot(robot, new Position(6, 6));
+        assertTrue(map.isEmpty(5, 5));
+    }
+
+    @Test
+    public void moveRobotMovesTheRobot() {
+        Map map = build(10, 10);
+        Robot robot = new Robot(5, 5, Directions.UP);
+        map.add(robot, 5, 5);
+        map.moveRobot(robot, new Position(6, 6));
+        assertEquals(robot, map.getBoardObject(new Position(6, 6)));
+    }
+
+    @Test
+    public void getBoardObjectsReturnsNullIfEmpty() {
+        Map map = build(10, 10);
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
+                assertNull(map.getBoardObject(new Position(i, j)));
+            }
+        }
+    }
+
+    @Test
+    public void allSquaresAreValidPositions() {
+        Map map = build(10, 10);
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
+                assertTrue(map.isValidPosition(new Position(i, j)));
+            }
+        }
+    }
+
+
 
 
 }

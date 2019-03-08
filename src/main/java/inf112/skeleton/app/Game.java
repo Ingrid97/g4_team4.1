@@ -144,6 +144,7 @@ public class Game {
 
     /**
      * checking that given position is inside map, or not occupied by a wall or robot
+     *
      * @param position
      * @return true if a robot can move to this position
      */
@@ -156,7 +157,7 @@ public class Game {
     }
 
 
-    public static void printMap(Map map){
+    public static void printMap(Map map) {
         System.out.println("Map:");
         //TODO: make switch and fix GUI stuffs
         for (int i = 0; i < map.getX(); i++) {
@@ -190,10 +191,11 @@ public class Game {
 
     /**
      * making the map from a given file
+     *
      * @param filename
      * @return
      */
-    public static Map makeMap(String filename){
+    public static Map makeMap(String filename) {
         BufferedReader br;
         try {
             br = new BufferedReader(new FileReader(filename));
@@ -207,22 +209,22 @@ public class Game {
         System.out.println("Making the map...");
         Map map = new Map(10, 10);
         try {
-            for (int i = 0; i < 10; i++){
+            for (int i = 0; i < 10; i++) {
                 String[] line = br.readLine().split(",");
                 int j = 0;
                 for (String l : line) {
                     System.out.println(l);
-                    if (l.contains("*")){
+                    if (l.contains("*")) {
                         map.add(new Wall(i, j), i, j);
-                    } else if (l.contains("r")){
+                    } else if (l.contains("r")) {
                         Player player = new Player(0, new Robot(i, j, Directions.UP));
                         players.add(player);
                         map.add(player.getRobot(), i, j);
-                    } else if  (l.contains("v")){
+                    } else if (l.contains("v")) {
                         map.add(new Void(i, j), i, j);
-                    } else if  (l.contains("l")){
+                    } else if (l.contains("l")) {
                         map.add(new Laser(i, j), i, j);
-                    } else if  (l.contains("b") || l.contains("y")){
+                    } else if (l.contains("b") || l.contains("y")) {
                         Conveyor_belt c = new Conveyor_belt(i, j);
                         c.setPlaceDir(getDir(l));
                         if (l.contains("y"))
@@ -231,13 +233,13 @@ public class Game {
                             c.isBlueBelt();
                         map.add(c, i, j);
 
-                    }  else if  (l.contains("s")){
+                    } else if (l.contains("s")) {
                         map.add(new Wrench(i, j), i, j);
-                    } else if  (l.contains("h")){
+                    } else if (l.contains("h")) {
                         map.add(new Wrench_hammer(i, j), i, j);
-                    }  else if  (l.contains("f")){
+                    } else if (l.contains("f")) {
                         map.add(new Flag(i, j), i, j);
-                    } else if  (l.contains("p")){
+                    } else if (l.contains("p")) {
                         map.add(new Rotating_belt(i, j), i, j);
                     } else {
                         map.add(new Nothing(i, j), i, j);
@@ -257,7 +259,7 @@ public class Game {
         return map;
     }
 
-    private static int getDir(String s){
+    private static int getDir(String s) {
         if (s.contains("1"))
             return 1;
         if (s.contains("2"))
@@ -276,8 +278,8 @@ public class Game {
         int priorityForRight = 70;
         int priorityForMovementForward = 490;
         for (int i = 0; i < 18; i++) {
-            theFullDeckOfAllMovementCards.add(new MovementCard(Directions.LEFT, 0,  priorityForLeft));
-            theFullDeckOfAllMovementCards.add(new MovementCard(Directions.RIGHT, 0,  priorityForRight));
+            theFullDeckOfAllMovementCards.add(new MovementCard(Directions.LEFT, 0, priorityForLeft));
+            theFullDeckOfAllMovementCards.add(new MovementCard(Directions.RIGHT, 0, priorityForRight));
             theFullDeckOfAllMovementCards.add(new MovementCard(Directions.NODIRECTION, 1, priorityForMovementForward));
             priorityForLeft += 20;
             priorityForRight += 20;

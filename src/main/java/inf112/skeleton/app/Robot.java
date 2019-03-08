@@ -1,7 +1,7 @@
 package inf112.skeleton.app;//Created by ingridjohansen on 04/02/2019.
 
 
-public class Robot implements IRobot{
+public class Robot implements IRobot {
     private Position positionOfRobot;
     private Position backUpPosition;
     private int healthPoints;
@@ -11,8 +11,7 @@ public class Robot implements IRobot{
     private Directions direction;
 
 
-
-    public Robot(int x, int y, Directions direction){
+    public Robot(int x, int y, Directions direction) {
         this.positionOfRobot = new Position(x, y);
         this.backUpPosition = positionOfRobot;
         this.healthPoints = 3;
@@ -23,14 +22,15 @@ public class Robot implements IRobot{
     }
 
 
-
     // Getters
     @Override
     public Position getPosition() {
         return this.positionOfRobot;
     }
 
-    public int getHealthPoints() { return this.healthPoints;}
+    public int getHealthPoints() {
+        return this.healthPoints;
+    }
 
     public Position getBackUpPosition() {
         return backUpPosition;
@@ -46,7 +46,7 @@ public class Robot implements IRobot{
         return this.positionOfRobot.getY();
     }
 
-    public Position getPositionOfRobot()  {
+    public Position getPositionOfRobot() {
         return this.positionOfRobot;
     }
 
@@ -69,7 +69,7 @@ public class Robot implements IRobot{
 
 
     // Methods
-    public void move (int numberOfSteps) {
+    public void move(int numberOfSteps) {
         for (int i = 0; i < numberOfSteps; i++) {
             this.positionOfRobot = this.positionOfRobot.moveDirection(this.direction);
         }
@@ -77,7 +77,6 @@ public class Robot implements IRobot{
 
 
     }
-
 
 
     @Override
@@ -94,7 +93,7 @@ public class Robot implements IRobot{
         this.backUpPosition = this.positionOfRobot;
     }
 
-    private void takeDamage (int laserStrength) {
+    private void takeDamage(int laserStrength) {
 
         this.memoryCapacity -= laserStrength;
 
