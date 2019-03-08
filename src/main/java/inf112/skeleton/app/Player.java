@@ -23,10 +23,19 @@ public class Player implements KeyListener {
         theCardsToChooseYourProgramFrom = new ArrayList<>();
     }
 
+    /**
+     * Gives a movement card to the player
+     *
+     * @param card movement card to be delt to the player
+     */
     public void giveMovementCardsToThePlayer(MovementCard card) {
         this.theCardsToChooseYourProgramFrom.add(card);
     }
 
+    /**
+     * gives movement cards for the player to choose from and returns a prioritized list to execute, by taking input from player
+     * @return prioritized list of movement cars to be executed
+     */
     public ArrayList<MovementCard> theMovementCardsThePlayerChose() {
         Scanner sc = new Scanner(System.in);
 
@@ -59,8 +68,8 @@ public class Player implements KeyListener {
 
             // Printing out the choices the player has done this far
             System.out.println("Your choices so far:");
-            for (int i = 0; i < programForRobotToExecute.size(); i++) {
-                System.out.println(programForRobotToExecute.get(i).toString());
+            for (MovementCard movementCard : programForRobotToExecute) {
+                System.out.println(movementCard.toString());
             }
             System.out.print("\nYou have " + (this.robot.getMemoryCapacity() - counter) + " cards left\n");
         } while (counter < this.robot.getMemoryCapacity());
@@ -69,6 +78,9 @@ public class Player implements KeyListener {
         return programForRobotToExecute;
     }
 
+    /**
+     * @return int memorycapasity for this player
+     */
     public int memoryCapacityForThisPlayer() {
         return this.robot.getMemoryCapacity();
     }

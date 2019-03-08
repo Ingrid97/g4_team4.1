@@ -69,76 +69,84 @@ public class Game {
 
     }
 
-
+    /**
+     * ececuting a movement card by checking the position/s to move to, if available the robot gets moved
+     *
+     * @param movCard the movement card to be executed
+     * @param player  the player that should be moved
+     */
     public static void playMovementCard(MovementCard movCard, Player player) {
         Position currentPos = player.getRobot().getPosition();
         Position newPos = new Position(1000, 1000);
         if (movCard.getDirection() == Directions.NODIRECTION) {//moving forward
-                try {
-                    for (int i = 0; i < movCard.getNumberOfSteps(); i++) {
-                        newPos = new Position(currentPos.getX(), (currentPos.getY() + 1));
-                        if (!legalPosition(newPos)) break;
-                    }
-                } catch (IllegalArgumentException e) {
-                    System.out.println("A robot has fallen");
+            try {
+                for (int i = 0; i < movCard.getNumberOfSteps(); i++) {
+                    newPos = new Position(currentPos.getX(), (currentPos.getY() + 1));
+                    if (!legalPosition(newPos)) break;
                 }
-        } else if (movCard.getDirection() == Directions.DOWN) {//moving backward or turning 180 degrees
-                try {
-                    if (movCard.getNumberOfSteps() == 1) {
-                        newPos = new Position(currentPos.getX(), (currentPos.getY() - 1));
-                    } else {
-                        Directions direction = player.getRobot().getDirection();
-                        newPos = currentPos;
-                        switch (direction) {
-                            case UP:
-                                player.getRobot().setDirection(Directions.DOWN);
-                            case RIGHT:
-                                player.getRobot().setDirection(Directions.LEFT);
-                            case LEFT:
-                                player.getRobot().setDirection(Directions.RIGHT);
-                            case DOWN:
-                                player.getRobot().setDirection(Directions.UP);
-                        }
-                    }
-                } catch (IllegalArgumentException e) {
-                    System.out.println("A robot has fallen");
-                }
-        } else if (movCard.getDirection() == Directions.LEFT) {//turning left, no movement
-                newPos = currentPos;
-                Directions direction = player.getRobot().getDirection();
-                newPos = currentPos;
-                switch (direction) {
-                    case UP:
-                        player.getRobot().setDirection(Directions.LEFT);
-                    case RIGHT:
-                        player.getRobot().setDirection(Directions.UP);
-                    case LEFT:
-                        player.getRobot().setDirection(Directions.DOWN);
-                    case DOWN:
-                        player.getRobot().setDirection(Directions.RIGHT);
-                }
-        } else {//turning right, no movement
-                newPos = currentPos;
-                Directions direction = player.getRobot().getDirection();
-                newPos = currentPos;
-                switch (direction) {
-                    case UP:
-                        player.getRobot().setDirection(Directions.RIGHT);
-                    case RIGHT:
-                        player.getRobot().setDirection(Directions.DOWN);
-                    case LEFT:
-                        player.getRobot().setDirection(Directions.UP);
-                    case DOWN:
-                        player.getRobot().setDirection(Directions.LEFT);
-                }
+            } catch (IllegalArgumentException e) {
+                System.out.println("A robot has fallen"); //robot fell outside map, should be returned to backup position
             }
+        } else if (movCard.getDirection() == Directions.DOWN) {//moving backward or turning 180 degrees
+            try {
+                if (movCard.getNumberOfSteps() == 1) {
+                    newPos = new Position(currentPos.getX(), (currentPos.getY() - 1));
+                } else {
+                    Directions direction = player.getRobot().getDirection();
+                    newPos = currentPos;
+                    switch (direction) {
+                        case UP:
+                            player.getRobot().setDirection(Directions.DOWN);
+                        case RIGHT:
+                            player.getRobot().setDirection(Directions.LEFT);
+                        case LEFT:
+                            player.getRobot().setDirection(Directions.RIGHT);
+                        case DOWN:
+                            player.getRobot().setDirection(Directions.UP);
+                    }
+                }
+            } catch (IllegalArgumentException e) {
+                System.out.println("A robot has fallen");//robot fell outside map, should be returned to backup position
+            }
+        } else if (movCard.getDirection() == Directions.LEFT) {//turning left, no movement
+            Directions direction = player.getRobot().getDirection();
+            newPos = currentPos;
+            switch (direction) {
+                case UP:
+                    player.getRobot().setDirection(Directions.LEFT);
+                case RIGHT:
+                    player.getRobot().setDirection(Directions.UP);
+                case LEFT:
+                    player.getRobot().setDirection(Directions.DOWN);
+                case DOWN:
+                    player.getRobot().setDirection(Directions.RIGHT);
+            }
+        } else {//turning right, no movement
+            Directions direction = player.getRobot().getDirection();
+            newPos = currentPos;
+            switch (direction) {
+                case UP:
+                    player.getRobot().setDirection(Directions.RIGHT);
+                case RIGHT:
+                    player.getRobot().setDirection(Directions.DOWN);
+                case LEFT:
+                    player.getRobot().setDirection(Directions.UP);
+                case DOWN:
+                    player.getRobot().setDirection(Directions.LEFT);
+            }
+        }
 
         if (legalPosition(newPos)) { // moving to te actual new position
-                map.moveRobot(player.getRobot(), newPos);
-                player.getRobot().setPosition(newPos);
-            }
+            map.moveRobot(player.getRobot(), newPos);
+            player.getRobot().setPosition(newPos);
+        }
     }
 
+    /**
+     * checking that given position is inside map, or not occupied by a wall or robot
+     * @param position
+     * @return true if a robot can move to this position
+     */
     public static boolean legalPosition(Position position) {
         if (!map.isValidPosition(position)) {
             return false;
