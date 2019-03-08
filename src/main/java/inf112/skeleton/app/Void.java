@@ -7,6 +7,7 @@ public class Void implements IBoardObject {
     public Void(int x, int y){
     this.position = new Position(x, y);
     }
+
     @Override
     public int getX() {
         return this.position.getX();
