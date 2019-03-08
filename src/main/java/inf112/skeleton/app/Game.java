@@ -73,7 +73,7 @@ public class Game {
     public static void playMovementCard(MovementCard movCard, Player player) {
         Position currentPos = player.getRobot().getPosition();
         Position newPos = new Position(1000, 1000);
-            if (movCard.getDirection() == Directions.NODIRECTION) {
+        if (movCard.getDirection() == Directions.NODIRECTION) {//moving forward
                 try {
                     for (int i = 0; i < movCard.getNumberOfSteps(); i++) {
                         newPos = new Position(currentPos.getX(), (currentPos.getY() + 1));
@@ -82,7 +82,7 @@ public class Game {
                 } catch (IllegalArgumentException e) {
                     System.out.println("A robot has fallen");
                 }
-            } else if (movCard.getDirection() == Directions.DOWN) {
+        } else if (movCard.getDirection() == Directions.DOWN) {//moving backward or turning 180 degrees
                 try {
                     if (movCard.getNumberOfSteps() == 1) {
                         newPos = new Position(currentPos.getX(), (currentPos.getY() - 1));
@@ -103,7 +103,7 @@ public class Game {
                 } catch (IllegalArgumentException e) {
                     System.out.println("A robot has fallen");
                 }
-            } else if (movCard.getDirection() == Directions.LEFT) {
+        } else if (movCard.getDirection() == Directions.LEFT) {//turning left, no movement
                 newPos = currentPos;
                 Directions direction = player.getRobot().getDirection();
                 newPos = currentPos;
@@ -117,7 +117,7 @@ public class Game {
                     case DOWN:
                         player.getRobot().setDirection(Directions.RIGHT);
                 }
-            } else {
+        } else {//turning right, no movement
                 newPos = currentPos;
                 Directions direction = player.getRobot().getDirection();
                 newPos = currentPos;
@@ -133,7 +133,7 @@ public class Game {
                 }
             }
 
-            if (legalPosition(newPos)) {
+        if (legalPosition(newPos)) { // moving to te actual new position
                 map.moveRobot(player.getRobot(), newPos);
                 player.getRobot().setPosition(newPos);
             }

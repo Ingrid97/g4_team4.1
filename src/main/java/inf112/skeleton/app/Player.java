@@ -48,8 +48,13 @@ public class Player implements KeyListener {
             // Input from user, and add it to the list of chosen cards
             if (sc.hasNextInt()) {
                 int number = sc.nextInt();
-                programForRobotToExecute.add(theCardsToChooseYourProgramFrom.get(number - 1));
-                counter++;
+                if (number <= 0 || number > this.robot.getMemoryCapacity()) {
+                    System.out.println("Illegal input: " + number);
+                    continue;
+                } else {
+                    programForRobotToExecute.add(theCardsToChooseYourProgramFrom.get(number - 1));
+                    counter++;
+                }
             }
 
             // Printing out the choices the player has done this far

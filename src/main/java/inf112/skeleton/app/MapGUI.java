@@ -5,7 +5,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -165,7 +164,7 @@ public class MapGUI extends ApplicationAdapter {
         for (int i = 0; i < 10; i++) {
             for (int j = 0, k = 9; j < 10; j++, k--) {
                 if (map.getBoardObject(new Position(j, i)) instanceof Robot) {
-                    //make thes pessial robot object
+                    //make the special robot object
                     batch.draw(nothingImage, tile[i][k].x, tile[i][k].y);
                     if (robot[roboid].x == -1) {
                         robot[roboid].x = i*64;
