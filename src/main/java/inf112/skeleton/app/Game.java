@@ -194,70 +194,48 @@ public class Game {
         }
 
 
-        //temporary solution since br.read() is fucked
-        String xy;
-        int split;
-        try {
-            xy = br.readLine();
-            split = 0;
-            for (int i = 0; i < xy.length(); i++) {
-                if (xy.substring(i, i+1).equals(" ")){
-                    split = i;
-                }
-            }
-            System.out.println("x: " + xy.substring(0, split) + " y: " + xy.substring(split+1));
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("the x and y in the file are wrong");
-            return null;
-        }
-
         System.out.println("Making the map...");
-        int x = Integer.parseInt(xy.substring(0, split));
-        int y = Integer.parseInt(xy.substring(split+1));
-        Map map = new Map(x, y);
-        //TODO: make switch
+        Map map = new Map(10, 10);
         try {
-            String line = br.readLine();
-            for (int i = 0; i < x; i++) {
-                line = br.readLine();
-                char[] lines = line.toCharArray();
-                System.out.println(line);
-                for (int j = 1; j < y; j += 2) {
-                    System.out.println("j: " + j + "   j+1: " + (j+1));
-                    System.out.println("i: " + i + "   x: " + x);
-                    if (lines[j+1] == '*'){
-                        map.add(new Wall(i, j/2), i, j/2);
-                    } else if (lines[j+1] == 'r'){
+            for (int i = 0; i < 10; i++){
+                String[] line = br.readLine().split(",");
+                int j = 0;
+                for (String l : line) {
+                    System.out.println(l);
+                    if (l.contains("*")){
+                        map.add(new Wall(i, j), i, j);
+                    } else if (l.contains("r")){
                         Player player = new Player(0, new Robot(i, j, Directions.UP));
                         players.add(player);
                         map.add(player.getRobot(), i, j);
-                    } else if  (lines[j+1] == 'v'){
-                        map.add(new Void(i, j/2), i, j/2);
-                    } else if  (lines[j+1] == 'l'){
-                        map.add(new Laser(i, j/2), i, j/2);
-                    } else if  (lines[j+1] == 'b' || lines[j+1] == 'y'){
-                        Conveyor_belt c = new Conveyor_belt(i, j/2);
-                        c.setPlaceDir((int)lines[j]);
-                        if (lines[j+1] == 'y')
+                    } else if  (l.contains("v")){
+                        map.add(new Void(i, j), i, j);
+                    } else if  (l.contains("l")){
+                        map.add(new Laser(i, j), i, j);
+                    } else if  (l.contains("b") || l.contains("y")){
+                        Conveyor_belt c = new Conveyor_belt(i, j);
+                        c.setPlaceDir(getDir(l));
+                        if (l.contains("y"))
                             c.isYellowBelt();
                         else
                             c.isBlueBelt();
-                        map.add(c, i, j/2);
+                        map.add(c, i, j);
 
-                    }  else if  (lines[j+1] == 's'){
-                        map.add(new Wrench(i, j/2), i, j/2);
-                    } else if  (lines[j+1] == 'h'){
-                        map.add(new Wrench_hammer(i, j/2), i, j/2);
-                    }  else if  (lines[j+1] == 'f'){
-                        map.add(new Flag(i, j/2), i, j/2);
-                    } else if  (lines[j+1] == 'p'){
-                        map.add(new Rotating_belt(i, j/2), i, j/2);
+                    }  else if  (l.contains("s")){
+                        map.add(new Wrench(i, j), i, j);
+                    } else if  (l.contains("h")){
+                        map.add(new Wrench_hammer(i, j), i, j);
+                    }  else if  (l.contains("f")){
+                        map.add(new Flag(i, j), i, j);
+                    } else if  (l.contains("p")){
+                        map.add(new Rotating_belt(i, j), i, j);
                     } else {
-                        map.add(new Nothing(i, j/2), i, j/2);
+                        map.add(new Nothing(i, j), i, j);
                     }
-                  }
-              }
+                    j++;
+                }
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("There's something wrong with the map");
@@ -267,6 +245,16 @@ public class Game {
         System.out.println("Adding stuff to the map...");
 
         return map;
+    }
+
+    private static int getDir(String s){
+        if (s.contains("1"))
+            return 1;
+        if (s.contains("2"))
+            return 2;
+        if (s.contains("3"))
+            return 3;
+        return 4;
     }
 
     private static void setUpTheFullDeckOfCards() {
