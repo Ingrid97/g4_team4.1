@@ -1,20 +1,21 @@
 package inf112.skeleton.app;//Created by ingridjohansen on 06/02/2019.
 
 public class Laser implements IBoardObject{
-private Position position;
+
+    private Position position;
+
     public Laser(int x, int y){
     this.position = new Position(x, y);
     }
 
-
     @Override
     public int getX() {
-        return 0;
+        return this.position.getX();
     }
 
     @Override
     public int getY() {
-        return 0;
+        return this.position.getY();
     }
 
     public Position getPosition() {
