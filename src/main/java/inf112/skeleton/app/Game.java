@@ -50,8 +50,10 @@ public class Game {
             ArrayList<ArrayList> listOfPrioritizedListsOfMovementCardsFromPlayers = new ArrayList<>();
             for (int i = 0; i < players.size(); i++) {
                 ArrayList<MovementCard> movementCardsToBeExecuted;
+                System.out.println("Player " + (i + 1) + " choose your cards!");
                 movementCardsToBeExecuted = players.get(i).theMovementCardsThePlayerChose();
                 listOfPrioritizedListsOfMovementCardsFromPlayers.add(movementCardsToBeExecuted);
+                System.out.print("\n\n\n");
             }
 
             //playing movement cards from players
@@ -299,7 +301,7 @@ public class Game {
         ArrayList<MovementCard> copy = new ArrayList<>(theFullDeckOfAllMovementCards);
         Collections.shuffle(copy);
         for (int i = 0; i < players.size(); i++) {
-            // TODO Make it take a part of the list instead of individual cards
+
             for (int j = 0; j < players.get(i).memoryCapacityForThisPlayer(); j++) {
                 players.get(i).giveMovementCardsToThePlayer(copy.get(j));
             }

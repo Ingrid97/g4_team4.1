@@ -28,33 +28,37 @@ public class Player implements KeyListener {
     }
 
     public ArrayList<MovementCard> theMovementCardsThePlayerChose() {
-        for (int i = 0; i < theCardsToChooseYourProgramFrom.size(); i++) {
-            System.out.println();
-            System.out.println("Alt" + (i + 1));
-            System.out.println(theCardsToChooseYourProgramFrom.get(i).toString());
-        }
-        ArrayList<MovementCard> programForRobotToExecute = new ArrayList<>();
         Scanner sc = new Scanner(System.in);
-        boolean notDone = false;
-        System.out.println("choose your movement cards by typing the number of the card you would like to use first, then press enter ");
-        System.out.println("When you are finished write a number greater then 10");
-        while (!notDone) {
+
+        // Printer ut alle kortene først
+        for (int i = 0; i < theCardsToChooseYourProgramFrom.size(); i++) {
+            System.out.println("\nCard number " + (i+1) + "\n" + theCardsToChooseYourProgramFrom.get(i).toString());
+        }
+
+        // Listen vi legger inn kortene som blir valgt av bruker at skal kjøre
+        ArrayList<MovementCard> programForRobotToExecute = new ArrayList<>();
+
+        // Informasjon til bruker
+        System.out.println("Choose your movement cards by typing the number of the card you would like to use first, then press enter\nYour robot have "
+                            + this.robot.getMemoryCapacity() + " slots in its memory");
+
+        int counter = 0;
+
+        do {
+            // Input from user, and add it to the list of chosen cards
             if (sc.hasNextInt()) {
                 int number = sc.nextInt();
-                if (number > 10) {
-                    notDone = true;
-                } else {
-                    programForRobotToExecute.add(theCardsToChooseYourProgramFrom.get(number - 1));
-                }
+                programForRobotToExecute.add(theCardsToChooseYourProgramFrom.get(number - 1));
+                counter++;
             }
 
+            // Printing out the choices the player has done this far
+            System.out.println("Your choices so far:");
             for (int i = 0; i < programForRobotToExecute.size(); i++) {
-                System.out.println("your choices so far:");
-                System.out.println(programForRobotToExecute.get(i).toString());
-
+                System.out.println(programForRobotToExecute.get(i).toString() + "\nYou have " + (this.robot.getMemoryCapacity() - (i+1)) + " cards left");
             }
-            System.out.println();
-        }
+        } while (counter < this.robot.getMemoryCapacity());
+
 
         return programForRobotToExecute;
     }
