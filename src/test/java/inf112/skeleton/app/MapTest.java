@@ -23,7 +23,7 @@ public class MapTest {
                 map.add(new Robot(x, y, Directions.UP), x, y);
             }
         }
-        return map;
+        return map; 
     }
 
     @Test
