@@ -4,9 +4,10 @@ public class Nothing implements IBoardObject{
     int x;
     int y;
 
+    private Position position;
+
     public Nothing(int x, int y){
-        this.x = x;
-        this.y = y;
+        this.position = new Position(x, y);
     }
 
     @Override
@@ -17,6 +18,10 @@ public class Nothing implements IBoardObject{
     @Override
     public int getY() {
         return this.y;
+    }
+
+    public Position getPosition() {
+        return this.position;
     }
 
     @Override

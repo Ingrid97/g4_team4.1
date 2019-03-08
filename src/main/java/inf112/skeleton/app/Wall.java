@@ -4,18 +4,23 @@ public class Wall implements IBoardObject{
     int x;
     int y;
 
+    private Position position;
+
     public Wall(int x, int y){
-        this.x = x;
-        this.y = y;
+        this.position = new Position(x, y);
     }
     @Override
     public int getX() {
-        return this.x;
+        return this.position.getX();
     }
 
     @Override
     public int getY() {
-        return this.y;
+        return this.position.getY();
+    }
+
+    public Position getPosition() {
+        return this.position;
     }
 
     @Override
