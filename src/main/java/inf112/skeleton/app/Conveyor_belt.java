@@ -6,10 +6,13 @@ public class Conveyor_belt implements IBoardObject{
     Directions dir;
     int placeDir;
     boolean isYellowBelt;
+    private Position position;
 
     public Conveyor_belt(int x, int y){
         isBlueBelt = false;
         isYellowBelt = false;
+
+        this.position = new Position(x, y);
     }
 
     public void isBlueBelt(){
@@ -26,8 +29,8 @@ public class Conveyor_belt implements IBoardObject{
         return 2;
     }
 
-    public void getDirection(){
-
+    public Directions getDirection(){
+        return this.dir;
     }
 
     public void setPlaceDir(int d){
@@ -36,13 +39,19 @@ public class Conveyor_belt implements IBoardObject{
 
     @Override
     public int getX() {
-        return 0;
+        return this.position.getX();
     }
 
     @Override
     public int getY() {
-        return 0;
+        return this.position.getY();
     }
+
+    public Position getPosition() {
+        return this.position;
+    }
+
+
 
     @Override
     public int color() {

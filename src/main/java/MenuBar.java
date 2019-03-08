@@ -1,18 +1,3 @@
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import static javax.swing.JComponent.WHEN_IN_FOCUSED_WINDOW;
-import static javax.swing.plaf.basic.BasicPopupMenuUI.getActionMap;
-import static javax.swing.plaf.basic.BasicPopupMenuUI.getInputMap;
-
 //TODO this class does not work yet because GameState class is not done
 
 /* public class MenuBar extends JFrame {
