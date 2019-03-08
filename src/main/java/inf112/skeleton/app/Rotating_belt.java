@@ -1,18 +1,25 @@
 package inf112.skeleton.app;//Created by ingridjohansen on 06/02/2019.
 
 public class Rotating_belt implements IBoardObject{
-    public Rotating_belt(int x, int y){
 
+    private Position position;
+
+    public Rotating_belt(int x, int y){
+    this.position = new Position(x, y);
     }
 
     @Override
     public int getX() {
-        return 0;
+        return this.position.getX();
     }
 
     @Override
     public int getY() {
-        return 0;
+        return this.position.getY();
+    }
+
+    public Position getPosition() {
+        return this.position;
     }
 
     @Override
