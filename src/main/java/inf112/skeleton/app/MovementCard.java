@@ -25,7 +25,7 @@ public class MovementCard {
 
     @Override
     public String toString() {
-        String stringToPrint = ("Direction: " + direction + "\nNumber of steps: " + numberOfSteps + "\nPriority: " + priority);
+        String stringToPrint = ("Direction: " + direction + "\nNumber of steps: " + numberOfSteps + "\nPriority: " + priority + "\n");
         return stringToPrint;
     }
 }
