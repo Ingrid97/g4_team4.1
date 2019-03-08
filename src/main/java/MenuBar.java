@@ -13,7 +13,9 @@ import static javax.swing.JComponent.WHEN_IN_FOCUSED_WINDOW;
 import static javax.swing.plaf.basic.BasicPopupMenuUI.getActionMap;
 import static javax.swing.plaf.basic.BasicPopupMenuUI.getInputMap;
 
-public class MenuBar extends JFrame {
+//TODO this class does not work yet because GameState class is not done
+
+/* public class MenuBar extends JFrame {
 
     //Creating GUI parameters
     private String clickedItem;
@@ -68,6 +70,7 @@ public class MenuBar extends JFrame {
 
             }
         };
+
         addMouseListener(mouse);
         addMouseMotionListener(mouse);
 
@@ -140,4 +143,6 @@ public class MenuBar extends JFrame {
 
 
 
-}
+0
+
+*/
