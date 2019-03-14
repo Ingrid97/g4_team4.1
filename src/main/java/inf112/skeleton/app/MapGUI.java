@@ -5,7 +5,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -92,10 +91,10 @@ public class MapGUI extends ApplicationAdapter {
 
 
         for (int i = 0; i < 10; i++) {
-            for (int j = 0; j < 10; j ++) {
+            for (int j = 0; j < 10; j++) {
                 tile[i][j] = new Rectangle();
-                tile[i][j].x = i*64;
-                tile[i][j].y = j*64;
+                tile[i][j].x = i * 64;
+                tile[i][j].y = j * 64;
                 tile[i][j].width = 64;
                 tile[i][j].height = 64;
             }
@@ -103,7 +102,7 @@ public class MapGUI extends ApplicationAdapter {
 
         for (int i = 0; i < 9; i++) {
             cards[i] = new Rectangle();
-            cards[i].x = 32+i*64;
+            cards[i].x = 32 + i * 64;
             cards[i].y = 700;
             cards[i].height = 96;
             cards[i].width = 64;
@@ -169,7 +168,7 @@ public class MapGUI extends ApplicationAdapter {
         */
     }
 
-    public void drawTable(){
+    public void drawTable() {
 
         //TODO: make switch or nicer?
         drawnTable = true;
@@ -177,11 +176,11 @@ public class MapGUI extends ApplicationAdapter {
         for (int i = 0; i < 10; i++) {
             for (int j = 0, k = 9; j < 10; j++, k--) {
                 if (map.getBoardObject(new Position(j, i)) instanceof Robot) {
-                    //make thes pessial robot object
+                    //make the special robot object
                     batch.draw(nothingImage, tile[i][k].x, tile[i][k].y);
                     if (robot[roboid].x == -1) {
-                        robot[roboid].x = i*64;
-                        robot[roboid].y = k*64;
+                        robot[roboid].x = i * 64;
+                        robot[roboid].y = k * 64;
                     }
                     batch.draw(robotImage, robot[roboid].x, robot[roboid].y);
                     roboid++;

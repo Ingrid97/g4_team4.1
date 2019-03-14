@@ -5,7 +5,7 @@ public class MovementCard {
     private int numberOfSteps;
     private int priority;
 
-    public MovementCard (Directions direction, int numberOfSteps, int priority) {
+    public MovementCard(Directions direction, int numberOfSteps, int priority) {
         this.direction = direction;
         this.numberOfSteps = numberOfSteps;
         this.priority = priority;
@@ -25,7 +25,7 @@ public class MovementCard {
 
     @Override
     public String toString() {
-        String stringToPrint = ("Direction: " + direction + " Number of steps: " + numberOfSteps + " Priority" + priority);
+        String stringToPrint = ("Direction: " + direction + "\nNumber of steps: " + numberOfSteps + "\nPriority: " + priority + "\n");
         return stringToPrint;
     }
 }

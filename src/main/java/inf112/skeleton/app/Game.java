@@ -50,8 +50,10 @@ public class Game {
             ArrayList<ArrayList> listOfPrioritizedListsOfMovementCardsFromPlayers = new ArrayList<>();
             for (int i = 0; i < players.size(); i++) {
                 ArrayList<MovementCard> movementCardsToBeExecuted;
+                System.out.println("Player " + (i + 1) + " choose your cards!");
                 movementCardsToBeExecuted = players.get(i).theMovementCardsThePlayerChose();
                 listOfPrioritizedListsOfMovementCardsFromPlayers.add(movementCardsToBeExecuted);
+                System.out.print("\n\n\n");
             }
 
             //playing movement cards from players
@@ -67,76 +69,85 @@ public class Game {
 
     }
 
-
+    /**
+     * ececuting a movement card by checking the position/s to move to, if available the robot gets moved
+     *
+     * @param movCard the movement card to be executed
+     * @param player  the player that should be moved
+     */
     public static void playMovementCard(MovementCard movCard, Player player) {
         Position currentPos = player.getRobot().getPosition();
         Position newPos = new Position(1000, 1000);
-            if (movCard.getDirection() == Directions.NODIRECTION) {
-                try {
-                    for (int i = 0; i < movCard.getNumberOfSteps(); i++) {
-                        newPos = new Position(currentPos.getX(), (currentPos.getY() + 1));
-                        if (!legalPosition(newPos)) break;
-                    }
-                } catch (IllegalArgumentException e) {
-                    System.out.println("A robot has fallen");
+        if (movCard.getDirection() == Directions.NODIRECTION) {//moving forward
+            try {
+                for (int i = 0; i < movCard.getNumberOfSteps(); i++) {
+                    newPos = new Position(currentPos.getX(), (currentPos.getY() + 1));
+                    if (!legalPosition(newPos)) break;
                 }
-            } else if (movCard.getDirection() == Directions.DOWN) {
-                try {
-                    if (movCard.getNumberOfSteps() == 1) {
-                        newPos = new Position(currentPos.getX(), (currentPos.getY() - 1));
-                    } else {
-                        Directions direction = player.getRobot().getDirection();
-                        newPos = currentPos;
-                        switch (direction) {
-                            case UP:
-                                player.getRobot().setDirection(Directions.DOWN);
-                            case RIGHT:
-                                player.getRobot().setDirection(Directions.LEFT);
-                            case LEFT:
-                                player.getRobot().setDirection(Directions.RIGHT);
-                            case DOWN:
-                                player.getRobot().setDirection(Directions.UP);
-                        }
-                    }
-                } catch (IllegalArgumentException e) {
-                    System.out.println("A robot has fallen");
-                }
-            } else if (movCard.getDirection() == Directions.LEFT) {
-                newPos = currentPos;
-                Directions direction = player.getRobot().getDirection();
-                newPos = currentPos;
-                switch (direction) {
-                    case UP:
-                        player.getRobot().setDirection(Directions.LEFT);
-                    case RIGHT:
-                        player.getRobot().setDirection(Directions.UP);
-                    case LEFT:
-                        player.getRobot().setDirection(Directions.DOWN);
-                    case DOWN:
-                        player.getRobot().setDirection(Directions.RIGHT);
-                }
-            } else {
-                newPos = currentPos;
-                Directions direction = player.getRobot().getDirection();
-                newPos = currentPos;
-                switch (direction) {
-                    case UP:
-                        player.getRobot().setDirection(Directions.RIGHT);
-                    case RIGHT:
-                        player.getRobot().setDirection(Directions.DOWN);
-                    case LEFT:
-                        player.getRobot().setDirection(Directions.UP);
-                    case DOWN:
-                        player.getRobot().setDirection(Directions.LEFT);
-                }
+            } catch (IllegalArgumentException e) {
+                System.out.println("A robot has fallen"); //robot fell outside map, should be returned to backup position
             }
+        } else if (movCard.getDirection() == Directions.DOWN) {//moving backward or turning 180 degrees
+            try {
+                if (movCard.getNumberOfSteps() == 1) {
+                    newPos = new Position(currentPos.getX(), (currentPos.getY() - 1));
+                } else {
+                    Directions direction = player.getRobot().getDirection();
+                    newPos = currentPos;
+                    switch (direction) {
+                        case UP:
+                            player.getRobot().setDirection(Directions.DOWN);
+                        case RIGHT:
+                            player.getRobot().setDirection(Directions.LEFT);
+                        case LEFT:
+                            player.getRobot().setDirection(Directions.RIGHT);
+                        case DOWN:
+                            player.getRobot().setDirection(Directions.UP);
+                    }
+                }
+            } catch (IllegalArgumentException e) {
+                System.out.println("A robot has fallen");//robot fell outside map, should be returned to backup position
+            }
+        } else if (movCard.getDirection() == Directions.LEFT) {//turning left, no movement
+            Directions direction = player.getRobot().getDirection();
+            newPos = currentPos;
+            switch (direction) {
+                case UP:
+                    player.getRobot().setDirection(Directions.LEFT);
+                case RIGHT:
+                    player.getRobot().setDirection(Directions.UP);
+                case LEFT:
+                    player.getRobot().setDirection(Directions.DOWN);
+                case DOWN:
+                    player.getRobot().setDirection(Directions.RIGHT);
+            }
+        } else {//turning right, no movement
+            Directions direction = player.getRobot().getDirection();
+            newPos = currentPos;
+            switch (direction) {
+                case UP:
+                    player.getRobot().setDirection(Directions.RIGHT);
+                case RIGHT:
+                    player.getRobot().setDirection(Directions.DOWN);
+                case LEFT:
+                    player.getRobot().setDirection(Directions.UP);
+                case DOWN:
+                    player.getRobot().setDirection(Directions.LEFT);
+            }
+        }
 
-            if (legalPosition(newPos)) {
-                map.moveRobot(player.getRobot(), newPos);
-                player.getRobot().setPosition(newPos);
-            }
+        if (legalPosition(newPos)) { // moving to te actual new position
+            map.moveRobot(player.getRobot(), newPos);
+            player.getRobot().setPosition(newPos);
+        }
     }
 
+    /**
+     * checking that given position is inside map, or not occupied by a wall or robot
+     *
+     * @param position
+     * @return true if a robot can move to this position
+     */
     public static boolean legalPosition(Position position) {
         if (!map.isValidPosition(position)) {
             return false;
@@ -146,7 +157,7 @@ public class Game {
     }
 
 
-    public static void printMap(Map map){
+    public static void printMap(Map map) {
         System.out.println("Map:");
         //TODO: make switch and fix GUI stuffs
         for (int i = 0; i < map.getX(); i++) {
@@ -180,10 +191,11 @@ public class Game {
 
     /**
      * making the map from a given file
+     *
      * @param filename
      * @return
      */
-    public static Map makeMap(String filename){
+    public static Map makeMap(String filename) {
         BufferedReader br;
         try {
             br = new BufferedReader(new FileReader(filename));
@@ -195,24 +207,24 @@ public class Game {
 
 
         System.out.println("Making the map...");
-        //the map is sat to 10x10
         Map map = new Map(10, 10);
         try {
-            for (int i = 0; i < 10; i++){
+            for (int i = 0; i < 10; i++) {
                 String[] line = br.readLine().split(",");
                 int j = 0;
                 for (String l : line) {
-                    if (l.contains("*")){
+                    System.out.println(l);
+                    if (l.contains("*")) {
                         map.add(new Wall(i, j), i, j);
-                    } else if (l.contains("r")){
+                    } else if (l.contains("r")) {
                         Player player = new Player(0, new Robot(i, j, Directions.UP));
                         players.add(player);
                         map.add(player.getRobot(), i, j);
-                    } else if  (l.contains("v")){
+                    } else if (l.contains("v")) {
                         map.add(new Void(i, j), i, j);
-                    } else if  (l.contains("l")){
+                    } else if (l.contains("l")) {
                         map.add(new Laser(i, j), i, j);
-                    } else if  (l.contains("b") || l.contains("y")){
+                    } else if (l.contains("b") || l.contains("y")) {
                         Conveyor_belt c = new Conveyor_belt(i, j);
                         c.setPlaceDir(getDir(l));
                         if (l.contains("y"))
@@ -220,13 +232,14 @@ public class Game {
                         else
                             c.isBlueBelt();
                         map.add(c, i, j);
-                    }  else if  (l.contains("s")){
+
+                    } else if (l.contains("s")) {
                         map.add(new Wrench(i, j), i, j);
-                    } else if  (l.contains("h")){
+                    } else if (l.contains("h")) {
                         map.add(new Wrench_hammer(i, j), i, j);
-                    }  else if  (l.contains("f")){
+                    } else if (l.contains("f")) {
                         map.add(new Flag(i, j), i, j);
-                    } else if  (l.contains("p")){
+                    } else if (l.contains("p")) {
                         map.add(new Rotating_belt(i, j), i, j);
                     } else {
                         map.add(new Nothing(i, j), i, j);
@@ -246,7 +259,7 @@ public class Game {
         return map;
     }
 
-    private static int getDir(String s){
+    private static int getDir(String s) {
         if (s.contains("1"))
             return 1;
         if (s.contains("2"))
@@ -265,8 +278,8 @@ public class Game {
         int priorityForRight = 70;
         int priorityForMovementForward = 490;
         for (int i = 0; i < 18; i++) {
-            theFullDeckOfAllMovementCards.add(new MovementCard(Directions.LEFT, 0,  priorityForLeft));
-            theFullDeckOfAllMovementCards.add(new MovementCard(Directions.RIGHT, 0,  priorityForRight));
+            theFullDeckOfAllMovementCards.add(new MovementCard(Directions.LEFT, 0, priorityForLeft));
+            theFullDeckOfAllMovementCards.add(new MovementCard(Directions.RIGHT, 0, priorityForRight));
             theFullDeckOfAllMovementCards.add(new MovementCard(Directions.NODIRECTION, 1, priorityForMovementForward));
             priorityForLeft += 20;
             priorityForRight += 20;
@@ -298,7 +311,7 @@ public class Game {
         ArrayList<MovementCard> copy = new ArrayList<>(theFullDeckOfAllMovementCards);
         Collections.shuffle(copy);
         for (int i = 0; i < players.size(); i++) {
-            // TODO Make it take a part of the list instead of individual cards
+
             for (int j = 0; j < players.get(i).memoryCapacityForThisPlayer(); j++) {
                 players.get(i).giveMovementCardsToThePlayer(copy.get(j));
             }
