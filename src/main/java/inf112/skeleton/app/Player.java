@@ -54,11 +54,14 @@ public class Player implements KeyListener {
             // Input from user, and add it to the list of chosen cards
             if (sc.hasNextInt()) {
                 int number = sc.nextInt();
+
+                // Sjekker ikke om du har valgt et kort to ganger, da kaster den exception
                 if (number <= 0 || number > this.robot.getMemoryCapacity()) {
                     System.out.println("Illegal input: " + number);
                     continue;
                 } else {
                     programForRobotToExecute.add(theCardsToChooseYourProgramFrom.get(number - 1));
+                    theCardsToChooseYourProgramFrom.remove(number - 1);
                     counter++;
                 }
             }
