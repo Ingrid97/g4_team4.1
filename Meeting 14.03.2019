@@ -6,8 +6,8 @@ We notice that a lot of our methods don’t work on the actual map, therefore th
 
 
 All of us got some taks to do within next week:
-Faltin - Checking and correcting errors
-Ingrid - Making player work with map
+Faltin - Checking and correcting errors, make sure all the differente rounds work and a new robot method (work on game class)
+Ingrid - Making player work with map, also work with GUI and visualization 
 Brede - Optimize movement-cards functionality and how to divide them correctly between players ¬
-Sandra – Finish menu functionality
-Magnus – add functional requirements 
+Sandra – Finish menu functionality for game and divide the tasks on trello.
+Magnus – add functional requirements
