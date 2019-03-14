@@ -310,10 +310,12 @@ public class Game {
     private static void dealOutMovementCards() {
         ArrayList<MovementCard> copy = new ArrayList<>(theFullDeckOfAllMovementCards);
         Collections.shuffle(copy);
+
         for (int i = 0; i < players.size(); i++) {
 
             for (int j = 0; j < players.get(i).memoryCapacityForThisPlayer(); j++) {
                 players.get(i).giveMovementCardsToThePlayer(copy.get(j));
+                copy.remove(j);
             }
         }
     }
