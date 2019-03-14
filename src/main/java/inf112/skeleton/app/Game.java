@@ -53,7 +53,6 @@ public class Game {
                 System.out.println("Player " + (i + 1) + " choose your cards!");
                 movementCardsToBeExecuted = players.get(i).theMovementCardsThePlayerChose();
                 listOfPrioritizedListsOfMovementCardsFromPlayers.add(movementCardsToBeExecuted);
-                System.out.print("\n\n\n");
             }
 
             //playing movement cards from players
@@ -62,7 +61,6 @@ public class Game {
                     playMovementCard((MovementCard) listOfPrioritizedListsOfMovementCardsFromPlayers.get(i).get(j), players.get(i));
                     mapGUI.updateMap(map);
                 }
-                //printMap(map);
             }
         }
 
@@ -310,10 +308,12 @@ public class Game {
     private static void dealOutMovementCards() {
         ArrayList<MovementCard> copy = new ArrayList<>(theFullDeckOfAllMovementCards);
         Collections.shuffle(copy);
+
         for (int i = 0; i < players.size(); i++) {
 
             for (int j = 0; j < players.get(i).memoryCapacityForThisPlayer(); j++) {
                 players.get(i).giveMovementCardsToThePlayer(copy.get(j));
+                copy.remove(j);
             }
         }
     }
