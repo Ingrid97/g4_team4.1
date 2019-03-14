@@ -53,7 +53,6 @@ public class Game {
                 System.out.println("Player " + (i + 1) + " choose your cards!");
                 movementCardsToBeExecuted = players.get(i).theMovementCardsThePlayerChose();
                 listOfPrioritizedListsOfMovementCardsFromPlayers.add(movementCardsToBeExecuted);
-                System.out.print("\n\n\n");
             }
 
             //playing movement cards from players
@@ -62,7 +61,6 @@ public class Game {
                     playMovementCard((MovementCard) listOfPrioritizedListsOfMovementCardsFromPlayers.get(i).get(j), players.get(i));
                     mapGUI.updateMap(map);
                 }
-                //printMap(map);
             }
         }
 
