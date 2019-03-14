@@ -10,22 +10,6 @@
  r,  ,  , r,  ,  ,  ,1y,  , v,
 
 
-10 20
-* * * * * * * * * * * *
-*                1y y *
-*   s    4b4b   f1y   *
-*   p4b4b1b      1y   *
-*  1b     v v    1y   *
-*  1b3b          1y3y *
-*    1b   h h     l1y *
-*    1b   h h  4y4y1y *
-*  4b p f      1y     *
-*   s     v v  1y s   *
-* r     r      1y   v *
-* * * * * * * * * * * *
-
-
-
 Symbols on the bord
 '*' = Wall (1,2,3,4)
 'r' = Robot
@@ -38,6 +22,7 @@ Symbols on the bord
 'f' = Flag
 'p' = Rotating_belt
 ' ' = Nothing
+
 
 1: north, 2: south, 3:east, 4: west
 

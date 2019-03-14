@@ -30,6 +30,7 @@ public class MapGUI extends ApplicationAdapter {
     public static boolean drawnTable = false;
     public static int witchRobot = 0;
     public ArrayList<Player> listOfPLayers;
+    public int moveonce;
 
     public MapGUI(Map map, ArrayList<Player> listOfPLayers) {
         MapGUI.map = map;
@@ -108,6 +109,8 @@ public class MapGUI extends ApplicationAdapter {
             cards[i].width = 64;
         }
 
+        moveonce = 0;
+
 
     }
 
@@ -151,10 +154,19 @@ public class MapGUI extends ApplicationAdapter {
             witchRobot = 0;
         }
 
+        if (moveonce < 64*5){
+            robot[1].y += 1;
+        }
+
+        moveonce++;
+
+
+        /*
         if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) robot[1].y += 64;
         if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) robot[1].y -= 64;
         if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) robot[1].x -= 64;
         if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) robot[1].x += 64;
+        */
     }
 
     public void drawTable(){
@@ -196,7 +208,6 @@ public class MapGUI extends ApplicationAdapter {
                 }
             }
         }
-
     }
 
     @Override

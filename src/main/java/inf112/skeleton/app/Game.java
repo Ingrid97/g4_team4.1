@@ -195,13 +195,13 @@ public class Game {
 
 
         System.out.println("Making the map...");
+        //the map is sat to 10x10
         Map map = new Map(10, 10);
         try {
             for (int i = 0; i < 10; i++){
                 String[] line = br.readLine().split(",");
                 int j = 0;
                 for (String l : line) {
-                    System.out.println(l);
                     if (l.contains("*")){
                         map.add(new Wall(i, j), i, j);
                     } else if (l.contains("r")){
@@ -220,7 +220,6 @@ public class Game {
                         else
                             c.isBlueBelt();
                         map.add(c, i, j);
-
                     }  else if  (l.contains("s")){
                         map.add(new Wrench(i, j), i, j);
                     } else if  (l.contains("h")){
