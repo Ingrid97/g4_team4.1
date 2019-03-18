@@ -61,7 +61,7 @@ public class Player implements KeyListener {
                     continue;
                 } else {
                     programForRobotToExecute.add(theCardsToChooseYourProgramFrom.get(number - 1));
-                    theCardsToChooseYourProgramFrom.remove(number - 1);
+                    //  theCardsToChooseYourProgramFrom.remove(number - 1);
                     counter++;
                 }
             }
