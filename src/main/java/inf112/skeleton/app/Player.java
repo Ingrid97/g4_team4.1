@@ -65,16 +65,13 @@ public class Player implements KeyListener {
         }
         HashSet<Integer> list = new HashSet<>(); // Et HashSet for å sjekke at det ikke velges samme kort flere ganger
 
-        /* Sliter med å tenke ut hvordan et kort skal "brenne" seg fast når det er under 5 valg å ta
-         * Hvordan husker man kortene fra forrige runde
-         */
+
         do {
             // Input from user, and add it to the list of chosen cards
             if (sc.hasNextInt()) {
                 int number = sc.nextInt();
 
 
-                // Sjekker ikke om du har valgt et kort to ganger, da kaster den exception
                 if (number <= 0 || number > this.robot.getMemoryCapacity()) {
                     System.out.println("Illegal input: " + number);
                     continue;
@@ -83,7 +80,6 @@ public class Player implements KeyListener {
                     continue;
                 } else {
                     programForRobotToExecute.add(theCardsToChooseYourProgramFrom.get(number - 1));
-                    //  theCardsToChooseYourProgramFrom.remove(number - 1);
                     counter++;
                     list.add(number);
                 }
