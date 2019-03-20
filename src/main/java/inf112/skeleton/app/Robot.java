@@ -9,6 +9,8 @@ public class Robot implements IRobot {
     private boolean alive;
     private int laserStrength;
     private Directions direction;
+    private int damageToken;
+
 
 
     public Robot(int x, int y, Directions direction) {
@@ -16,9 +18,10 @@ public class Robot implements IRobot {
         this.backUpPosition = positionOfRobot;
         this.healthPoints = 3;
         this.memoryCapacity = 9;
-        this.alive = true;
         this.laserStrength = 1;
+        this.damageToken = 0;
         this.direction = direction;
+        this.alive = true;
     }
 
 
@@ -57,6 +60,7 @@ public class Robot implements IRobot {
     public Directions getDirection() {
         return direction;
     }
+
 
     // Setters
     public void setDirection(Directions direction) {
