@@ -9,7 +9,6 @@ public class Robot implements IRobot {
     private boolean alive;
     private int laserStrength;
     private Directions direction;
-    private int damageToken;
 
 
 
@@ -19,7 +18,6 @@ public class Robot implements IRobot {
         this.healthPoints = 3;
         this.memoryCapacity = 9;
         this.laserStrength = 1;
-        this.damageToken = 0;
         this.direction = direction;
         this.alive = true;
     }
