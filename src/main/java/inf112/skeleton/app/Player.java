@@ -92,6 +92,7 @@ public class Player implements KeyListener {
             }
             System.out.print("\nYou have " + (numberOfSlotsInRegister - counter) + " cards left to choose\n");
         } while (counter < numberOfSlotsInRegister);
+        theCardsToChooseYourProgramFrom.clear();
 
 
         return programForRobotToExecute;

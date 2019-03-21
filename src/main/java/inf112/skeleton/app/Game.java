@@ -54,6 +54,7 @@ public class Game {
                 movementCardsToBeExecuted = players.get(i).theMovementCardsThePlayerChose();
                 listOfPrioritizedListsOfMovementCardsFromPlayers.add(movementCardsToBeExecuted);
             }
+            dealOutMovementCards();
 
             //playing movement cards from players
             for (int j = 0; j < 3; j++) {
