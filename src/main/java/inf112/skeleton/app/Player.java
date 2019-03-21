@@ -83,6 +83,9 @@ public class Player implements KeyListener {
                     counter++;
                     list.add(number);
                 }
+            } else {
+                sc.next();
+                continue;
             }
 
             // Printing out the choices the player has done this far
