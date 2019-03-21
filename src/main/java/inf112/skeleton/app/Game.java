@@ -81,7 +81,7 @@ public class Game {
             try {
                 for (int i = 0; i < movCard.getNumberOfSteps(); i++) {
                     newPos = new Position(currentPos.getX(), (currentPos.getY() + 1));
-                    if (!legalPosition(newPos)) break;
+                    if (legalPosition(newPos) == "dead") break;
                 }
             } catch (IllegalArgumentException e) {
                 System.out.println("A robot has fallen"); //robot fell outside map, should be returned to backup position
@@ -135,9 +135,26 @@ public class Game {
             }
         }
 
-        if (legalPosition(newPos)) { // moving to te actual new position
+        String result = legalPosition(newPos);
+        if (result == "ok") { // moving to te actual new position
             map.moveRobot(player.getRobot(), newPos);
             player.getRobot().setPosition(newPos);
+        } else if (result == "robot") {
+
+        } else if (result == "wall") {
+
+        } else if (result == "laser") {
+
+        } else if (result == "wrench") {
+
+        } else if (result == "wrench_hammer") {
+
+        } else if (result == "rotating_belt") {
+
+        } else if (result == "void") {
+
+        } else if (result == "nothing") {
+
         }
     }
 
@@ -145,14 +162,29 @@ public class Game {
      * checking that given position is inside map, or not occupied by a wall or robot
      *
      * @param position
-     * @return true if a robot can move to this position
+     * @return name of object
      */
-    public static boolean legalPosition(Position position) {
+    public static String legalPosition(Position position) {
         if (!map.isValidPosition(position)) {
-            return false;
+            return "dead";
         } else if (map.getBoardObject(position) instanceof Robot) {
-            return false;
-        } else return !(map.getBoardObject(position) instanceof Wall);
+            return "robot";
+        } else if (!(map.getBoardObject(position) instanceof Wall)) {
+            return "wall";
+        } else if (map.getBoardObject(position) instanceof Laser) {
+            return "laser";
+        } else if (map.getBoardObject(position) instanceof Wrench) {
+            return "wrench";
+        } else if (map.getBoardObject(position) instanceof Wrench_hammer) {
+            return "wrench_hammer";
+        } else if (map.getBoardObject(position) instanceof Rotating_belt) {
+            return "rotating_belt";
+        } else if (map.getBoardObject(position) instanceof Void) {
+            return "void";
+        } else if (map.getBoardObject(position) instanceof Nothing) {
+            return "nothing";
+        }
+        return null;
     }
 
 
