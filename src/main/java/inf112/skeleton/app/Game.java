@@ -24,7 +24,6 @@ public class Game {
         // Lager alle kortene
         setUpTheFullDeckOfCards();
 
-        players = new ArrayList<>();
 
         //leser inn map fra fil
         robotPositions = new int[4][2];
@@ -34,6 +33,8 @@ public class Game {
         map = makeMap("testMap1.txt");
         if (map == null)
             System.exit(0);
+
+
 
         LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
         cfg.title = "Robo Rally";
@@ -57,8 +58,11 @@ public class Game {
             dealOutMovementCards();
 
             //playing movement cards from players
+
+
             for (int j = 0; j < 3; j++) {
                 for (int i = 0; i < players.size(); i++) {
+                    System.out.println("EOAFJOAEF");
                     playMovementCard((MovementCard) listOfPrioritizedListsOfMovementCardsFromPlayers.get(i).get(j), players.get(i));
                     mapGUI.updateMap(map);
                 }
@@ -81,10 +85,10 @@ public class Game {
             try {
                 for (int i = 0; i < movCard.getNumberOfSteps(); i++) {
                     newPos = new Position(currentPos.getX(), (currentPos.getY() + 1));
-                    if (legalPosition(newPos) == "dead") break;
+                    if (legalPosition(newPos).equals("dead")) player.getRobot().setPositionToBackUp();
                 }
             } catch (IllegalArgumentException e) {
-                System.out.println("A robot has fallen"); //robot fell outside map, should be returned to backup position
+                System.out.println("A robot has fallen1"); //robot fell outside map, should be returned to backup position
             }
         } else if (movCard.getDirection() == Directions.DOWN) {//moving backward or turning 180 degrees
             try {
@@ -105,7 +109,7 @@ public class Game {
                     }
                 }
             } catch (IllegalArgumentException e) {
-                System.out.println("A robot has fallen");//robot fell outside map, should be returned to backup position
+                System.out.println("A robot has fallen2");//robot fell outside map, should be returned to backup position
             }
         } else if (movCard.getDirection() == Directions.LEFT) {//turning left, no movement
             Directions direction = player.getRobot().getDirection();
@@ -136,24 +140,29 @@ public class Game {
         }
 
         String result = legalPosition(newPos);
-        if (result == "ok") { // moving to te actual new position
+        // TODO make switch!
+        System.out.println("Result " + result);
+        if (result.equals("ok")) { // moving to te actual new position
+            System.out.println("X new pos: " + newPos.getX() + "\nY new pos: " + newPos.getY());
+            System.out.println("Robot direction " + player.getRobot().getDirection());
             map.moveRobot(player.getRobot(), newPos);
             player.getRobot().setPosition(newPos);
-        } else if (result == "robot") {
+            System.out.println("X = " + player.getRobot().getX() + "\nY = " + player.getRobot().getY());
+        } else if (result.equals("robot")) {
 
-        } else if (result == "wall") {
+        } else if (result.equals("wall")) {
 
-        } else if (result == "laser") {
+        } else if (result.equals("laser")) {
 
-        } else if (result == "wrench") {
+        } else if (result.equals("wrench")) {
 
-        } else if (result == "wrench_hammer") {
+        } else if (result.equals("wrench_hammer")) {
 
-        } else if (result == "rotating_belt") {
+        } else if (result.equals("rotating_belt")) {
 
-        } else if (result == "void") {
+        } else if (result.equals("void")) {
 
-        } else if (result == "nothing") {
+        } else if (result.equals("nothing")) {
 
         }
     }
@@ -169,7 +178,7 @@ public class Game {
             return "dead";
         } else if (map.getBoardObject(position) instanceof Robot) {
             return "robot";
-        } else if (!(map.getBoardObject(position) instanceof Wall)) {
+        } else if (map.getBoardObject(position) instanceof Wall) {
             return "wall";
         } else if (map.getBoardObject(position) instanceof Laser) {
             return "laser";
@@ -182,7 +191,7 @@ public class Game {
         } else if (map.getBoardObject(position) instanceof Void) {
             return "void";
         } else if (map.getBoardObject(position) instanceof Nothing) {
-            return "nothing";
+            return "ok";
         }
         return null;
     }
@@ -244,11 +253,12 @@ public class Game {
                 String[] line = br.readLine().split(",");
                 int j = 0;
                 for (String l : line) {
-                    System.out.println(l);
+
                     if (l.contains("*")) {
                         map.add(new Wall(i, j), i, j);
                     } else if (l.contains("r")) {
-                        Player player = new Player(0, new Robot(i, j, Directions.UP));
+                        Player player = new Player(0, new Robot(9 - i, j, Directions.UP));
+                        System.out.println("i = " + i + ", j = " + j);
                         players.add(player);
                         map.add(player.getRobot(), i, j);
                     } else if (l.contains("v")) {

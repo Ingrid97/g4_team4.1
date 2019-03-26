@@ -133,10 +133,17 @@ public class MapGUI extends ApplicationAdapter {
         drawTable();
 
         roboid = 0;
+        // For loop som går gjennom players og position til robotene
+        for (int i = 0; i < listOfPLayers.size(); i++) {
+            batch.draw(robotImage, listOfPLayers.get(i).getRobot().getX() * 64, listOfPLayers.get(i).getRobot().getY() * 64);
+        }
+
+        /*
         for (int i = 0, k = 9; i < 2; i++, k--) {
             batch.draw(robotImage, robot[roboid].x, robot[roboid].y);
             roboid++;
         }
+        */
 
         for (int i = 0; i < 9; i++) {
             batch.draw(cardTester, cards[i].x, cards[i].y);
@@ -166,11 +173,12 @@ public class MapGUI extends ApplicationAdapter {
                 if (map.getBoardObject(new Position(j, i)) instanceof Robot) {
                     //make the special robot object
                     batch.draw(nothingImage, tile[i][k].x, tile[i][k].y);
+                    /*
                     if (robot[roboid].x == -1) {
                         robot[roboid].x = i * 64;
                         robot[roboid].y = k * 64;
                     }
-                    batch.draw(robotImage, robot[roboid].x, robot[roboid].y);
+                    batch.draw(robotImage, robot[roboid].x, robot[roboid].y); */
                     roboid++;
                 } else if (map.getBoardObject(new Position(j, i)) instanceof Void) {
                     batch.draw(voidImage, tile[i][k].x, tile[i][k].y);
