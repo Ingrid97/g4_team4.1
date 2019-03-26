@@ -74,7 +74,7 @@ public class Map {
         if (position.getY() < 0) return false;
         if (position.getX() < 0) return false;
         if (position.getX() > getX()) return false;
-        return position.getY() <= getY();
+        return position.getY() >= getY();
     }
 
     public void moveRobot(Robot robot, Position newPosition) {

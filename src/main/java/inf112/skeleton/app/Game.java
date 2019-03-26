@@ -46,7 +46,7 @@ public class Game {
         setUpTheFullDeckOfCards();
         dealOutMovementCards();
         while (gameOver) {
-            //getting movement cars from player/s
+            //getting movement cards from player/s
             ArrayList<ArrayList> listOfPrioritizedListsOfMovementCardsFromPlayers = new ArrayList<>();
             for (int i = 0; i < players.size(); i++) {
                 ArrayList<MovementCard> movementCardsToBeExecuted;
@@ -80,8 +80,22 @@ public class Game {
         if (movCard.getDirection() == Directions.NODIRECTION) {//moving forward
             try {
                 for (int i = 0; i < movCard.getNumberOfSteps(); i++) {
-                    newPos = new Position(currentPos.getX(), (currentPos.getY() + 1));
-                    if (legalPosition(newPos) == "dead") break;
+                    Directions direction = player.getRobot().getDirection();
+                    switch (direction) {
+                        case UP:
+                            newPos = new Position(currentPos.getX(), (currentPos.getY() - 1));
+                            break;
+                        case RIGHT:
+                            newPos = new Position((currentPos.getX() + 1), currentPos.getY());
+                            break;
+                        case LEFT:
+                            newPos = new Position((currentPos.getX() - 1), currentPos.getY());
+                            break;
+                        case DOWN:
+                            newPos = new Position(currentPos.getX(), (currentPos.getY() + 1));
+                            break;
+                    }
+                    if (!legalPosition(newPos)) break;
                 }
             } catch (IllegalArgumentException e) {
                 System.out.println("A robot has fallen"); //robot fell outside map, should be returned to backup position
@@ -96,12 +110,16 @@ public class Game {
                     switch (direction) {
                         case UP:
                             player.getRobot().setDirection(Directions.DOWN);
+                            break;
                         case RIGHT:
                             player.getRobot().setDirection(Directions.LEFT);
+                            break;
                         case LEFT:
                             player.getRobot().setDirection(Directions.RIGHT);
+                            break;
                         case DOWN:
                             player.getRobot().setDirection(Directions.UP);
+                            break;
                     }
                 }
             } catch (IllegalArgumentException e) {
@@ -113,12 +131,16 @@ public class Game {
             switch (direction) {
                 case UP:
                     player.getRobot().setDirection(Directions.LEFT);
+                    break;
                 case RIGHT:
                     player.getRobot().setDirection(Directions.UP);
+                    break;
                 case LEFT:
                     player.getRobot().setDirection(Directions.DOWN);
+                    break;
                 case DOWN:
                     player.getRobot().setDirection(Directions.RIGHT);
+                    break;
             }
         } else {//turning right, no movement
             Directions direction = player.getRobot().getDirection();
@@ -126,12 +148,16 @@ public class Game {
             switch (direction) {
                 case UP:
                     player.getRobot().setDirection(Directions.RIGHT);
+                    break;
                 case RIGHT:
                     player.getRobot().setDirection(Directions.DOWN);
+                    break;
                 case LEFT:
                     player.getRobot().setDirection(Directions.UP);
+                    break;
                 case DOWN:
                     player.getRobot().setDirection(Directions.LEFT);
+                    break;
             }
         }
 
