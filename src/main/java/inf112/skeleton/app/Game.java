@@ -95,7 +95,7 @@ public class Game {
                             newPos = new Position(currentPos.getX(), (currentPos.getY() + 1));
                             break;
                     }
-                    if (!legalPosition(newPos)) break;
+                    if (!legalPosition(newPos).equals("dead")) break;
                 }
             } catch (IllegalArgumentException e) {
                 System.out.println("A robot has fallen"); //robot fell outside map, should be returned to backup position
