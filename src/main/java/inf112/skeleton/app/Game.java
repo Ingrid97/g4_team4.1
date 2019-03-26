@@ -167,13 +167,11 @@ public class Game {
 
         String result = legalPosition(newPos);
         // TODO make switch!
-        System.out.println("Result " + result);
         if (result.equals("ok")) { // moving to te actual new position
-            System.out.println("X new pos: " + newPos.getX() + "\nY new pos: " + newPos.getY());
-            System.out.println("Robot direction " + player.getRobot().getDirection());
             map.moveRobot(player.getRobot(), newPos);
             player.getRobot().setPosition(newPos);
-            System.out.println("X = " + player.getRobot().getX() + "\nY = " + player.getRobot().getY());
+
+
         } else if (result.equals("robot")) {
 
         } else if (result.equals("wall")) {
@@ -216,10 +214,9 @@ public class Game {
             return "rotating_belt";
         } else if (map.getBoardObject(position) instanceof Void) {
             return "void";
-        } else if (map.getBoardObject(position) instanceof Nothing) {
+        } else {
             return "ok";
         }
-        return null;
     }
 
 
@@ -283,7 +280,8 @@ public class Game {
                     if (l.contains("*")) {
                         map.add(new Wall(i, j), i, j);
                     } else if (l.contains("r")) {
-                        Player player = new Player(0, new Robot(9 - i, j, Directions.UP));
+                        // TODO! Hvordan fungerer rutenettet? Fikse slik at robotene starter riktig sted
+                        Player player = new Player(0, new Robot(i, j, Directions.UP));
                         System.out.println("i = " + i + ", j = " + j);
                         players.add(player);
                         map.add(player.getRobot(), i, j);
