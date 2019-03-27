@@ -136,7 +136,7 @@ public class MapTest {
             }
         }
     }
-
+//
 //    @Test
 //    public void testingRobotMovement() {
 //        Map map = build(10, 10);

@@ -39,7 +39,7 @@ public class Game {
                 movementCardsToBeExecuted = players.get(i).theMovementCardsThePlayerChose();
                 listOfPrioritizedListsOfMovementCardsFromPlayers.add(movementCardsToBeExecuted);
             }
-            MovementCardDeck.dealOutMovementCards();
+            MovementCardDeck.dealOutMovementCards(players);
 
             //playing movement cards from players
             for (int j = 0; j < 3; j++) {
@@ -49,7 +49,6 @@ public class Game {
                 }
             }
         }
-
 
     }
 

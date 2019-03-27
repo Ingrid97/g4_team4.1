@@ -7,6 +7,9 @@ public class MovementCardDeck {
 
     private static ArrayList<MovementCard> theFullDeckOfAllMovementCards;
 
+    /**
+     * Making the movement card deck
+     */
     public static void setUpTheFullDeckOfCards() {
         theFullDeckOfAllMovementCards = new ArrayList<>();
 
@@ -45,6 +48,11 @@ public class MovementCardDeck {
         }
     }
 
+    /**
+     * Dealing out random movement cards to players
+     *
+     * @param players list of player to deal cards to
+     */
     public static void dealOutMovementCards(ArrayList<Player> players) {
         ArrayList<MovementCard> copy = new ArrayList<>(theFullDeckOfAllMovementCards);
         Collections.shuffle(copy);

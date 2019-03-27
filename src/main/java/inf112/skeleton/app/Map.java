@@ -10,6 +10,12 @@ public class Map {
 
     private ArrayList[][] map;
 
+    /**
+     * Map constructor
+     *
+     * @param x width for the map to make
+     * @param y height fo the map to make
+     */
     public Map(int x, int y) {
         if (x < 0 || y < 0) {
             throw new IllegalArgumentException("the x or y value of the map cannot be less than zero");
@@ -23,15 +29,44 @@ public class Map {
         }
     }
 
+    /**
+     * translator from string to int
+     *
+     * @param s string to be converted
+     * @return 1, 2, 3, 4(to be used for Direction)
+     */
+    private static int getDir(String s) {
+        if (s.contains("1"))
+            return 1;
+        if (s.contains("2"))
+            return 2;
+        if (s.contains("3"))
+            return 3;
+        return 4;
+    }
+
+    /**
+     * @return the maps length
+     */
     int getX() {
         return map.length;
     }
 
+    /**
+     * @return the maps height
+     */
     int getY() {
         return map[0].length;
     }
 
-    void add(IBoardObject c, int x, int y) {
+    /**
+     * Adding a IBoardObject to the map
+     *
+     * @param c the IBoardObject to add
+     * @param x coordinate for object(must be greater than 0, and lower than getX()
+     * @param y coordinate for object(must be greater than 0, and lower than getY()
+     */
+    public void add(IBoardObject c, int x, int y) {
         if (x < 0 || y < 0) {
             if (x > getX() || y > getY()) {
                 throw new IllegalArgumentException("Cannot place object with these values: x= " + x + " y= " + y);
@@ -41,8 +76,13 @@ public class Map {
 
     }
 
-    //test
-    IBoardObject getBoardObject(Position position) {
+    /**
+     * Finding a IBoardObject in a Position on the map
+     *
+     * @param position the position to check
+     * @return a robot if there is one, otherwise any other object if none returns null
+     */
+    public IBoardObject getBoardObject(Position position) {
         ArrayList listOfObjects = map[position.getX()][position.getY()];
         if (isValidPosition(position)) {
             for (int i = 0; i < listOfObjects.size(); i++) {
@@ -59,6 +99,9 @@ public class Map {
         return null;
     }
 
+    /**
+     * @return copy of the map
+     */
     public ArrayList[][] getMap() {
         ArrayList[][] copyOfMap = new ArrayList[getX()][getY()];
         for (int x = 0; x < getX(); x++) {
@@ -69,11 +112,20 @@ public class Map {
         return map;
     }
 
+    /**
+     * @param x coordinate to check
+     * @param y coordinate to check
+     * @return true if empty
+     */
     public boolean isEmpty(int x, int y) {
         return map[x][y].size() == 0;
     }
 
-
+    /**
+     * check if a Position is inside the map or invalid
+     * @param position coordinates to check
+     * @return true if valid
+     */
     public boolean isValidPosition(Position position) {
         if (position.getY() < 0) return false;
         if (position.getX() < 0) return false;
@@ -81,41 +133,14 @@ public class Map {
         return position.getY() <= getY();
     }
 
+    /**
+     * moves a robot on the map
+     * @param robot robot to be moved
+     * @param newPosition where to move given robot
+     */
     public void moveRobot(Robot robot, Position newPosition) {
         map[newPosition.getX()][newPosition.getY()].add(robot);
         map[robot.getPosition().getX()][robot.getPosition().getY()].remove(robot);
-    }
-
-
-    public static void printMap(Map map) {
-        System.out.println("Map:");
-        //TODO: make switch and fix GUI stuffs
-        for (int i = 0; i < map.getX(); i++) {
-            for (int j = 0; j < map.getY(); j++) {
-                if (map.getBoardObject(new Position(i, j)) instanceof Wall) {
-                    System.out.print('*');
-                } else if (map.getBoardObject(new Position(i, j)) instanceof Robot) {
-                    System.out.print('r');
-                } else if (map.getBoardObject(new Position(i, j)) instanceof Void) {
-                    System.out.print('v');
-                } else if (map.getBoardObject(new Position(i, j)) instanceof Laser) {
-                    System.out.print('l');
-                } else if (map.getBoardObject(new Position(i, j)) instanceof Conveyor_belt) {
-                    System.out.print('b');
-                } else if (map.getBoardObject(new Position(i, j)) instanceof Wrench) {
-                    System.out.print('s');
-                } else if (map.getBoardObject(new Position(i, j)) instanceof Wrench_hammer) {
-                    System.out.print('h');
-                } else if (map.getBoardObject(new Position(i, j)) instanceof Flag) {
-                    System.out.print('f');
-                } else if (map.getBoardObject(new Position(i, j)) instanceof Rotating_belt) {
-                    System.out.print('p');
-                } else {
-                    System.out.print(' ');
-                }
-            }
-            System.out.println();
-        }
     }
 
 
@@ -189,14 +214,38 @@ public class Map {
         return map;
     }
 
-    private static int getDir(String s) {
-        if (s.contains("1"))
-            return 1;
-        if (s.contains("2"))
-            return 2;
-        if (s.contains("3"))
-            return 3;
-        return 4;
+    /**
+     * prints the map to the conosle
+     */
+    public void printMap() {
+        System.out.println("Map:");
+        //TODO: make switch and fix GUI stuffs
+        for (int i = 0; i < getX(); i++) {
+            for (int j = 0; j < getY(); j++) {
+                if (getBoardObject(new Position(i, j)) instanceof Wall) {
+                    System.out.print('*');
+                } else if (getBoardObject(new Position(i, j)) instanceof Robot) {
+                    System.out.print('r');
+                } else if (getBoardObject(new Position(i, j)) instanceof Void) {
+                    System.out.print('v');
+                } else if (getBoardObject(new Position(i, j)) instanceof Laser) {
+                    System.out.print('l');
+                } else if (getBoardObject(new Position(i, j)) instanceof Conveyor_belt) {
+                    System.out.print('b');
+                } else if (getBoardObject(new Position(i, j)) instanceof Wrench) {
+                    System.out.print('s');
+                } else if (getBoardObject(new Position(i, j)) instanceof Wrench_hammer) {
+                    System.out.print('h');
+                } else if (getBoardObject(new Position(i, j)) instanceof Flag) {
+                    System.out.print('f');
+                } else if (getBoardObject(new Position(i, j)) instanceof Rotating_belt) {
+                    System.out.print('p');
+                } else {
+                    System.out.print(' ');
+                }
+            }
+            System.out.println();
+        }
     }
 
 }
