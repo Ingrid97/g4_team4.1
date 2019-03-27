@@ -13,6 +13,7 @@ public class Main {
 //
 //        new LwjglApplication(new MapGUI(), cfg);
         playGame();
-
+        Game game = new Game();
+        playGame();
     }
 }

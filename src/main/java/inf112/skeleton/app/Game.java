@@ -4,6 +4,7 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 public class Game {
     private static ArrayList<Player> players;
@@ -46,9 +47,8 @@ public class Game {
             //playing movement cards from players
             for (int j = 0; j < 5; j++) {//the max number for this for loop chooses how many movementcards is supposed to be played
                 for (int i = 0; i < players.size(); i++) {
-                    System.out.println("EOAFJOAEF");
-                    playMovementCard((MovementCard) listOfPrioritizedListsOfMovementCardsFromPlayers.get(i).get(j), players.get(i));
-                    mapGUI.updateMap(map);
+                    System.out.println("position: x: " + players.get(i).getRobot().getX() + " y: " + players.get(i).getRobot().getY());
+                    playMovementCard((MovementCard) listOfPrioritizedListsOfMovementCardsFromPlayers.get(i).get(j), players.get(i), mapGUI);
                 }
             }
 
@@ -64,13 +64,17 @@ public class Game {
      * @param movCard the movement card to be executed
      * @param player  the player that should be moved
      */
-    public static void playMovementCard(MovementCard movCard, Player player) {
+    public static void playMovementCard(MovementCard movCard, Player player, MapGUI mapGUI) {
         Position currentPos = player.getRobot().getPosition();
         Position newPos = new Position(1000, 1000);
         switch (movCard.getDirection()) {
             case NODIRECTION: //moving forward
                 try {
-                    newPos = movingForward(movCard, player, currentPos, newPos);
+                    for (int i = 0; i < movCard.getNumberOfSteps(); i++) {
+                        newPos = movingForward(player, currentPos);
+                        if (!legalPosition(newPos).equals("dead")) break;
+                        moveTheRobotAndUpdateMapGUI(player, newPos, mapGUI);
+                    }
                 } catch (IllegalArgumentException e) {
                     System.out.println("A robot has fallen1"); //robot fell outside map, should be returned to backup position
                 }
@@ -83,10 +87,12 @@ public class Game {
                 }
                 break;
             case LEFT: //turning left
+                newPos = currentPos;
                 Directions newDirection1 = turningLeft(player.getRobot().getDirection());
                 player.getRobot().setDirection(newDirection1);
                 break;
             default: //turning right
+                newPos = currentPos;
                 Directions newDirection2 = turningRight(player.getRobot().getDirection());
                 player.getRobot().setDirection(newDirection2);
                 break;
@@ -118,15 +124,29 @@ public class Game {
             case "dead":
                 map.moveRobot(player.getRobot(), player.getRobot().getBackUpPosition());
                 player.getRobot().setPositionToBackUp();
+                System.out.println("deadPosition: x: " + newPos.getX() + " y: " + newPos.getY() + "   Direction on MovCard: " + movCard.getDirection());
+                System.out.println("ROBOT DEAD");
                 return;
             default://default is when none of the other case occurs, then it moves the robot to the actual position
-                map.moveRobot(player.getRobot(), newPos);
-                player.getRobot().setPosition(newPos);
+                moveTheRobotAndUpdateMapGUI(player, newPos, mapGUI);
                 break;
 
         }
     }
 
+    private static void moveTheRobotAndUpdateMapGUI(Player player, Position newPos, MapGUI mapGUI) {
+        if (newPos.getY() == 1000 || newPos.getX() == 1000) {
+            return;
+        }
+        map.moveRobot(player.getRobot(), newPos);
+        player.getRobot().setPosition(newPos);
+        mapGUI.updateMap(map);
+        try {
+            TimeUnit.SECONDS.sleep(1);
+        } catch (InterruptedException e) {
+            System.out.println("ERROROROROR");
+        }
+    }
     /**
      * checking that given position is inside map, or not occupied by a wall or robot
      *
@@ -161,17 +181,15 @@ public class Game {
     /**
      * Moving a robot forward,
      *
-     * @param movCard    movement card for knowing how many steps
      * @param player     player to move
      * @param currentPos current position of robot
-     * @param newPos     new position where the robot is going next step
      * @return the final new position, ex the third position if the movCard said 3 steps
      * @throws IllegalArgumentException
      */
-    private static Position movingForward(MovementCard movCard, Player player, Position currentPos, Position newPos) throws IllegalArgumentException {
-        for (int i = 0; i < movCard.getNumberOfSteps(); i++) {
-            Directions direction = player.getRobot().getDirection();
-            switch (direction) {
+    private static Position movingForward(Player player, Position currentPos) throws IllegalArgumentException {
+        Directions direction = player.getRobot().getDirection();
+        Position newPos;
+        switch (direction) {
                 case UP:
                     newPos = new Position(currentPos.getX(), (currentPos.getY() - 1));
                     break;
@@ -181,12 +199,10 @@ public class Game {
                 case LEFT:
                     newPos = new Position((currentPos.getX() - 1), currentPos.getY());
                     break;
-                case DOWN:
+            default:
                     newPos = new Position(currentPos.getX(), (currentPos.getY() + 1));
                     break;
             }
-            if (!legalPosition(newPos).equals("dead")) break;
-        }
         return newPos;
     }
 
