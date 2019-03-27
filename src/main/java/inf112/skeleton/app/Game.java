@@ -60,7 +60,7 @@ public class Game {
             //playing movement cards from players
 
 
-            for (int j = 0; j < 3; j++) {
+            for (int j = 0; j < 5; j++) {//the max number for this for loop chooses how many movementcards is supposed to be played
                 for (int i = 0; i < players.size(); i++) {
                     System.out.println("EOAFJOAEF");
                     playMovementCard((MovementCard) listOfPrioritizedListsOfMovementCardsFromPlayers.get(i).get(j), players.get(i));
