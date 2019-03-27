@@ -168,7 +168,6 @@ public class Map {
                 String[] line = br.readLine().split(",");
                 int j = 0;
                 for (String l : line) {
-                    System.out.println(l);
                     if (l.contains("*")) {
                         map.add(new Wall(i, j), i, j);
                     } else if (l.contains("r")) {
