@@ -3,34 +3,20 @@ package inf112.skeleton.app;//Created by ingridjohansen on 04/02/2019.
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class Game {
     private static ArrayList<Player> players;
-    private static ArrayList<MovementCard> theFullDeckOfAllMovementCards;
     private static boolean gameOver;
-    public static int[][] robotPositions;
-    public static int numberOfRobots;
-    private static int numberOfPlayers;
     private static Map map;
 
 
     public static void playGame() {
         // Lager alle kortene
-        setUpTheFullDeckOfCards();
-
-
         //leser inn map fra fil
-        robotPositions = new int[4][2];
-        numberOfRobots = 0;
-        numberOfPlayers = 0;
         players = new ArrayList<>();
-        map = makeMap("testMap1.txt");
+        map = new Map(10, 10);
+        map = Map.makeMap("testMap1.txt", players);
         if (map == null)
             System.exit(0);
 
@@ -44,8 +30,8 @@ public class Game {
         new LwjglApplication(mapGUI, cfg);//instantiating MapGUI and updating the map it prints
 
         gameOver = true;
-        setUpTheFullDeckOfCards();
-        dealOutMovementCards();
+        MovementCardDeck.setUpTheFullDeckOfCards();
+        MovementCardDeck.dealOutMovementCards(players);
         while (gameOver) {
             //getting movement cards from player/s
             ArrayList<ArrayList> listOfPrioritizedListsOfMovementCardsFromPlayers = new ArrayList<>();
@@ -55,7 +41,7 @@ public class Game {
                 movementCardsToBeExecuted = players.get(i).theMovementCardsThePlayerChose();
                 listOfPrioritizedListsOfMovementCardsFromPlayers.add(movementCardsToBeExecuted);
             }
-            dealOutMovementCards();
+            MovementCardDeck.dealOutMovementCards(players);
 
             //playing movement cards from players
 
@@ -68,7 +54,6 @@ public class Game {
                 }
             }
         }
-
 
     }
 
@@ -166,27 +151,32 @@ public class Game {
         }
 
         String result = legalPosition(newPos);
-        // TODO make switch! Not necessary but a nice refactor
-        if (result.equals("ok")) { // moving to te actual new position
-            map.moveRobot(player.getRobot(), newPos);
-            player.getRobot().setPosition(newPos);
-
-
-        } else if (result.equals("robot")) {
-
-        } else if (result.equals("wall")) {
-
-        } else if (result.equals("laser")) {
-
-        } else if (result.equals("wrench")) {
-
-        } else if (result.equals("wrench_hammer")) {
-
-        } else if (result.equals("rotating_belt")) {
-
-        } else if (result.equals("void")) {
-
-        } else if (result.equals("nothing")) {
+        switch (result) {
+            case "robot":
+                //what do to if a robot collides with another robot
+                break;
+            case "wall":
+                //what do to if a robot collides with a wall
+                break;
+            case "laser":
+                //what do to if a robot collides with a laser
+                break;
+            case "wrench_hammer":
+                //what do to if a robot collides with a wrench:hammer
+                break;
+            case "rotating_belt":
+                //what do to if a robot collides with a rotating_belt
+                break;
+            case "void":
+                //what do to if a robot collides with a void
+                break;
+            case "nothing":
+                //what do to if a robot collides with a nothing
+                break;
+            default://default is when none of the other case occurs, then it moves the robot to the actual position
+                map.moveRobot(player.getRobot(), newPos);
+                player.getRobot().setPosition(newPos);
+                break;
 
         }
     }
@@ -214,174 +204,11 @@ public class Game {
             return "rotating_belt";
         } else if (map.getBoardObject(position) instanceof Void) {
             return "void";
+        } else if (map.getBoardObject(position) instanceof Nothing) {
+            return "nothing";
         } else {
             return "ok";
         }
     }
 
-
-    public static void printMap(Map map) {
-        System.out.println("Map:");
-
-        for (int i = 0; i < map.getX(); i++) {
-            for (int j = 0; j < map.getY(); j++) {
-                if (map.getBoardObject(new Position(i, j)) instanceof Wall) {
-                    System.out.print('*');
-                } else if (map.getBoardObject(new Position(i, j)) instanceof Robot) {
-                    System.out.print('r');
-                } else if (map.getBoardObject(new Position(i, j)) instanceof Void) {
-                    System.out.print('v');
-                } else if (map.getBoardObject(new Position(i, j)) instanceof Laser) {
-                    System.out.print('l');
-                } else if (map.getBoardObject(new Position(i, j)) instanceof Conveyor_belt) {
-                    System.out.print('b');
-                } else if (map.getBoardObject(new Position(i, j)) instanceof Wrench) {
-                    System.out.print('s');
-                } else if (map.getBoardObject(new Position(i, j)) instanceof Wrench_hammer) {
-                    System.out.print('h');
-                } else if (map.getBoardObject(new Position(i, j)) instanceof Flag) {
-                    System.out.print('f');
-                } else if (map.getBoardObject(new Position(i, j)) instanceof Rotating_belt) {
-                    System.out.print('p');
-                } else {
-                    System.out.print(' ');
-                }
-            }
-            System.out.println();
-        }
-    }
-
-
-    /**
-     * making the map from a given file
-     *
-     * @param filename
-     * @return
-     */
-    public static Map makeMap(String filename) {
-        BufferedReader br;
-        try {
-            br = new BufferedReader(new FileReader(filename));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            System.out.println("this file does not exist: " + filename);
-            return null;
-        }
-
-
-        System.out.println("Making the map...");
-        Map map = new Map(10, 10);
-        try {
-            for (int i = 0; i < 10; i++) {
-                String[] line = br.readLine().split(",");
-                int j = 0;
-                for (String l : line) {
-
-                    if (l.contains("*")) {
-                        map.add(new Wall(i, j), i, j);
-                    } else if (l.contains("r")) {
-                        // TODO! Hvordan fungerer rutenettet? Fikse slik at robotene starter riktig sted
-                        Player player = new Player(0, new Robot(i, j, Directions.UP));
-                        System.out.println("i = " + i + ", j = " + j);
-                        players.add(player);
-                        map.add(player.getRobot(), i, j);
-                    } else if (l.contains("v")) {
-                        map.add(new Void(i, j), i, j);
-                    } else if (l.contains("l")) {
-                        map.add(new Laser(i, j), i, j);
-                    } else if (l.contains("b") || l.contains("y")) {
-                        Conveyor_belt c = new Conveyor_belt(i, j);
-                        c.setPlaceDir(getDir(l));
-                        if (l.contains("y"))
-                            c.isYellowBelt();
-                        else
-                            c.isBlueBelt();
-                        map.add(c, i, j);
-
-                    } else if (l.contains("s")) {
-                        map.add(new Wrench(i, j), i, j);
-                    } else if (l.contains("h")) {
-                        map.add(new Wrench_hammer(i, j), i, j);
-                    } else if (l.contains("f")) {
-                        map.add(new Flag(i, j), i, j);
-                    } else if (l.contains("p")) {
-                        map.add(new Rotating_belt(i, j), i, j);
-                    } else {
-                        map.add(new Nothing(i, j), i, j);
-                    }
-                    j++;
-                }
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("There's something wrong with the map");
-            return null;
-        }
-
-        System.out.println("Adding stuff to the map...");
-
-        return map;
-    }
-
-    private static int getDir(String s) {
-        if (s.contains("1"))
-            return 1;
-        if (s.contains("2"))
-            return 2;
-        if (s.contains("3"))
-            return 3;
-        return 4;
-    }
-
-    private static void setUpTheFullDeckOfCards() {
-        theFullDeckOfAllMovementCards = new ArrayList<>();
-
-        // Rotate cards
-        // Left rotation, right rotation, forward movement 1
-        int priorityForLeft = 80;
-        int priorityForRight = 70;
-        int priorityForMovementForward = 490;
-        for (int i = 0; i < 18; i++) {
-            theFullDeckOfAllMovementCards.add(new MovementCard(Directions.LEFT, 0, priorityForLeft));
-            theFullDeckOfAllMovementCards.add(new MovementCard(Directions.RIGHT, 0, priorityForRight));
-            theFullDeckOfAllMovementCards.add(new MovementCard(Directions.NODIRECTION, 1, priorityForMovementForward));
-            priorityForLeft += 20;
-            priorityForRight += 20;
-            priorityForMovementForward += 20;
-        }
-
-        // Movement forward 2
-        priorityForMovementForward = 670;
-        for (int i = 0; i < 12; i++) {
-            theFullDeckOfAllMovementCards.add(new MovementCard(Directions.NODIRECTION, 2, priorityForMovementForward));
-            priorityForMovementForward += 20;
-        }
-
-        // Movement forward 3, movement backwards 1 & 180 turn
-        priorityForMovementForward = 790;
-        int priorityForMovementBackwards = 430;
-        int priorityFor180Turn = 10;
-        for (int i = 0; i < 6; i++) {
-            theFullDeckOfAllMovementCards.add(new MovementCard(Directions.NODIRECTION, 3, priorityForMovementForward));
-            theFullDeckOfAllMovementCards.add(new MovementCard(Directions.DOWN, 0, priorityFor180Turn));
-            theFullDeckOfAllMovementCards.add(new MovementCard(Directions.DOWN, 1, priorityForMovementBackwards));
-            priorityForMovementForward += 10;
-            priorityFor180Turn += 10;
-            priorityForMovementBackwards += 10;
-        }
-    }
-
-    private static void dealOutMovementCards() {
-        ArrayList<MovementCard> copy = new ArrayList<>(theFullDeckOfAllMovementCards);
-        Collections.shuffle(copy);
-
-        for (int i = 0; i < players.size(); i++) {
-
-            for (int j = 0; j < players.get(i).memoryCapacityForThisPlayer(); j++) {
-                players.get(i).giveMovementCardsToThePlayer(copy.get(j));
-                copy.remove(j);
-            }
-        }
-    }
 }
