@@ -172,6 +172,7 @@ public class Game {
                 map.moveRobot(player.getRobot(), newPos);
                 player.getRobot().setPosition(newPos);
                 break;
+                
         }
     }
 
