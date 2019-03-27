@@ -3,10 +3,6 @@ package inf112.skeleton.app;//Created by ingridjohansen on 04/02/2019.
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -31,7 +27,8 @@ public class Game {
         numberOfRobots = 0;
         numberOfPlayers = 0;
         players = new ArrayList<>();
-        map = makeMap("testMap1.txt");
+        Map map = new Map(10, 10);
+        map = Map.makeMap("testMap1.txt", players);
         if (map == null)
             System.exit(0);
 
@@ -162,25 +159,32 @@ public class Game {
         }
 
         String result = legalPosition(newPos);
-        if (result == "ok") { // moving to te actual new position
-            map.moveRobot(player.getRobot(), newPos);
-            player.getRobot().setPosition(newPos);
-        } else if (result == "robot") {
-
-        } else if (result == "wall") {
-
-        } else if (result == "laser") {
-
-        } else if (result == "wrench") {
-
-        } else if (result == "wrench_hammer") {
-
-        } else if (result == "rotating_belt") {
-
-        } else if (result == "void") {
-
-        } else if (result == "nothing") {
-
+        switch (result) {
+            case "robot":
+                //what do to if a robot collides with another robot
+                break;
+            case "wall":
+                //what do to if a robot collides with a wall
+                break;
+            case "laser":
+                //what do to if a robot collides with a laser
+                break;
+            case "wrench_hammer":
+                //what do to if a robot collides with a wrench:hammer
+                break;
+            case "rotating_belt":
+                //what do to if a robot collides with a rotating_belt
+                break;
+            case "void":
+                //what do to if a robot collides with a void
+                break;
+            case "nothing":
+                //what do to if a robot collides with a nothing
+                break;
+            default://default is when none of the other case occurs, then it moves the robot to the actual position
+                map.moveRobot(player.getRobot(), newPos);
+                player.getRobot().setPosition(newPos);
+                break;
         }
     }
 
@@ -195,7 +199,7 @@ public class Game {
             return "dead";
         } else if (map.getBoardObject(position) instanceof Robot) {
             return "robot";
-        } else if (!(map.getBoardObject(position) instanceof Wall)) {
+        } else if ((map.getBoardObject(position) instanceof Wall)) {
             return "wall";
         } else if (map.getBoardObject(position) instanceof Laser) {
             return "laser";
@@ -209,121 +213,9 @@ public class Game {
             return "void";
         } else if (map.getBoardObject(position) instanceof Nothing) {
             return "nothing";
+        } else {
+            return "ok";
         }
-        return null;
-    }
-
-
-    public static void printMap(Map map) {
-        System.out.println("Map:");
-        //TODO: make switch and fix GUI stuffs
-        for (int i = 0; i < map.getX(); i++) {
-            for (int j = 0; j < map.getY(); j++) {
-                if (map.getBoardObject(new Position(i, j)) instanceof Wall) {
-                    System.out.print('*');
-                } else if (map.getBoardObject(new Position(i, j)) instanceof Robot) {
-                    System.out.print('r');
-                } else if (map.getBoardObject(new Position(i, j)) instanceof Void) {
-                    System.out.print('v');
-                } else if (map.getBoardObject(new Position(i, j)) instanceof Laser) {
-                    System.out.print('l');
-                } else if (map.getBoardObject(new Position(i, j)) instanceof Conveyor_belt) {
-                    System.out.print('b');
-                } else if (map.getBoardObject(new Position(i, j)) instanceof Wrench) {
-                    System.out.print('s');
-                } else if (map.getBoardObject(new Position(i, j)) instanceof Wrench_hammer) {
-                    System.out.print('h');
-                } else if (map.getBoardObject(new Position(i, j)) instanceof Flag) {
-                    System.out.print('f');
-                } else if (map.getBoardObject(new Position(i, j)) instanceof Rotating_belt) {
-                    System.out.print('p');
-                } else {
-                    System.out.print(' ');
-                }
-            }
-            System.out.println();
-        }
-    }
-
-
-    /**
-     * making the map from a given file
-     *
-     * @param filename
-     * @return
-     */
-    public static Map makeMap(String filename) {
-        BufferedReader br;
-        try {
-            br = new BufferedReader(new FileReader(filename));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            System.out.println("this file does not exist: " + filename);
-            return null;
-        }
-
-
-        System.out.println("Making the map...");
-        Map map = new Map(10, 10);
-        try {
-            for (int i = 0; i < 10; i++) {
-                String[] line = br.readLine().split(",");
-                int j = 0;
-                for (String l : line) {
-                    System.out.println(l);
-                    if (l.contains("*")) {
-                        map.add(new Wall(i, j), i, j);
-                    } else if (l.contains("r")) {
-                        Player player = new Player(0, new Robot(i, j, Directions.UP));
-                        players.add(player);
-                        map.add(player.getRobot(), i, j);
-                    } else if (l.contains("v")) {
-                        map.add(new Void(i, j), i, j);
-                    } else if (l.contains("l")) {
-                        map.add(new Laser(i, j), i, j);
-                    } else if (l.contains("b") || l.contains("y")) {
-                        Conveyor_belt c = new Conveyor_belt(i, j);
-                        c.setPlaceDir(getDir(l));
-                        if (l.contains("y"))
-                            c.isYellowBelt();
-                        else
-                            c.isBlueBelt();
-                        map.add(c, i, j);
-
-                    } else if (l.contains("s")) {
-                        map.add(new Wrench(i, j), i, j);
-                    } else if (l.contains("h")) {
-                        map.add(new Wrench_hammer(i, j), i, j);
-                    } else if (l.contains("f")) {
-                        map.add(new Flag(i, j), i, j);
-                    } else if (l.contains("p")) {
-                        map.add(new Rotating_belt(i, j), i, j);
-                    } else {
-                        map.add(new Nothing(i, j), i, j);
-                    }
-                    j++;
-                }
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("There's something wrong with the map");
-            return null;
-        }
-
-        System.out.println("Adding stuff to the map...");
-
-        return map;
-    }
-
-    private static int getDir(String s) {
-        if (s.contains("1"))
-            return 1;
-        if (s.contains("2"))
-            return 2;
-        if (s.contains("3"))
-            return 3;
-        return 4;
     }
 
     private static void setUpTheFullDeckOfCards() {
