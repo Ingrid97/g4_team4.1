@@ -165,13 +165,19 @@ public class MapGUI extends ApplicationAdapter {
 
     public void drawTable() {
 
-        //TODO: make switch or nicer?
+
         drawnTable = true;
         roboid = 0;
+
+        /* TODO! Logic in drawTable vs makeMap in Game
+         * Here there is one type of logic of how to place objects on the map, this logic is not the same
+         * which is used when placing the robots at the map. Therefore the start placement of the robot
+         * is inconsistent, furthermore the movement is not correct
+         */
         for (int i = 0; i < 10; i++) {
             for (int j = 0, k = 9; j < 10; j++, k--) {
                 if (map.getBoardObject(new Position(j, i)) instanceof Robot) {
-                    //make the special robot object
+
                     batch.draw(nothingImage, tile[i][k].x, tile[i][k].y);
                     /*
                     if (robot[roboid].x == -1) {

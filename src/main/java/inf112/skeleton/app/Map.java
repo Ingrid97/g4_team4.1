@@ -38,8 +38,11 @@ public class Map {
     }
 
     //test
+    // TODO! Throws ArrayIndexOutOfBoundException, does not safe check positions right
     IBoardObject getBoardObject(Position position) {
-        ArrayList listOfObjects = map[position.getX()][position.getY()];
+
+        // Dont know if the problem is here or, if it is in the logic moving the robot ?¿
+        ArrayList listOfObjects = map[position.getX()][position.getY()]; // This needs to be changed! Throws exception
         if (isValidPosition(position)) {
             for (int i = 0; i < listOfObjects.size(); i++) {
                 if (listOfObjects.get(i) instanceof Robot) {

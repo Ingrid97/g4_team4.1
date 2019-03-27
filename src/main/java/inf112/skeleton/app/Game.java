@@ -166,7 +166,7 @@ public class Game {
         }
 
         String result = legalPosition(newPos);
-        // TODO make switch!
+        // TODO make switch! Not necessary but a nice refactor
         if (result.equals("ok")) { // moving to te actual new position
             map.moveRobot(player.getRobot(), newPos);
             player.getRobot().setPosition(newPos);
@@ -222,7 +222,7 @@ public class Game {
 
     public static void printMap(Map map) {
         System.out.println("Map:");
-        //TODO: make switch and fix GUI stuffs
+
         for (int i = 0; i < map.getX(); i++) {
             for (int j = 0; j < map.getY(); j++) {
                 if (map.getBoardObject(new Position(i, j)) instanceof Wall) {
