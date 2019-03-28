@@ -1,14 +1,15 @@
-package inf112.skeleton.app;//Created by ingridjohansen on 05/02/2019.
+package boardObjects;//Created by ingridjohansen on 06/02/2019.
 
-public class Wall implements IBoardObject{
-    int x;
-    int y;
+import inf112.skeleton.app.Position;
+
+public class Flag implements IBoardObject{
 
     private Position position;
 
-    public Wall(int x, int y){
+    public Flag(int x, int y){
         this.position = new Position(x, y);
     }
+
     @Override
     public int getX() {
         return this.position.getX();

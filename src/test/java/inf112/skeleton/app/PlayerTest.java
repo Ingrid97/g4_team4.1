@@ -1,5 +1,6 @@
 package inf112.skeleton.app;
 
+import boardObjects.Wall;
 import org.junit.Before;
 
 /* Test for player */

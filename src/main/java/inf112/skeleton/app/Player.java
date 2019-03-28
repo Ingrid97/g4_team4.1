@@ -1,6 +1,8 @@
 package inf112.skeleton.app;
 
 
+import boardObjects.Wall;
+
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;

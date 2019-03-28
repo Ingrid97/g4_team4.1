@@ -1,5 +1,7 @@
 package inf112.skeleton.app;//Created by ingridjohansen on 04/02/2019.
 
+import boardObjects.*;
+import boardObjects.Void;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;

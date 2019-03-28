@@ -1,8 +1,11 @@
-package inf112.skeleton.app;//Created by ingridjohansen on 06/02/2019.
+package boardObjects;//Created by ingridjohansen on 06/02/2019.
+
+import inf112.skeleton.app.Directions;
+import inf112.skeleton.app.Position;
 
 public class Conveyor_belt implements IBoardObject{
 
-    boolean isBlueBelt;
+    public boolean isBlueBelt;
     Directions dir;
     int placeDir;
     boolean isYellowBelt;

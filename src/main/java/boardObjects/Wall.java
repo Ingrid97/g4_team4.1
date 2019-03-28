@@ -1,13 +1,16 @@
-package inf112.skeleton.app;//Created by ingridjohansen on 06/02/2019.
+package boardObjects;//Created by ingridjohansen on 05/02/2019.
 
-public class Wrench implements IBoardObject{
+import inf112.skeleton.app.Position;
+
+public class Wall implements IBoardObject{
+    int x;
+    int y;
 
     private Position position;
 
-    public Wrench(int x, int y){
-    this.position  = new Position(x, y);
+    public Wall(int x, int y){
+        this.position = new Position(x, y);
     }
-
     @Override
     public int getX() {
         return this.position.getX();

@@ -1,10 +1,12 @@
-package inf112.skeleton.app;//Created by ingridjohansen on 06/02/2019.
+package boardObjects;//Created by ingridjohansen on 06/02/2019.
 
-public class Wrench_hammer implements IBoardObject{
+import inf112.skeleton.app.Position;
+
+public class Laser implements IBoardObject{
 
     private Position position;
 
-    public Wrench_hammer(int x, int y){
+    public Laser(int x, int y){
     this.position = new Position(x, y);
     }
 

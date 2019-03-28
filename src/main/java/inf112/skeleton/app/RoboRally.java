@@ -1,5 +1,7 @@
 package inf112.skeleton.app;//Created by ingridjohansen on 04/02/2019.
 
+import boardObjects.*;
+import boardObjects.Void;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
@@ -134,6 +136,13 @@ public class RoboRally {
         }
     }
 
+    /**
+     * moving the robot both in map and updating the robots own position
+     *
+     * @param player player to move
+     * @param newPos position to move to
+     * @param mapGUI mapGui to update
+     */
     private static void moveTheRobotAndUpdateMapGUI(Player player, Position newPos, MapGUI mapGUI) {
         if (newPos.getY() == 1000 || newPos.getX() == 1000) {
             return;

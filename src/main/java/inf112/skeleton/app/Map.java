@@ -1,5 +1,8 @@
 package inf112.skeleton.app;//Created by ingridjohansen on 04/02/2019.
 
+import boardObjects.*;
+import boardObjects.Void;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -137,7 +140,8 @@ public class Map {
         if (position.getY() < 0) return false;
         if (position.getX() < 0) return false;
         if (position.getX() > getX() - 1) return false;
-        return position.getY() <= getY() - 1;
+        return position.getX() <= getY() - 1;
+
     }
 
     /**
