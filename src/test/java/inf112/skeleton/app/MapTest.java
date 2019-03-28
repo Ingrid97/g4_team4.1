@@ -143,7 +143,7 @@ public class MapTest {
 //        Robot robot = new Robot(5, 5, Directions.UP);
 //        Player player = new Player(0, robot);
 //        map.add(robot, 5, 5);
-//        Game.playMovementCard(new MovementCard(Directions.NODIRECTION, 3, 800), player);
+//        RoboRally.playMovementCard(new MovementCard(Directions.NODIRECTION, 3, 800), player);
 //        assertTrue(map.getBoardObject(new Position(2, 5)) instanceof Robot);
 //    }
 

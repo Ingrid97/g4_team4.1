@@ -1,12 +1,15 @@
 package inf112.skeleton.app;//Created by ingridjohansen on 05/02/2019.
 
-public class Nothing implements IBoardObject{
+public class Tile implements IBoardObject {
     int x;
     int y;
 
     private Position position;
 
-    public Nothing(int x, int y){
+    /*
+     * Is an object on the board where there is nothing in the tile!
+     */
+    public Tile(int x, int y) {
         this.position = new Position(x, y);
     }
 

@@ -1,6 +1,6 @@
 package inf112.skeleton.app;
 
-import static inf112.skeleton.app.Game.playGame;
+import static inf112.skeleton.app.RoboRally.playGame;
 
 
 public class Main {
@@ -12,8 +12,6 @@ public class Main {
 //        cfg.height = 640;
 //
 //        new LwjglApplication(new MapGUI(), cfg);
-        playGame();
-        Game game = new Game();
         playGame();
     }
 }

@@ -169,7 +169,7 @@ public class MapGUI extends ApplicationAdapter {
         drawnTable = true;
         roboid = 0;
 
-        /* TODO! Logic in drawTable vs makeMap in Game
+        /* TODO! Logic in drawTable vs makeMap in RoboRally
          * Here there is one type of logic of how to place objects on the map, this logic is not the same
          * which is used when placing the robots at the map. Therefore the start placement of the robot
          * is inconsistent, furthermore the movement is not correct

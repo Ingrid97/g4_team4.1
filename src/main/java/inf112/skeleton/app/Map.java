@@ -204,7 +204,7 @@ public class Map {
                     } else if (l.contains("p")) {
                         map.add(new Rotating_belt(i, j), i, j);
                     } else {
-                        map.add(new Nothing(i, j), i, j);
+                        map.add(new Tile(i, j), i, j);
                     }
                     j++;
                 }

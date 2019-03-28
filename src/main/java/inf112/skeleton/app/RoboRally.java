@@ -6,7 +6,7 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
-public class Game {
+public class RoboRally {
     private static ArrayList<Player> players;
     private static boolean gameOver;
     private static Map map;
@@ -170,7 +170,7 @@ public class Game {
             return "rotating_belt";
         } else if (map.getBoardObject(position) instanceof Void) {
             return "void";
-        } else if (map.getBoardObject(position) instanceof Nothing) {
+        } else if (map.getBoardObject(position) instanceof Tile) {
             return "nothing";
         } else {
             return "ok";
