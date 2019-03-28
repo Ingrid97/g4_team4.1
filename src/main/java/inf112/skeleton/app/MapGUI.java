@@ -43,18 +43,6 @@ public class MapGUI extends ApplicationAdapter {
     public void create() {
 
 
-        // load the images for the objects on the map, 64x64 pixels each
-        /*robotImage = getImage("wall_e.png");
-        voidImage = getImage("void.png");
-        yellowConveyor_beltImage = getImage("yellow_arrow.png");
-        blueConveyor_beltImage = getImage("blue_arrow.png");
-        laserImage = getImage("laser.png");
-        wrenchImage = getImage("Wrench.png");
-        wrench_hammer = getImage("Wrench_hammer.png");
-        rotatin_plateImage = getImage("Rotating_bond.png");
-        flagImage = getImage("flag.png");
-        nothingImage = getImage("nothing.png");*/
-
         //Testing with other picture
         robotImage = getImage("r.png");
         voidImage = getImage("v.png");
@@ -138,12 +126,6 @@ public class MapGUI extends ApplicationAdapter {
             batch.draw(robotImage, listOfPLayers.get(i).getRobot().getX() * 64, listOfPLayers.get(i).getRobot().getY() * 64);
         }
 
-        /*
-        for (int i = 0, k = 9; i < 2; i++, k--) {
-            batch.draw(robotImage, robot[roboid].x, robot[roboid].y);
-            roboid++;
-        }
-        */
 
         for (int i = 0; i < 9; i++) {
             batch.draw(cardTester, cards[i].x, cards[i].y);
@@ -179,12 +161,6 @@ public class MapGUI extends ApplicationAdapter {
                 if (map.getBoardObject(new Position(j, i)) instanceof Robot) {
 
                     batch.draw(nothingImage, tile[i][k].x, tile[i][k].y);
-                    /*
-                    if (robot[roboid].x == -1) {
-                        robot[roboid].x = i * 64;
-                        robot[roboid].y = k * 64;
-
-                    batch.draw(robotImage, robot[roboid].x, robot[roboid].y); */
                     roboid++;
                 } else if (map.getBoardObject(new Position(j, i)) instanceof Void) {
                     batch.draw(voidImage, tile[i][k].x, tile[i][k].y);
