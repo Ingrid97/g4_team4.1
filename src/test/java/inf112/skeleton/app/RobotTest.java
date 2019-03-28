@@ -87,50 +87,53 @@ public class RobotTest {
 
     // Testing healthPoints of robots
     @Test
-    public void takingOneDamageResultInOneHealthPointReduction() {
+    public void takingOneDamageResultInOneMemoryCapacityReduction() {
         Robot robotShooting = new Robot(5, 5, Directions.UP);
         Robot theRobotGettingShot = new Robot(2, 2, Directions.UP);
 
+        int memory = theRobotGettingShot.getMemoryCapacity();
         // 1 shot
         robotShooting.shootLaser(theRobotGettingShot);
 
-        assertEquals(2, theRobotGettingShot.getHealthPoints());
+        assertEquals((memory - 1), theRobotGettingShot.getMemoryCapacity());
     }
 
     @Test
-    public void takingTwoDamageResultInTwoHealthPointReduction() {
+    public void takingTwoDamageResultInTwoMemoryCapacityReduction() {
         Robot robotShooting = new Robot(5, 5, Directions.UP);
         Robot theRobotGettingShot = new Robot(2, 2, Directions.UP);
 
+        int memory = theRobotGettingShot.getMemoryCapacity();
         // 2 shots
         robotShooting.shootLaser(theRobotGettingShot);
         robotShooting.shootLaser(theRobotGettingShot);
 
-        assertEquals(1, theRobotGettingShot.getHealthPoints());
+        assertEquals((memory - 2), theRobotGettingShot.getMemoryCapacity());
+    }
+
+
+    @Test
+    public void takingNineDamageResultInOneLessHP() {
+        Robot robotShooting = new Robot(5, 5, Directions.UP);
+        Robot theRobotGettingShot = new Robot(2, 2, Directions.UP);
+        int hp = theRobotGettingShot.getHealthPoints();
+        // 9 shots
+        for (int i = 0; i < 9; i++) {
+            robotShooting.shootLaser(theRobotGettingShot);
+        }
+
+        assertEquals(hp - 1, theRobotGettingShot.getHealthPoints());
     }
 
     @Test
-    public void takingThreeDamageResultInThreeHealthPointReduction() {
+    public void taking27DamageResultInDeath() {
         Robot robotShooting = new Robot(5, 5, Directions.UP);
         Robot theRobotGettingShot = new Robot(2, 2, Directions.UP);
-
-        // 3 shots
-        robotShooting.shootLaser(theRobotGettingShot);
-        robotShooting.shootLaser(theRobotGettingShot);
-        robotShooting.shootLaser(theRobotGettingShot);
-
-        assertEquals(0, theRobotGettingShot.getHealthPoints());
-    }
-
-    @Test
-    public void takingThreeDamageResultInAliveStatusChanging() {
-        Robot robotShooting = new Robot(5, 5, Directions.UP);
-        Robot theRobotGettingShot = new Robot(2, 2, Directions.UP);
-
-        // 3 shots
-        robotShooting.shootLaser(theRobotGettingShot);
-        robotShooting.shootLaser(theRobotGettingShot);
-        robotShooting.shootLaser(theRobotGettingShot);
+        int hp = theRobotGettingShot.getHealthPoints();
+        // 9 shots
+        for (int i = 0; i < 27; i++) {
+            robotShooting.shootLaser(theRobotGettingShot);
+        }
 
         assertFalse(theRobotGettingShot.isAlive());
     }
@@ -147,7 +150,7 @@ public class RobotTest {
 
 
     @Test
-    public void whenRobotGetKilledRespawnOnBackup() {
+    public void whenRobotHaveNoMemoryRespawnOnBackup() {
         Robot robotShooting = new Robot(5, 5, Directions.UP);
         Robot theRobotGettingShot = new Robot(2, 2, Directions.UP);
 
@@ -155,12 +158,17 @@ public class RobotTest {
         theRobotGettingShot.dropBackUpAtCurrentPosition();    // (2, 3)
         theRobotGettingShot.move(1);            // (2, 4)
 
-        robotShooting.shootLaser(theRobotGettingShot);
-        robotShooting.shootLaser(theRobotGettingShot);
-        robotShooting.shootLaser(theRobotGettingShot);
+        for (int i = 0; i < 9; i++) {
+            robotShooting.shootLaser(theRobotGettingShot);
+        }
 
-        assertEquals(2, theRobotGettingShot.getBackUpPosition().getX());
-        assertEquals(3, theRobotGettingShot.getBackUpPosition().getY());
+
+        assertNotEquals(4, theRobotGettingShot.getY());
+
+        assertEquals(2, theRobotGettingShot.getX());
+        assertEquals(3, theRobotGettingShot.getY());
+
     }
+
 
 }

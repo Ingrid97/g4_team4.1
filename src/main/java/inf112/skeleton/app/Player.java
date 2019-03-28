@@ -4,6 +4,7 @@ package inf112.skeleton.app;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Scanner;
 
 
@@ -11,6 +12,8 @@ public class Player implements KeyListener {
     private boolean[] flagsWhichHasBeenVisited;
     private Robot robot;
     private ArrayList<MovementCard> theCardsToChooseYourProgramFrom;
+    private ArrayList<MovementCard> programForRobotToExecute = new ArrayList<>();
+
 
 
     public Player(int numberOfFlags, Robot robot) {
@@ -37,33 +40,52 @@ public class Player implements KeyListener {
         Scanner sc = new Scanner(System.in);
 
         // Informasjon til bruker
-        System.out.println("Choose your movement cards by typing the number of the card you would like to use first, then press enter\nYour robot have "
-                + this.robot.getMemoryCapacity() + " slots in its memory");
+        System.out.println("Choose your movement cards by typing the number of the card you would like to use first, then press enter");
 
         // Printer ut alle kortene først
-        for (int i = 0; i < theCardsToChooseYourProgramFrom.size(); i++) {
+        for (int i = 0; i < this.robot.getMemoryCapacity(); i++) {
             System.out.println("\nCard number " + (i + 1) + "\n" + theCardsToChooseYourProgramFrom.get(i).toString());
         }
 
-        // Listen vi legger inn kortene som blir valgt av bruker at skal kjøre
-        ArrayList<MovementCard> programForRobotToExecute = new ArrayList<>();
-
 
         int counter = 0;
+
+        // Gjør at man bare velger antallet kort man kan ut i fra skaden roboten har tatt
+        int numberOfSlotsInRegister;
+        if (this.robot.getMemoryCapacity() > 4) {
+            numberOfSlotsInRegister = 5;
+            this.programForRobotToExecute.clear();
+        } else {
+            // Nå må MemoryCapacity være 4 eller mindre
+            numberOfSlotsInRegister = this.robot.getMemoryCapacity();
+            // Skal slette alt utenom det som er over MemoryCapacity
+            for (int i = 0; i < this.robot.getMemoryCapacity(); i++) {
+                this.programForRobotToExecute.remove(i);
+            }
+        }
+        HashSet<Integer> list = new HashSet<>(); // Et HashSet for å sjekke at det ikke velges samme kort flere ganger
+
+
         do {
             // Input from user, and add it to the list of chosen cards
             if (sc.hasNextInt()) {
                 int number = sc.nextInt();
 
-                // Sjekker ikke om du har valgt et kort to ganger, da kaster den exception
+
                 if (number <= 0 || number > this.robot.getMemoryCapacity()) {
                     System.out.println("Illegal input: " + number);
                     continue;
+                } else if (list.contains(number)) {
+                    System.out.println("You have already chosen this card!");
+                    continue;
                 } else {
                     programForRobotToExecute.add(theCardsToChooseYourProgramFrom.get(number - 1));
-                    theCardsToChooseYourProgramFrom.remove(number - 1);
                     counter++;
+                    list.add(number);
                 }
+            } else {
+                sc.next();
+                continue;
             }
 
             // Printing out the choices the player has done this far
@@ -71,8 +93,9 @@ public class Player implements KeyListener {
             for (MovementCard movementCard : programForRobotToExecute) {
                 System.out.println(movementCard.toString());
             }
-            System.out.print("\nYou have " + (this.robot.getMemoryCapacity() - counter) + " cards left\n");
-        } while (counter < this.robot.getMemoryCapacity());
+            System.out.print("\nYou have " + (numberOfSlotsInRegister - counter) + " cards left to choose\n");
+        } while (counter < numberOfSlotsInRegister);
+        theCardsToChooseYourProgramFrom.clear();
 
 
         return programForRobotToExecute;

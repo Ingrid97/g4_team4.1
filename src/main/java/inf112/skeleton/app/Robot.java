@@ -11,14 +11,15 @@ public class Robot implements IRobot {
     private Directions direction;
 
 
+
     public Robot(int x, int y, Directions direction) {
         this.positionOfRobot = new Position(x, y);
         this.backUpPosition = positionOfRobot;
         this.healthPoints = 3;
         this.memoryCapacity = 9;
-        this.alive = true;
         this.laserStrength = 1;
         this.direction = direction;
+        this.alive = true;
     }
 
 
@@ -58,6 +59,7 @@ public class Robot implements IRobot {
         return direction;
     }
 
+
     // Setters
     public void setDirection(Directions direction) {
         this.direction = direction;
@@ -65,6 +67,11 @@ public class Robot implements IRobot {
 
     public void setPosition(Position position) {
         this.positionOfRobot = position;
+    }
+
+    public void setPositionToBackUp() {
+        // TODO! Miste liv osv.
+        this.positionOfRobot = this.backUpPosition;
     }
 
 

@@ -136,10 +136,17 @@ public class MapGUI extends ApplicationAdapter {
         drawTable();
 
         roboid = 0;
+        // For loop som går gjennom players og position til robotene
+        for (int i = 0; i < listOfPLayers.size(); i++) {
+            batch.draw(robotImage, listOfPLayers.get(i).getRobot().getX() * 64, listOfPLayers.get(i).getRobot().getY() * 64);
+        }
+
+        /*
         for (int i = 0, k = 9; i < 2; i++, k--) {
             batch.draw(robotImage, robot[roboid].x, robot[roboid].y);
             roboid++;
         }
+        */
 
         for (int i = 0; i < 9; i++) {
             batch.draw(cardTester, cards[i].x, cards[i].y);
@@ -170,19 +177,26 @@ public class MapGUI extends ApplicationAdapter {
 
     public void drawTable() {
 
-        //TODO: make switch or nicer?
+
         drawnTable = true;
         roboid = 0;
+
+        /* TODO! Logic in drawTable vs makeMap in Game
+         * Here there is one type of logic of how to place objects on the map, this logic is not the same
+         * which is used when placing the robots at the map. Therefore the start placement of the robot
+         * is inconsistent, furthermore the movement is not correct
+         */
         for (int i = 0; i < 10; i++) {
             for (int j = 0, k = 9; j < 10; j++, k--) {
                 if (map.getBoardObject(new Position(j, i)) instanceof Robot) {
-                    //make the special robot object
+
                     batch.draw(nothingImage, tile[i][k].x, tile[i][k].y);
+                    /*
                     if (robot[roboid].x == -1) {
                         robot[roboid].x = i * 64;
                         robot[roboid].y = k * 64;
-                    }
-                    batch.draw(robotImage, robot[roboid].x, robot[roboid].y);
+
+                    batch.draw(robotImage, robot[roboid].x, robot[roboid].y); */
                     roboid++;
                 } else if (map.getBoardObject(new Position(j, i)) instanceof Void) {
                     batch.draw(voidImage, tile[i][k].x, tile[i][k].y);
