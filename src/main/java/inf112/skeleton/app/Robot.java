@@ -69,6 +69,11 @@ public class Robot implements IRobot {
         this.positionOfRobot = position;
     }
 
+    public void setPositionToBackUp() {
+        // TODO! Miste liv osv.
+        this.positionOfRobot = this.backUpPosition;
+    }
+
 
     // Methods
     public void move(int numberOfSteps) {

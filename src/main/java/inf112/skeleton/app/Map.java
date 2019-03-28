@@ -9,6 +9,8 @@ import java.util.ArrayList;
 public class Map {
 
     private ArrayList[][] map;
+    private int length;
+    private int height;
 
     /**
      * Map constructor
@@ -20,6 +22,8 @@ public class Map {
         if (x < 0 || y < 0) {
             throw new IllegalArgumentException("the x or y value of the map cannot be less than zero");
         }
+        length = x;
+        height = y;
         map = new ArrayList[x][y];
         for (int i = 0; i < x; i++) {
             for (int j = 0; j < y; j++) {
@@ -49,14 +53,14 @@ public class Map {
      * @return the maps length
      */
     int getX() {
-        return map.length;
+        return length;
     }
 
     /**
      * @return the maps height
      */
     int getY() {
-        return map[0].length;
+        return height;
     }
 
     /**
@@ -76,6 +80,8 @@ public class Map {
 
     }
 
+    //test
+    // TODO! Throws ArrayIndexOutOfBoundException, does not safe check positions right
     /**
      * Finding a IBoardObject in a Position on the map
      *
@@ -83,8 +89,10 @@ public class Map {
      * @return a robot if there is one, otherwise any other object if none returns null
      */
     public IBoardObject getBoardObject(Position position) {
-        ArrayList listOfObjects = map[position.getX()][position.getY()];
+        // Dont know if the problem is here or, if it is in the logic moving the robot ?¿
+        // This needs to be changed! Throws exception
         if (isValidPosition(position)) {
+            ArrayList listOfObjects = map[position.getX()][position.getY()];
             for (int i = 0; i < listOfObjects.size(); i++) {
                 if (listOfObjects.get(i) instanceof Robot) {
                     return (IBoardObject) listOfObjects.get(i);
@@ -129,8 +137,8 @@ public class Map {
     public boolean isValidPosition(Position position) {
         if (position.getY() < 0) return false;
         if (position.getX() < 0) return false;
-        if (position.getX() > getX()) return false;
-        return position.getY() <= getY();
+        if (position.getX() > getX() - 1) return false;
+        return position.getY() <= getY() - 1;
     }
 
     /**
