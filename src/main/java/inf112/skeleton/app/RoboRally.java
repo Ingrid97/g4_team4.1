@@ -1,7 +1,7 @@
 package inf112.skeleton.app;//Created by ingridjohansen on 04/02/2019.
 
-import boardObjects.*;
 import boardObjects.Void;
+import boardObjects.*;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
@@ -83,7 +83,7 @@ public class RoboRally {
                 break;
             case DOWN://moving backward or turning 180degrees
                 try {
-                    newPos = movingBackwardOrTurning180Degrees(movCard, player, currentPos, newPos);
+                    newPos = backingUpOrTurning180Degrees(movCard, player, currentPos, newPos);
                 } catch (IllegalArgumentException e) {
                     System.out.println("A robot has fallen2");    //robot fell outside map, should be returned to backup position
                 }
@@ -195,12 +195,12 @@ public class RoboRally {
      * @return the final new position, ex the third position if the movCard said 3 steps
      * @throws IllegalArgumentException
      */
-    private static Position movingForward(Player player, Position currentPos) throws IllegalArgumentException {
+    public static Position movingForward(Player player, Position currentPos) throws IllegalArgumentException {
         Directions direction = player.getRobot().getDirection();
         Position newPos;
         switch (direction) {
                 case UP:
-                    newPos = new Position(currentPos.getX(), (currentPos.getY() - 1));
+                    newPos = new Position(currentPos.getX(), (currentPos.getY() + 1));
                     break;
                 case RIGHT:
                     newPos = new Position((currentPos.getX() + 1), currentPos.getY());
@@ -209,7 +209,7 @@ public class RoboRally {
                     newPos = new Position((currentPos.getX() - 1), currentPos.getY());
                     break;
             default:
-                    newPos = new Position(currentPos.getX(), (currentPos.getY() + 1));
+                newPos = new Position(currentPos.getX(), (currentPos.getY() - 1));
                     break;
             }
         return newPos;
@@ -225,10 +225,23 @@ public class RoboRally {
      * @return the final new position
      * @throws IllegalArgumentException
      */
-    private static Position movingBackwardOrTurning180Degrees(MovementCard movCard, Player player, Position currentPos, Position newPos) throws IllegalArgumentException {
+    public static Position backingUpOrTurning180Degrees(MovementCard movCard, Player player, Position currentPos, Position newPos) throws IllegalArgumentException {
         if (movCard.getNumberOfSteps() == 1) {
-            newPos = new Position(currentPos.getX(), (currentPos.getY() - 1));
-            //should the robot also turn 180 degrees when moving backward?
+            Directions direction = player.getRobot().getDirection();
+            switch (direction) {
+                case UP:
+                    newPos = new Position(currentPos.getX(), (currentPos.getY() - 1));
+                    break;
+                case RIGHT:
+                    newPos = new Position(currentPos.getX() - 1, currentPos.getY());
+                    break;
+                case LEFT:
+                    newPos = new Position(currentPos.getX() + 1, currentPos.getY());
+                    break;
+                case DOWN:
+                    newPos = new Position(currentPos.getX(), (currentPos.getY() + 1));
+                    break;
+            }
         } else {
             Directions direction = player.getRobot().getDirection();
             newPos = currentPos;
@@ -257,7 +270,7 @@ public class RoboRally {
      * @return direction left from current
      * @throws IllegalArgumentException
      */
-    private static Directions turningLeft(Directions direction) throws IllegalArgumentException {
+    public static Directions turningLeft(Directions direction) throws IllegalArgumentException {
         switch (direction) {
             case UP:
                 return Directions.LEFT;
@@ -277,7 +290,7 @@ public class RoboRally {
      * @return direction right from current
      * @throws IllegalArgumentException
      */
-    private static Directions turningRight(Directions direction) throws IllegalArgumentException {
+    public static Directions turningRight(Directions direction) throws IllegalArgumentException {
         switch (direction) {
             case UP:
                 return Directions.RIGHT;

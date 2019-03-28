@@ -5,7 +5,7 @@ import java.util.Collections;
 
 public class MovementCardDeck {
 
-    private static ArrayList<MovementCard> theFullDeckOfAllMovementCards;
+    public static ArrayList<MovementCard> theFullDeckOfAllMovementCards;
 
     /**
      * Making the movement card deck
