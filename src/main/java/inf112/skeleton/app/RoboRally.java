@@ -32,10 +32,10 @@ public class RoboRally {
         MapGUI mapGUI = new MapGUI(map, players);
         new LwjglApplication(mapGUI, cfg);//instantiating MapGUI and updating the map it prints
 
-        gameOver = true;
+        gameOver = false;
         MovementCardDeck.setUpTheFullDeckOfCards();
         MovementCardDeck.dealOutMovementCards(players);
-        while (gameOver) {
+        while (!gameOver) {
             //getting movement cards from player/s
             ArrayList<ArrayList> listOfPrioritizedListsOfMovementCardsFromPlayers = new ArrayList<>();
             for (int i = 0; i < players.size(); i++) {
@@ -55,9 +55,51 @@ public class RoboRally {
             }
 
             //end of round
+            /* TODO! Sjekke om robot står på flag
+             *
+             */
+            for (int i = 0; i < players.size(); i++) {
+                Position pos = players.get(i).getRobot().getPosition();
 
+                ArrayList list = map.getBoardObjects(pos);
+
+                for (int j = 0; j < list.size(); j++) {
+
+                    // Sjekker om det er et flag i posisjonen roboten står
+                    if (list.get(j) instanceof Flag) {
+                        if (updateFlag(players.get(i), (Flag) list.get(j))) gameOver = true;
+                    }
+                }
+
+            }
         }
 
+    }
+
+    // Litt usikker på om denne er helt riktig
+
+    /**
+     * Returns true if someone has won
+     *
+     * @param player
+     * @param flag
+     * @return
+     */
+    private static boolean updateFlag(Player player, Flag flag) {
+        boolean[] temp = player.getFlagsWhichHasBeenVisited();
+        int identifier = flag.identifier;
+
+        int i = 0;
+        while (temp[i++] && i <= identifier) ;
+
+        // Må senke verdien av i med 1 etter while-loopen
+        i = i - 1;
+
+        if (i == identifier) {
+            player.setFlagsWhichHasBeenVisitedTrue(identifier);
+            return identifier == 2;
+        }
+        return false;
     }
 
     /**
@@ -181,6 +223,8 @@ public class RoboRally {
             return "void";
         } else if (map.getBoardObject(position) instanceof Tile) {
             return "nothing";
+        } else if (map.getBoardObject(position) instanceof Flag) {
+            return "flag";
         } else {
             return "ok";
         }

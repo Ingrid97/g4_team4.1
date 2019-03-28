@@ -103,13 +103,20 @@ public class Player implements KeyListener {
         return programForRobotToExecute;
     }
 
-    /**
-     * @return int memorycapasity for this player
-     */
+
     public int memoryCapacityForThisPlayer() {
         return this.robot.getMemoryCapacity();
     }
 
+    public boolean[] getFlagsWhichHasBeenVisited() {
+        return flagsWhichHasBeenVisited;
+    }
+
+    public void setFlagsWhichHasBeenVisitedTrue(int pos) {
+
+        this.flagsWhichHasBeenVisited[pos] = true;
+
+    }
 
     @Override
     public void keyTyped(KeyEvent e) {
