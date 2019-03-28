@@ -183,7 +183,7 @@ public class MapGUI extends ApplicationAdapter {
                     if (robot[roboid].x == -1) {
                         robot[roboid].x = i * 64;
                         robot[roboid].y = k * 64;
-                    }
+
                     batch.draw(robotImage, robot[roboid].x, robot[roboid].y); */
                     roboid++;
                 } else if (map.getBoardObject(new Position(j, i)) instanceof Void) {
