@@ -1,7 +1,7 @@
 package inf112.skeleton.app;//Created by ingridjohansen on 04/02/2019.
 
-import boardObjects.Void;
 import boardObjects.*;
+import boardObjects.Void;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
@@ -9,15 +9,14 @@ import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 public class RoboRally {
-    private static ArrayList<Player> players;
-    private static boolean gameOver;
     private static Map map;
+    private static MapGUI mapGUI;
 
 
     public static void playGame() {
         // Lager alle kortene
         //leser inn map fra fil
-        players = new ArrayList<>();
+        ArrayList<Player> players = new ArrayList<>();
         map = new Map(10, 10);
         map = Map.makeMap("testMap1.txt", players);
         if (map == null)
@@ -29,10 +28,10 @@ public class RoboRally {
         cfg.title = "Robo Rally";
         cfg.width = 640;
         cfg.height = 940;
-        MapGUI mapGUI = new MapGUI(map, players);
+        mapGUI = new MapGUI(map, players);
         new LwjglApplication(mapGUI, cfg);//instantiating MapGUI and updating the map it prints
 
-        gameOver = false;
+        boolean gameOver = false;
         MovementCardDeck.setUpTheFullDeckOfCards();
         MovementCardDeck.dealOutMovementCards(players);
         while (!gameOver) {
@@ -50,7 +49,7 @@ public class RoboRally {
             for (int j = 0; j < 5; j++) {//the max number for this for loop chooses how many movementcards is supposed to be played
                 for (int i = 0; i < players.size(); i++) {
                     System.out.println("position: x: " + players.get(i).getRobot().getX() + " y: " + players.get(i).getRobot().getY());
-                    playMovementCard((MovementCard) listOfPrioritizedListsOfMovementCardsFromPlayers.get(i).get(j), players.get(i), mapGUI);
+                    playMovementCard((MovementCard) listOfPrioritizedListsOfMovementCardsFromPlayers.get(i).get(j), players.get(i));
                 }
             }
 
@@ -108,7 +107,7 @@ public class RoboRally {
      * @param movCard the movement card to be executed
      * @param player  the player that should be moved
      */
-    public static void playMovementCard(MovementCard movCard, Player player, MapGUI mapGUI) {
+    public static void playMovementCard(MovementCard movCard, Player player) {
         Position currentPos = player.getRobot().getPosition();
         Position newPos = new Position(1000, 1000);
         switch (movCard.getDirection()) {
@@ -117,7 +116,7 @@ public class RoboRally {
                     for (int i = 0; i < movCard.getNumberOfSteps(); i++) {
                         newPos = movingForward(player, currentPos);
                         if (!legalPosition(newPos).equals("dead")) break;
-                        moveTheRobotAndUpdateMapGUI(player, newPos, mapGUI);
+                        moveTheRobotAndUpdateMapGUI(player, newPos);
                     }
                 } catch (IllegalArgumentException e) {
                     System.out.println("A robot has fallen1"); //robot fell outside map, should be returned to backup position
@@ -172,7 +171,7 @@ public class RoboRally {
                 System.out.println("ROBOT DEAD");
                 return;
             default://default is when none of the other case occurs, then it moves the robot to the actual position
-                moveTheRobotAndUpdateMapGUI(player, newPos, mapGUI);
+                moveTheRobotAndUpdateMapGUI(player, newPos);
                 break;
 
         }
@@ -183,9 +182,8 @@ public class RoboRally {
      *
      * @param player player to move
      * @param newPos position to move to
-     * @param mapGUI mapGui to update
      */
-    private static void moveTheRobotAndUpdateMapGUI(Player player, Position newPos, MapGUI mapGUI) {
+    private static void moveTheRobotAndUpdateMapGUI(Player player, Position newPos) {
         if (newPos.getY() == 1000 || newPos.getX() == 1000) {
             return;
         }
@@ -201,7 +199,7 @@ public class RoboRally {
     /**
      * checking that given position is inside map, or not occupied by a wall or robot
      *
-     * @param position
+     * @param position position to check
      * @return name of object
      */
     public static String legalPosition(Position position) {
@@ -237,7 +235,7 @@ public class RoboRally {
      * @param player     player to move
      * @param currentPos current position of robot
      * @return the final new position, ex the third position if the movCard said 3 steps
-     * @throws IllegalArgumentException
+     * @throws IllegalArgumentException throws if the robot moves outside the board
      */
     public static Position movingForward(Player player, Position currentPos) throws IllegalArgumentException {
         Directions direction = player.getRobot().getDirection();
@@ -267,7 +265,7 @@ public class RoboRally {
      * @param currentPos current position of robot
      * @param newPos     new position where the robot is going next step
      * @return the final new position
-     * @throws IllegalArgumentException
+     * @throws IllegalArgumentException if robot is outside map
      */
     public static Position backingUpOrTurning180Degrees(MovementCard movCard, Player player, Position currentPos, Position newPos) throws IllegalArgumentException {
         if (movCard.getNumberOfSteps() == 1) {
