@@ -115,8 +115,15 @@ public class RoboRally {
                 try {
                     for (int i = 0; i < movCard.getNumberOfSteps(); i++) {
                         newPos = movingForward(player, currentPos);
-                        if (!legalPosition(newPos).equals("dead")) break;
+                        if (legalPosition(newPos).equals("dead")) {
+                            map.moveRobot(player.getRobot(), player.getRobot().getBackUpPosition());
+                            player.getRobot().setPositionToBackUp();
+                            System.out.println("deadPosition: x: " + newPos.getX() + " y: " + newPos.getY() + "   Direction on MovCard: " + movCard.getDirection());
+                            System.out.println("ROBOT DEAD");
+                            break;
+                        }
                         moveTheRobotAndUpdateMapGUI(player, newPos);
+                        currentPos = newPos;
                     }
                 } catch (IllegalArgumentException e) {
                     System.out.println("A robot has fallen1"); //robot fell outside map, should be returned to backup position
@@ -161,8 +168,8 @@ public class RoboRally {
             case "void":
                 //what do to if a robot collides with a void
                 break;
-            case "nothing":
-                //what do to if a robot collides with a nothing
+            case "tile":
+                //what do to if a robot collides with a tile
                 break;*/
             case "dead":
                 map.moveRobot(player.getRobot(), player.getRobot().getBackUpPosition());
@@ -220,7 +227,7 @@ public class RoboRally {
         } else if (map.getBoardObject(position) instanceof Void) {
             return "void";
         } else if (map.getBoardObject(position) instanceof Tile) {
-            return "nothing";
+            return "tile";
         } else if (map.getBoardObject(position) instanceof Flag) {
             return "flag";
         } else {
