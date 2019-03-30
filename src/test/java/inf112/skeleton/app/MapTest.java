@@ -1,5 +1,6 @@
 package inf112.skeleton.app;
 
+import boardObjects.*;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -162,6 +163,44 @@ public class MapTest {
         map.add(robot, 5, 5);
         RoboRally.playMovementCard(new MovementCard(Directions.NODIRECTION, 3, 800), player);
         assertTrue(map.getBoardObject(new Position(2, 5)) instanceof Robot);
+    }
+
+    @Test
+    public void severalObjectsOnOneTile() {
+        Map map = build(10, 10);
+        map.add(new Tile(5, 5), 5, 5);
+        map.add(new Flag(5, 5, 0), 5, 5);
+        map.add(new Robot(5, 5, Directions.UP), 5, 5);
+        ArrayList<IBoardObject> list = map.getBoardObjects(new Position(5, 5));
+        assertEquals(list.size(), 3);
+    }
+
+    @Test
+    public void severalObjectsOnOneTile2() {
+        Map map = build(10, 10);
+        map.add(new Conveyor_belt(5, 5), 5, 5);
+        map.add(new Tile(5, 5), 5, 5);
+        map.add(new Wall(5, 5), 5, 5);
+        map.add(new Flag(5, 5, 0), 5, 5);
+        map.add(new Robot(5, 5, Directions.UP), 5, 5);
+        ArrayList<IBoardObject> list = map.getBoardObjects(new Position(5, 5));
+        assertEquals(list.size(), 5);
+    }
+
+    @Test
+    public void getBoardObjects() {
+        Map map = build(10, 10);
+        map.add(new Tile(5, 5), 5, 5);
+        map.add(new Flag(5, 5, 0), 5, 5);
+        map.add(new Robot(5, 5, Directions.UP), 5, 5);
+        ArrayList<IBoardObject> list = map.getBoardObjects(new Position(5, 5));
+        boolean flagFound = false;
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i) instanceof Flag) {
+                flagFound = true;
+            }
+        }
+        assertTrue(flagFound);
     }
 
 }

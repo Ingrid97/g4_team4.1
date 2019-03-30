@@ -13,6 +13,9 @@ public class RoboRally {
     private static MapGUI mapGUI;
 
 
+    /**
+     * Initiates the game and runs continuesly while the game runs, in loops of rounds and phases of the game.
+     */
     public static void playGame() {
         // Lager alle kortene
         //leser inn map fra fil
@@ -21,7 +24,6 @@ public class RoboRally {
         map = Map.makeMap("testMap1.txt", players);
         if (map == null)
             System.exit(0);
-
 
 
         LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
@@ -45,11 +47,18 @@ public class RoboRally {
             }
             MovementCardDeck.dealOutMovementCards(players);
 
-            //playing movement cards from players
+            //playing movement cards from players'
+            boolean[] playersWhosDead = new boolean[players.size()];
             for (int j = 0; j < 5; j++) {//the max number for this for loop chooses how many movementcards is supposed to be played
                 for (int i = 0; i < players.size(); i++) {
+                    if (playersWhosDead[i]) {
+                        continue;
+                    }
                     System.out.println("position: x: " + players.get(i).getRobot().getX() + " y: " + players.get(i).getRobot().getY());
-                    playMovementCard((MovementCard) listOfPrioritizedListsOfMovementCardsFromPlayers.get(i).get(j), players.get(i));
+                    boolean isRobotAlive = playMovementCard((MovementCard) listOfPrioritizedListsOfMovementCardsFromPlayers.get(i).get(j), players.get(i));
+                    if (!isRobotAlive) {
+                        playersWhosDead[i] = true;
+                    }
                 }
             }
 
@@ -59,14 +68,16 @@ public class RoboRally {
              */
             for (int i = 0; i < players.size(); i++) {
                 Position pos = players.get(i).getRobot().getPosition();
-
                 ArrayList list = map.getBoardObjects(pos);
 
                 for (int j = 0; j < list.size(); j++) {
 
                     // Sjekker om det er et flag i posisjonen roboten står
                     if (list.get(j) instanceof Flag) {
-                        if (updateFlag(players.get(i), (Flag) list.get(j))) gameOver = true;
+                        if (updateFlag(players.get(i), (Flag) list.get(j))) {
+                            gameOver = true;
+                            System.out.println("WINNEEEER DING DING DING!");
+                        }
                     }
                 }
 
@@ -87,7 +98,7 @@ public class RoboRally {
     private static boolean updateFlag(Player player, Flag flag) {
         boolean[] temp = player.getFlagsWhichHasBeenVisited();
         int identifier = flag.identifier;
-
+        System.out.println("A player reached flag " + identifier);
         int i = 0;
         while (temp[i++] && i <= identifier) ;
 
@@ -107,7 +118,7 @@ public class RoboRally {
      * @param movCard the movement card to be executed
      * @param player  the player that should be moved
      */
-    public static void playMovementCard(MovementCard movCard, Player player) {
+    public static boolean playMovementCard(MovementCard movCard, Player player) {
         Position currentPos = player.getRobot().getPosition();
         Position newPos = new Position(1000, 1000);
         switch (movCard.getDirection()) {
@@ -120,7 +131,7 @@ public class RoboRally {
                             player.getRobot().setPositionToBackUp();
                             System.out.println("deadPosition: x: " + newPos.getX() + " y: " + newPos.getY() + "   Direction on MovCard: " + movCard.getDirection());
                             System.out.println("ROBOT DEAD");
-                            break;
+                            return false;
                         }
                         moveTheRobotAndUpdateMapGUI(player, newPos);
                         currentPos = newPos;
@@ -176,10 +187,10 @@ public class RoboRally {
                 player.getRobot().setPositionToBackUp();
                 System.out.println("deadPosition: x: " + newPos.getX() + " y: " + newPos.getY() + "   Direction on MovCard: " + movCard.getDirection());
                 System.out.println("ROBOT DEAD");
-                return;
+                return false;
             default://default is when none of the other case occurs, then it moves the robot to the actual position
                 moveTheRobotAndUpdateMapGUI(player, newPos);
-                break;
+                return true;
 
         }
     }

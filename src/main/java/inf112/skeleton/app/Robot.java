@@ -72,6 +72,7 @@ public class Robot implements IRobot {
     public void setPositionToBackUp() {
         // TODO! Miste liv osv.
         this.positionOfRobot = this.backUpPosition;
+        this.direction = Directions.UP;
     }
 
 
