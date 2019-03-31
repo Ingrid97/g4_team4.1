@@ -12,6 +12,9 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.Screen;
+
+
 
 import java.util.ArrayList;
 
@@ -32,6 +35,8 @@ public class MapGUI extends ApplicationAdapter {
     public static int witchRobot = 0;
     public ArrayList<Player> listOfPLayers;
 
+
+
     public MapGUI(Map map, ArrayList<Player> listOfPLayers) {
         MapGUI.map = map;
         this.listOfPLayers = listOfPLayers;
@@ -43,6 +48,13 @@ public class MapGUI extends ApplicationAdapter {
 
     @Override
     public void create() {
+
+        //TODO make manu screen appear first
+        //((MenuBar)Gdx.app.getApplicationListener()).setScreen(new MenuBar());
+
+
+
+
 
 
         //Testing with other picture
