@@ -1,5 +1,6 @@
 package inf112.skeleton.app;
 
+import boardObjects.Wall;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -62,15 +63,16 @@ public class Player implements KeyListener {
             for (int i = 0; i < this.robot.getMemoryCapacity(); i++) {
                 this.programForRobotToExecute.remove(i);
             }
+
         }
         HashSet<Integer> list = new HashSet<>(); // Et HashSet for å sjekke at det ikke velges samme kort flere ganger
 
 
         do {
             // Input from user, and add it to the list of chosen cards
+
             if (sc.hasNextInt()) {
                 int number = sc.nextInt();
-
 
                 if (number <= 0 || number > this.robot.getMemoryCapacity()) {
                     System.out.println("Illegal input: " + number);
@@ -97,17 +99,24 @@ public class Player implements KeyListener {
         } while (counter < numberOfSlotsInRegister);
         theCardsToChooseYourProgramFrom.clear();
 
-
         return programForRobotToExecute;
     }
 
-    /**
-     * @return int memorycapasity for this player
-     */
+
     public int memoryCapacityForThisPlayer() {
         return this.robot.getMemoryCapacity();
     }
 
+
+    public boolean[] getFlagsWhichHasBeenVisited() {
+        return flagsWhichHasBeenVisited;
+    }
+
+    public void setFlagsWhichHasBeenVisitedTrue(int pos) {
+
+        this.flagsWhichHasBeenVisited[pos] = true;
+
+    }
 
     @Override
     public void keyTyped(KeyEvent e) {
@@ -118,25 +127,26 @@ public class Player implements KeyListener {
 
     public void keyPressed(KeyEvent key) {
 
-        if (key.getKeyChar() == KeyEvent.VK_W) {
-            canGO = Directions.UP;
+            if (key.getKeyChar() == KeyEvent.VK_W) {
+                canGO = Directions.UP;
 
-        } else if (key.getKeyChar() == KeyEvent.VK_S) {
-            canGO = Directions.DOWN;
+            } else if (key.getKeyChar() == KeyEvent.VK_S) {
+                canGO = Directions.DOWN;
 
-        } else if (key.getKeyChar() == KeyEvent.VK_D) {
-            canGO = Directions.RIGHT;
+            } else if (key.getKeyChar() == KeyEvent.VK_D) {
+                canGO = Directions.RIGHT;
 
-        } else if (key.getKeyChar() == KeyEvent.VK_A) {
-            canGO = Directions.LEFT;
+            } else if (key.getKeyChar() == KeyEvent.VK_A) {
+                canGO = Directions.LEFT;
+
+            }
 
         }
 
-    }
 
     @Override
     public void keyReleased(KeyEvent key) {
-        if (key.getKeyChar() == KeyEvent.CHAR_UNDEFINED) {
+        if(key.getKeyChar() == KeyEvent.CHAR_UNDEFINED){
             canGO = null;
         }
 
@@ -168,8 +178,10 @@ public class Player implements KeyListener {
         }
 
 
+
         return true;
     }
+
 
 
     public int getX() {

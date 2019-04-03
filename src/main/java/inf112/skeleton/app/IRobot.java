@@ -1,5 +1,7 @@
 package inf112.skeleton.app;
 
+import boardObjects.IBoardObject;
+
 public interface IRobot extends IBoardObject {
 
 

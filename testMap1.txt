@@ -1,5 +1,5 @@
   ,  ,  ,  ,  ,  ,  ,  ,1y, y,
-  , s,  ,  ,4b,4b,  , f,1y,  ,
+  , s, f,  ,4b,4b,  , f,1y,  ,
   , p,4b,4b,1b,  ,  ,  ,1y,  ,
   ,1b,  ,  , v, v,  ,  ,1y,  ,
   ,1b,3b,  ,  ,  ,  ,  ,1y,3y,
@@ -10,7 +10,7 @@
   ,  , r,  ,  ,  ,  ,1y,  , v,
 
 
-Symbols on the bord
+Symbols on the board
 '*' = Wall (1,2,3,4)
 'r' = Robot
 'v' = Void

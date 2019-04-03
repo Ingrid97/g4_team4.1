@@ -1,5 +1,8 @@
 package inf112.skeleton.app;//Created by ingridjohansen on 04/02/2019.
 
+import boardObjects.Void;
+import boardObjects.*;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -80,7 +83,6 @@ public class Map {
 
     }
 
-    //test
     // TODO! Throws ArrayIndexOutOfBoundException, does not safe check positions right
     /**
      * Finding a IBoardObject in a Position on the map
@@ -108,51 +110,6 @@ public class Map {
     }
 
     /**
-     * @return copy of the map
-     */
-    public ArrayList[][] getMap() {
-        ArrayList[][] copyOfMap = new ArrayList[getX()][getY()];
-        for (int x = 0; x < getX(); x++) {
-            for (int y = 0; y < getY(); y++) {
-                copyOfMap[x][y] = map[x][y];
-            }
-        }
-        return map;
-    }
-
-    /**
-     * @param x coordinate to check
-     * @param y coordinate to check
-     * @return true if empty
-     */
-    public boolean isEmpty(int x, int y) {
-        return map[x][y].size() == 0;
-    }
-
-    /**
-     * check if a Position is inside the map or invalid
-     * @param position coordinates to check
-     * @return true if valid
-     */
-    public boolean isValidPosition(Position position) {
-        if (position.getY() < 0) return false;
-        if (position.getX() < 0) return false;
-        if (position.getX() > getX() - 1) return false;
-        return position.getY() <= getY() - 1;
-    }
-
-    /**
-     * moves a robot on the map
-     * @param robot robot to be moved
-     * @param newPosition where to move given robot
-     */
-    public void moveRobot(Robot robot, Position newPosition) {
-        map[newPosition.getX()][newPosition.getY()].add(robot);
-        map[robot.getPosition().getX()][robot.getPosition().getY()].remove(robot);
-    }
-
-
-    /**
      * making the map from a given file
      *
      * @param filename
@@ -168,6 +125,8 @@ public class Map {
             return null;
         }
 
+        // Identifier for the flags
+        int identifier = 0;
 
         System.out.println("Making the map...");
         Map map = new Map(10, 10);
@@ -200,11 +159,11 @@ public class Map {
                     } else if (l.contains("h")) {
                         map.add(new Wrench_hammer(i, j), i, j);
                     } else if (l.contains("f")) {
-                        map.add(new Flag(i, j), i, j);
+                        map.add(new Flag(i, j, identifier++), i, j);
                     } else if (l.contains("p")) {
                         map.add(new Rotating_belt(i, j), i, j);
                     } else {
-                        map.add(new Nothing(i, j), i, j);
+                        map.add(new Tile(i, j), i, j);
                     }
                     j++;
                 }
@@ -219,6 +178,61 @@ public class Map {
         System.out.println("Adding stuff to the map...");
 
         return map;
+    }
+
+    /**
+     * @return copy of the map
+     */
+    public ArrayList[][] getMap() {
+        ArrayList[][] copyOfMap = new ArrayList[getX()][getY()];
+        for (int x = 0; x < getX(); x++) {
+            for (int y = 0; y < getY(); y++) {
+                copyOfMap[x][y] = map[x][y];
+            }
+        }
+        return map;
+    }
+
+    /**
+     * @param x coordinate to check
+     * @param y coordinate to check
+     * @return true if empty
+     */
+    public boolean isEmpty(int x, int y) {
+        return map[x][y].size() == 0;
+    }
+
+    /**
+     * check if a Position is inside the map or invalid
+     *
+     * @param position coordinates to check
+     * @return true if valid
+     */
+    public boolean isValidPosition(Position position) {
+        if (position.getY() < 0) return false;
+        if (position.getX() < 0) return false;
+        if (position.getX() > getX() - 1) return false;
+        return position.getX() <= getY() - 1;
+
+    }
+
+    /**
+     * moves a robot on the map
+     *
+     * @param robot       robot to be moved
+     * @param newPosition where to move given robot
+     */
+    public void moveRobot(Robot robot, Position newPosition) {
+        map[newPosition.getX()][newPosition.getY()].add(robot);
+        map[robot.getPosition().getX()][robot.getPosition().getY()].remove(robot);
+    }
+
+    public ArrayList<IBoardObject> getBoardObjects(Position position) {
+        if (isValidPosition(position)) {
+            return map[position.getX()][position.getY()];
+        } else {
+            return null;
+        }
     }
 
     /**

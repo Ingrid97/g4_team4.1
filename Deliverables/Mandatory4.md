@@ -21,6 +21,12 @@ Three goals to the next sprint
 * Help other members complete their task
 * Every member send in weekly update (on slack) on what they have done / have not done (on tuesday)
 
+Knowledge transfer
+* We try to do some pair-programming together to raise the general knowledge level, and have experienced 
+ that its helpful to giving insights and understandings that would otherwise be hard to come by
+* We also try to transfer knowledge in our meetings with spesific problem solving and discussions
+
+
 Project board
 * https://trello.com/b/GaztDf4k/inf112
 

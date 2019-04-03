@@ -1,4 +1,6 @@
-package inf112.skeleton.app;//Created by ingridjohansen on 05/02/2019.
+package boardObjects;//Created by ingridjohansen on 05/02/2019.
+
+import inf112.skeleton.app.Position;
 
 public class Wall implements IBoardObject{
     int x;

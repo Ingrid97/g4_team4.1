@@ -1,39 +1,42 @@
 package inf112.skeleton.app;//Created by ingridjohansen on 04/02/2019.
 
+import boardObjects.*;
+import boardObjects.Void;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
-public class Game {
-    private static ArrayList<Player> players;
-    private static boolean gameOver;
+public class RoboRally {
     private static Map map;
+    private static MapGUI mapGUI;
 
 
+    /**
+     * Initiates the game and runs continuesly while the game runs, in loops of rounds and phases of the game.
+     */
     public static void playGame() {
         // Lager alle kortene
         //leser inn map fra fil
-        players = new ArrayList<>();
+        ArrayList<Player> players = new ArrayList<>();
         map = new Map(10, 10);
         map = Map.makeMap("testMap1.txt", players);
         if (map == null)
             System.exit(0);
 
 
-
         LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
         cfg.title = "Robo Rally";
         cfg.width = 640;
         cfg.height = 940;
-        MapGUI mapGUI = new MapGUI(map, players);
+        mapGUI = new MapGUI(map, players);
         new LwjglApplication(mapGUI, cfg);//instantiating MapGUI and updating the map it prints
 
-        gameOver = true;
+        boolean gameOver = false;
         MovementCardDeck.setUpTheFullDeckOfCards();
         MovementCardDeck.dealOutMovementCards(players);
-        while (gameOver) {
+        while (!gameOver) {
             //getting movement cards from player/s
             ArrayList<ArrayList> listOfPrioritizedListsOfMovementCardsFromPlayers = new ArrayList<>();
             for (int i = 0; i < players.size(); i++) {
@@ -44,18 +47,69 @@ public class Game {
             }
             MovementCardDeck.dealOutMovementCards(players);
 
-            //playing movement cards from players
+            //playing movement cards from players'
+            boolean[] playersWhosDead = new boolean[players.size()];
             for (int j = 0; j < 5; j++) {//the max number for this for loop chooses how many movementcards is supposed to be played
                 for (int i = 0; i < players.size(); i++) {
+                    if (playersWhosDead[i]) {
+                        continue;
+                    }
                     System.out.println("position: x: " + players.get(i).getRobot().getX() + " y: " + players.get(i).getRobot().getY());
-                    playMovementCard((MovementCard) listOfPrioritizedListsOfMovementCardsFromPlayers.get(i).get(j), players.get(i), mapGUI);
+                    boolean isRobotAlive = playMovementCard((MovementCard) listOfPrioritizedListsOfMovementCardsFromPlayers.get(i).get(j), players.get(i));
+                    if (!isRobotAlive) {
+                        playersWhosDead[i] = true;
+                    }
                 }
             }
 
             //end of round
+            /* TODO! Sjekke om robot står på flag
+             *
+             */
+            for (int i = 0; i < players.size(); i++) {
+                Position pos = players.get(i).getRobot().getPosition();
+                ArrayList list = map.getBoardObjects(pos);
 
+                for (int j = 0; j < list.size(); j++) {
+
+                    // Sjekker om det er et flag i posisjonen roboten står
+                    if (list.get(j) instanceof Flag) {
+                        if (updateFlag(players.get(i), (Flag) list.get(j))) {
+                            gameOver = true;
+                            System.out.println("WINNEEEER DING DING DING!");
+                        }
+                    }
+                }
+
+            }
         }
 
+    }
+
+    // Litt usikker på om denne er helt riktig
+
+    /**
+     * Returns true if someone has won
+     *
+     * @param player
+     * @param flag
+     * @return
+     */
+    private static boolean updateFlag(Player player, Flag flag) {
+        boolean[] temp = player.getFlagsWhichHasBeenVisited();
+        int identifier = flag.identifier;
+        System.out.println("A player reached flag " + identifier);
+        int i = 0;
+        while (temp[i++] && i <= identifier) ;
+
+        // Må senke verdien av i med 1 etter while-loopen
+        i = i - 1;
+
+        if (i == identifier) {
+            player.setFlagsWhichHasBeenVisitedTrue(identifier);
+            return identifier == 2;
+        }
+        return false;
     }
 
     /**
@@ -64,7 +118,7 @@ public class Game {
      * @param movCard the movement card to be executed
      * @param player  the player that should be moved
      */
-    public static void playMovementCard(MovementCard movCard, Player player, MapGUI mapGUI) {
+    public static boolean playMovementCard(MovementCard movCard, Player player) {
         Position currentPos = player.getRobot().getPosition();
         Position newPos = new Position(1000, 1000);
         switch (movCard.getDirection()) {
@@ -72,8 +126,15 @@ public class Game {
                 try {
                     for (int i = 0; i < movCard.getNumberOfSteps(); i++) {
                         newPos = movingForward(player, currentPos);
-                        if (!legalPosition(newPos).equals("dead")) break;
-                        moveTheRobotAndUpdateMapGUI(player, newPos, mapGUI);
+                        if (legalPosition(newPos).equals("dead")) {
+                            map.moveRobot(player.getRobot(), player.getRobot().getBackUpPosition());
+                            player.getRobot().setPositionToBackUp();
+                            System.out.println("deadPosition: x: " + newPos.getX() + " y: " + newPos.getY() + "   Direction on MovCard: " + movCard.getDirection());
+                            System.out.println("ROBOT DEAD");
+                            return false;
+                        }
+                        moveTheRobotAndUpdateMapGUI(player, newPos);
+                        currentPos = newPos;
                     }
                 } catch (IllegalArgumentException e) {
                     System.out.println("A robot has fallen1"); //robot fell outside map, should be returned to backup position
@@ -81,7 +142,7 @@ public class Game {
                 break;
             case DOWN://moving backward or turning 180degrees
                 try {
-                    newPos = movingBackwardOrTurning180Degrees(movCard, player, currentPos, newPos);
+                    newPos = backingUpOrTurning180Degrees(movCard, player, currentPos, newPos);
                 } catch (IllegalArgumentException e) {
                     System.out.println("A robot has fallen2");    //robot fell outside map, should be returned to backup position
                 }
@@ -118,23 +179,29 @@ public class Game {
             case "void":
                 //what do to if a robot collides with a void
                 break;
-            case "nothing":
-                //what do to if a robot collides with a nothing
+            case "tile":
+                //what do to if a robot collides with a tile
                 break;*/
             case "dead":
                 map.moveRobot(player.getRobot(), player.getRobot().getBackUpPosition());
                 player.getRobot().setPositionToBackUp();
                 System.out.println("deadPosition: x: " + newPos.getX() + " y: " + newPos.getY() + "   Direction on MovCard: " + movCard.getDirection());
                 System.out.println("ROBOT DEAD");
-                return;
+                return false;
             default://default is when none of the other case occurs, then it moves the robot to the actual position
-                moveTheRobotAndUpdateMapGUI(player, newPos, mapGUI);
-                break;
+                moveTheRobotAndUpdateMapGUI(player, newPos);
+                return true;
 
         }
     }
 
-    private static void moveTheRobotAndUpdateMapGUI(Player player, Position newPos, MapGUI mapGUI) {
+    /**
+     * moving the robot both in map and updating the robots own position
+     *
+     * @param player player to move
+     * @param newPos position to move to
+     */
+    private static void moveTheRobotAndUpdateMapGUI(Player player, Position newPos) {
         if (newPos.getY() == 1000 || newPos.getX() == 1000) {
             return;
         }
@@ -150,7 +217,7 @@ public class Game {
     /**
      * checking that given position is inside map, or not occupied by a wall or robot
      *
-     * @param position
+     * @param position position to check
      * @return name of object
      */
     public static String legalPosition(Position position) {
@@ -170,8 +237,10 @@ public class Game {
             return "rotating_belt";
         } else if (map.getBoardObject(position) instanceof Void) {
             return "void";
-        } else if (map.getBoardObject(position) instanceof Nothing) {
-            return "nothing";
+        } else if (map.getBoardObject(position) instanceof Tile) {
+            return "tile";
+        } else if (map.getBoardObject(position) instanceof Flag) {
+            return "flag";
         } else {
             return "ok";
         }
@@ -184,14 +253,14 @@ public class Game {
      * @param player     player to move
      * @param currentPos current position of robot
      * @return the final new position, ex the third position if the movCard said 3 steps
-     * @throws IllegalArgumentException
+     * @throws IllegalArgumentException throws if the robot moves outside the board
      */
-    private static Position movingForward(Player player, Position currentPos) throws IllegalArgumentException {
+    public static Position movingForward(Player player, Position currentPos) throws IllegalArgumentException {
         Directions direction = player.getRobot().getDirection();
         Position newPos;
         switch (direction) {
                 case UP:
-                    newPos = new Position(currentPos.getX(), (currentPos.getY() - 1));
+                    newPos = new Position(currentPos.getX(), (currentPos.getY() + 1));
                     break;
                 case RIGHT:
                     newPos = new Position((currentPos.getX() + 1), currentPos.getY());
@@ -200,7 +269,7 @@ public class Game {
                     newPos = new Position((currentPos.getX() - 1), currentPos.getY());
                     break;
             default:
-                    newPos = new Position(currentPos.getX(), (currentPos.getY() + 1));
+                newPos = new Position(currentPos.getX(), (currentPos.getY() - 1));
                     break;
             }
         return newPos;
@@ -214,12 +283,25 @@ public class Game {
      * @param currentPos current position of robot
      * @param newPos     new position where the robot is going next step
      * @return the final new position
-     * @throws IllegalArgumentException
+     * @throws IllegalArgumentException if robot is outside map
      */
-    private static Position movingBackwardOrTurning180Degrees(MovementCard movCard, Player player, Position currentPos, Position newPos) throws IllegalArgumentException {
+    public static Position backingUpOrTurning180Degrees(MovementCard movCard, Player player, Position currentPos, Position newPos) throws IllegalArgumentException {
         if (movCard.getNumberOfSteps() == 1) {
-            newPos = new Position(currentPos.getX(), (currentPos.getY() - 1));
-            //should the robot also turn 180 degrees when moving backward?
+            Directions direction = player.getRobot().getDirection();
+            switch (direction) {
+                case UP:
+                    newPos = new Position(currentPos.getX(), (currentPos.getY() - 1));
+                    break;
+                case RIGHT:
+                    newPos = new Position(currentPos.getX() - 1, currentPos.getY());
+                    break;
+                case LEFT:
+                    newPos = new Position(currentPos.getX() + 1, currentPos.getY());
+                    break;
+                case DOWN:
+                    newPos = new Position(currentPos.getX(), (currentPos.getY() + 1));
+                    break;
+            }
         } else {
             Directions direction = player.getRobot().getDirection();
             newPos = currentPos;
@@ -248,7 +330,7 @@ public class Game {
      * @return direction left from current
      * @throws IllegalArgumentException
      */
-    private static Directions turningLeft(Directions direction) throws IllegalArgumentException {
+    public static Directions turningLeft(Directions direction) throws IllegalArgumentException {
         switch (direction) {
             case UP:
                 return Directions.LEFT;
@@ -268,7 +350,7 @@ public class Game {
      * @return direction right from current
      * @throws IllegalArgumentException
      */
-    private static Directions turningRight(Directions direction) throws IllegalArgumentException {
+    public static Directions turningRight(Directions direction) throws IllegalArgumentException {
         switch (direction) {
             case UP:
                 return Directions.RIGHT;

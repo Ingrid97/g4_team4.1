@@ -1,5 +1,7 @@
 package inf112.skeleton.app;//Created by ingridjohansen on 04/02/2019.
 
+import boardObjects.*;
+import boardObjects.Void;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -10,6 +12,9 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.Screen;
+
+
 
 import java.util.ArrayList;
 
@@ -31,6 +36,8 @@ public class MapGUI extends ApplicationAdapter {
     public ArrayList<Player> listOfPLayers;
     public int moveonce;
 
+
+
     public MapGUI(Map map, ArrayList<Player> listOfPLayers) {
         MapGUI.map = map;
         this.listOfPLayers = listOfPLayers;
@@ -43,18 +50,13 @@ public class MapGUI extends ApplicationAdapter {
     @Override
     public void create() {
 
+        //TODO make manu screen appear first
+        //((MenuBar)Gdx.app.getApplicationListener()).setScreen(new MenuBar());
 
-        // load the images for the objects on the map, 64x64 pixels each
-        /*robotImage = getImage("wall_e.png");
-        voidImage = getImage("void.png");
-        yellowConveyor_beltImage = getImage("yellow_arrow.png");
-        blueConveyor_beltImage = getImage("blue_arrow.png");
-        laserImage = getImage("laser.png");
-        wrenchImage = getImage("Wrench.png");
-        wrench_hammer = getImage("Wrench_hammer.png");
-        rotatin_plateImage = getImage("Rotating_bond.png");
-        flagImage = getImage("flag.png");
-        nothingImage = getImage("nothing.png");*/
+
+
+
+
 
         //Testing with other picture
         robotImage = getImage("r.png");
@@ -141,12 +143,6 @@ public class MapGUI extends ApplicationAdapter {
             batch.draw(robotImage, listOfPLayers.get(i).getRobot().getX() * 64, listOfPLayers.get(i).getRobot().getY() * 64);
         }
 
-        /*
-        for (int i = 0, k = 9; i < 2; i++, k--) {
-            batch.draw(robotImage, robot[roboid].x, robot[roboid].y);
-            roboid++;
-        }
-        */
 
         for (int i = 0; i < 9; i++) {
             batch.draw(cardTester, cards[i].x, cards[i].y);
@@ -181,7 +177,7 @@ public class MapGUI extends ApplicationAdapter {
         drawnTable = true;
         roboid = 0;
 
-        /* TODO! Logic in drawTable vs makeMap in Game
+        /* TODO! Logic in drawTable vs makeMap in RoboRally
          * Here there is one type of logic of how to place objects on the map, this logic is not the same
          * which is used when placing the robots at the map. Therefore the start placement of the robot
          * is inconsistent, furthermore the movement is not correct
@@ -191,12 +187,6 @@ public class MapGUI extends ApplicationAdapter {
                 if (map.getBoardObject(new Position(j, i)) instanceof Robot) {
 
                     batch.draw(nothingImage, tile[i][k].x, tile[i][k].y);
-                    /*
-                    if (robot[roboid].x == -1) {
-                        robot[roboid].x = i * 64;
-                        robot[roboid].y = k * 64;
-
-                    batch.draw(robotImage, robot[roboid].x, robot[roboid].y); */
                     roboid++;
                 } else if (map.getBoardObject(new Position(j, i)) instanceof Void) {
                     batch.draw(voidImage, tile[i][k].x, tile[i][k].y);

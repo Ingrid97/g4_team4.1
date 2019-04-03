@@ -1,5 +1,6 @@
 package inf112.skeleton.app;
 
+import boardObjects.*;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -27,22 +28,22 @@ public class MapTest {
     }
 
     @Test
-    public void testThatGivenInputXOnMapIsCorrect() {
+    public void GivenInputXOnMapIsCorrect() {
         assertEquals(build(10, 20).getX(), 10);
     }
 
     @Test
-    public void testThatGivenInputYOnMapIsCorrect() {
+    public void GivenInputYOnMapIsCorrect() {
         assertEquals(build(10, 20).getY(), 20);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testInitializingMapWithXValueLessThanZeroThrowsException() {
+    public void initializingWithXValueLessThanZeroThrowsException() {
         build(-1, 3);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testInitializingMapWithYValueLessThanZeroThrowsException() {
+    public void initializingWithYValueLessThanZeroThrowsException() {
         build(3, -1);
     }
 
@@ -88,7 +89,7 @@ public class MapTest {
     }
 
     @Test
-    public void allSquaresInGetMapEqualsSquaresInOriginal() {
+    public void copyOfMapGivesIdenticalMap() {
         Map map = build(10, 10);
         map = addRobotToAllSquaresOnTheMap(map);
         ArrayList[][] copyOfMap = map.getMap();
@@ -136,15 +137,71 @@ public class MapTest {
             }
         }
     }
-//
-//    @Test
-//    public void testingRobotMovement() {
-//        Map map = build(10, 10);
-//        Robot robot = new Robot(5, 5, Directions.UP);
-//        Player player = new Player(0, robot);
-//        map.add(robot, 5, 5);
-//        Game.playMovementCard(new MovementCard(Directions.NODIRECTION, 3, 800), player);
-//        assertTrue(map.getBoardObject(new Position(2, 5)) instanceof Robot);
-//    }
+
+    @Test
+    public void isValidPosition() {
+        Map map = build(10, 10);
+        for (int i = 0; i < 10; i++) {
+            assertTrue(map.isValidPosition(new Position(i, 5)));
+        }
+    }
+
+    @Test
+    public void isInvalidIfOutsideTheMapX() {
+        Map map = build(10, 10);
+        for (int i = 10; i < 30; i++) {
+            assertFalse(map.isValidPosition(new Position(i, 5)));
+        }
+    }
+
+/*
+    @Test
+    public void testingRobotMovement() {
+        Map map = build(10, 10);
+        Robot robot = new Robot(5, 5, Directions.UP);
+        Player player = new Player(0, robot);
+        map.add(robot, 5, 5);
+        RoboRally.playMovementCard(new MovementCard(Directions.NODIRECTION, 3, 800), player);
+        assertTrue(map.getBoardObject(new Position(2, 5)) instanceof Robot);
+    }
+    */
+
+    @Test
+    public void severalObjectsOnOneTile() {
+        Map map = build(10, 10);
+        map.add(new Tile(5, 5), 5, 5);
+        map.add(new Flag(5, 5, 0), 5, 5);
+        map.add(new Robot(5, 5, Directions.UP), 5, 5);
+        ArrayList<IBoardObject> list = map.getBoardObjects(new Position(5, 5));
+        assertEquals(list.size(), 3);
+    }
+
+    @Test
+    public void severalObjectsOnOneTile2() {
+        Map map = build(10, 10);
+        map.add(new Conveyor_belt(5, 5), 5, 5);
+        map.add(new Tile(5, 5), 5, 5);
+        map.add(new Wall(5, 5), 5, 5);
+        map.add(new Flag(5, 5, 0), 5, 5);
+        map.add(new Robot(5, 5, Directions.UP), 5, 5);
+        ArrayList<IBoardObject> list = map.getBoardObjects(new Position(5, 5));
+        assertEquals(list.size(), 5);
+    }
+
+    @Test
+    public void getBoardObjects() {
+        Map map = build(10, 10);
+        map.add(new Tile(5, 5), 5, 5);
+        map.add(new Flag(5, 5, 0), 5, 5);
+        map.add(new Robot(5, 5, Directions.UP), 5, 5);
+        ArrayList<IBoardObject> list = map.getBoardObjects(new Position(5, 5));
+        boolean flagFound = false;
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i) instanceof Flag) {
+                flagFound = true;
+            }
+        }
+        assertTrue(flagFound);
+    }
 
 }
