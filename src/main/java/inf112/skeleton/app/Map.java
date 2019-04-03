@@ -42,7 +42,7 @@ public class Map {
      * @param s string to be converted
      * @return 1, 2, 3, 4(to be used for Direction)
      */
-    private static int getDir(String s) {
+    private int getDir(String s) {
         if (s.contains("1"))
             return 1;
         if (s.contains("2"))
@@ -115,7 +115,7 @@ public class Map {
      * @param filename
      * @return
      */
-    public static Map makeMap(String filename, ArrayList<Player> players) {
+    public Map makeMap(String filename, ArrayList<Player> players) {
         BufferedReader br;
         try {
             br = new BufferedReader(new FileReader(filename));

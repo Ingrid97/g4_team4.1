@@ -30,20 +30,20 @@ public class MapGUI extends ApplicationAdapter {
     private Rectangle[] robot;
     private Rectangle[] cards;
     private int roboid;
-    public static Map map;
-    public static boolean drawnTable = false;
-    public static int witchRobot = 0;
+    public Map map;
+    public boolean drawnTable = false;
+    public int witchRobot = 0;
     public ArrayList<Player> listOfPLayers;
 
 
 
     public MapGUI(Map map, ArrayList<Player> listOfPLayers) {
-        MapGUI.map = map;
+        this.map = map;
         this.listOfPLayers = listOfPLayers;
     }
 
     public void updateMap(Map map) {
-        MapGUI.map = map;
+        this.map = map;
     }
 
     @Override

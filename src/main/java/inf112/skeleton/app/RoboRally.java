@@ -9,19 +9,17 @@ import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 public class RoboRally {
-    private static Map map;
-    private static MapGUI mapGUI;
+    private Map map;
+    private MapGUI mapGUI;
+    private ArrayList<Player> players;
 
 
-    /**
-     * Initiates the game and runs continuesly while the game runs, in loops of rounds and phases of the game.
-     */
-    public static void playGame() {
+    public RoboRally() {
         // Lager alle kortene
         //leser inn map fra fil
-        ArrayList<Player> players = new ArrayList<>();
+        this.players = new ArrayList<>();
         map = new Map(10, 10);
-        map = Map.makeMap("testMap1.txt", players);
+        map = map.makeMap("testMap1.txt", players);
         if (map == null)
             System.exit(0);
 
@@ -33,9 +31,14 @@ public class RoboRally {
         mapGUI = new MapGUI(map, players);
         new LwjglApplication(mapGUI, cfg);//instantiating MapGUI and updating the map it prints
 
-        boolean gameOver = false;
         MovementCardDeck.setUpTheFullDeckOfCards();
         MovementCardDeck.dealOutMovementCards(players);
+    }
+    /**
+     * Initiates the game and runs continuosly while the game runs, in loops of rounds and phases of the game.
+     */
+    public void playGame() {
+        boolean gameOver = false;
         while (!gameOver) {
             //getting movement cards from player/s
             ArrayList<ArrayList> listOfPrioritizedListsOfMovementCardsFromPlayers = new ArrayList<>();
@@ -95,7 +98,7 @@ public class RoboRally {
      * @param flag
      * @return
      */
-    private static boolean updateFlag(Player player, Flag flag) {
+    private boolean updateFlag(Player player, Flag flag) {
         boolean[] temp = player.getFlagsWhichHasBeenVisited();
         int identifier = flag.identifier;
         System.out.println("A player reached flag " + identifier);
@@ -118,7 +121,7 @@ public class RoboRally {
      * @param movCard the movement card to be executed
      * @param player  the player that should be moved
      */
-    public static boolean playMovementCard(MovementCard movCard, Player player) {
+    public boolean playMovementCard(MovementCard movCard, Player player) {
         Position currentPos = player.getRobot().getPosition();
         Position newPos = new Position(1000, 1000);
         switch (movCard.getDirection()) {
@@ -201,7 +204,7 @@ public class RoboRally {
      * @param player player to move
      * @param newPos position to move to
      */
-    private static void moveTheRobotAndUpdateMapGUI(Player player, Position newPos) {
+    private void moveTheRobotAndUpdateMapGUI(Player player, Position newPos) {
         if (newPos.getY() == 1000 || newPos.getX() == 1000) {
             return;
         }
@@ -220,7 +223,7 @@ public class RoboRally {
      * @param position position to check
      * @return name of object
      */
-    public static String legalPosition(Position position) {
+    public String legalPosition(Position position) {
         if (!map.isValidPosition(position)) {
             return "dead";
         } else if (map.getBoardObject(position) instanceof Robot) {
@@ -255,7 +258,7 @@ public class RoboRally {
      * @return the final new position, ex the third position if the movCard said 3 steps
      * @throws IllegalArgumentException throws if the robot moves outside the board
      */
-    public static Position movingForward(Player player, Position currentPos) throws IllegalArgumentException {
+    public Position movingForward(Player player, Position currentPos) throws IllegalArgumentException {
         Directions direction = player.getRobot().getDirection();
         Position newPos;
         switch (direction) {
@@ -285,7 +288,7 @@ public class RoboRally {
      * @return the final new position
      * @throws IllegalArgumentException if robot is outside map
      */
-    public static Position backingUpOrTurning180Degrees(MovementCard movCard, Player player, Position currentPos, Position newPos) throws IllegalArgumentException {
+    public Position backingUpOrTurning180Degrees(MovementCard movCard, Player player, Position currentPos, Position newPos) throws IllegalArgumentException {
         if (movCard.getNumberOfSteps() == 1) {
             Directions direction = player.getRobot().getDirection();
             switch (direction) {
@@ -330,7 +333,7 @@ public class RoboRally {
      * @return direction left from current
      * @throws IllegalArgumentException
      */
-    public static Directions turningLeft(Directions direction) throws IllegalArgumentException {
+    public Directions turningLeft(Directions direction) throws IllegalArgumentException {
         switch (direction) {
             case UP:
                 return Directions.LEFT;
@@ -350,7 +353,7 @@ public class RoboRally {
      * @return direction right from current
      * @throws IllegalArgumentException
      */
-    public static Directions turningRight(Directions direction) throws IllegalArgumentException {
+    public Directions turningRight(Directions direction) throws IllegalArgumentException {
         switch (direction) {
             case UP:
                 return Directions.RIGHT;
