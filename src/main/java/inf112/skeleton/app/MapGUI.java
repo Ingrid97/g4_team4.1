@@ -54,10 +54,6 @@ public class MapGUI extends ApplicationAdapter {
         //((MenuBar)Gdx.app.getApplicationListener()).setScreen(new MenuBar());
 
 
-
-
-
-
         //Testing with other picture
         robotImage = getImage("r.png");
         voidImage = getImage("v.png");
@@ -90,7 +86,6 @@ public class MapGUI extends ApplicationAdapter {
             robot[i].height = 64;
             robot[i].width = 64;
         }
-
 
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
@@ -140,7 +135,7 @@ public class MapGUI extends ApplicationAdapter {
         roboid = 0;
         // For loop som går gjennom players og position til robotene
         for (int i = 0; i < listOfPLayers.size(); i++) {
-            batch.draw(robotImage, listOfPLayers.get(i).getRobot().getX() * 64, listOfPLayers.get(i).getRobot().getY() * 64);
+            batch.draw(robotImage, listOfPLayers.get(i).getRobot().getY() * 64, 576 - listOfPLayers.get(i).getRobot().getX() * 64);
         }
 
 
@@ -185,7 +180,6 @@ public class MapGUI extends ApplicationAdapter {
         for (int i = 0; i < 10; i++) {
             for (int j = 0, k = 9; j < 10; j++, k--) {
                 if (map.getBoardObject(new Position(j, i)) instanceof Robot) {
-
                     batch.draw(nothingImage, tile[i][k].x, tile[i][k].y);
                     roboid++;
                 } else if (map.getBoardObject(new Position(j, i)) instanceof Void) {
