@@ -152,6 +152,16 @@ public class Map {
                             c.isYellowBelt();
                         else
                             c.isBlueBelt();
+
+                        if (l.contains("1"))
+                            c.setPictureDir(1);
+                        else if (l.contains("2"))
+                            c.setPictureDir(2);
+                        else if (l.contains("3"))
+                            c.setPictureDir(3);
+                        else
+                            c.setPictureDir(4);
+
                         map.add(c, i, j);
 
                     } else if (l.contains("s")) {

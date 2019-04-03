@@ -10,6 +10,7 @@ public class Conveyor_belt implements IBoardObject{
     int placeDir;
     boolean isYellowBelt;
     private Position position;
+    public int pictureDir;
 
     public Conveyor_belt(int x, int y){
         isBlueBelt = false;
@@ -43,6 +44,10 @@ public class Conveyor_belt implements IBoardObject{
     @Override
     public int getX() {
         return this.position.getX();
+    }
+
+    public void setPictureDir(int d){
+        this.pictureDir = d;
     }
 
     @Override

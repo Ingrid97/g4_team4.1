@@ -20,7 +20,9 @@ import java.util.ArrayList;
 
 public class MapGUI extends ApplicationAdapter {
 
-    private Texture robotImage, voidImage, yellowConveyor_beltImage, blueConveyor_beltImage, laserImage, wrenchImage, wrench_hammer, rotatin_plateImage, flagImage, nothingImage, cardTester;
+    private Texture robotImage, voidImage, laserImage, wrenchImage, wrench_hammer, rotatin_plateImage, flagImage, nothingImage, cardTester;
+    private Texture blueConveyor_beltImage1, blueConveyor_beltImage2, blueConveyor_beltImage3, blueConveyor_beltImage4;
+    private Texture yellowConveyor_beltImage1, yellowConveyor_beltImage2, yellowConveyor_beltImage3, yellowConveyor_beltImage4;
 
     private Sound dropSound;
     private Music rainMusic;
@@ -57,8 +59,14 @@ public class MapGUI extends ApplicationAdapter {
         //Testing with other picture
         robotImage = getImage("r.png");
         voidImage = getImage("v.png");
-        yellowConveyor_beltImage = getImage("y.png");
-        blueConveyor_beltImage = getImage("b.png");
+        yellowConveyor_beltImage1 = getImage("y1.png");
+        yellowConveyor_beltImage2 = getImage("y2.png");
+        yellowConveyor_beltImage3 = getImage("y3.png");
+        yellowConveyor_beltImage4 = getImage("y4.png");
+        blueConveyor_beltImage1 = getImage("b1.png");
+        blueConveyor_beltImage2 = getImage("b2.png");
+        blueConveyor_beltImage3 = getImage("b3.png");
+        blueConveyor_beltImage4 = getImage("b4.png");
         laserImage = getImage("l.png");
         wrenchImage = getImage("s.png");
         wrench_hammer = getImage("s_h.png");
@@ -188,10 +196,25 @@ public class MapGUI extends ApplicationAdapter {
                     batch.draw(laserImage, tile[i][k].x, tile[i][k].y);
                 } else if (map.getBoardObject(new Position(j, i)) instanceof Conveyor_belt) {
                     Conveyor_belt c = (Conveyor_belt) map.getBoardObject(new Position(j, i));
-                    if (c.isBlueBelt)
-                        batch.draw(blueConveyor_beltImage, tile[i][k].x, tile[i][k].y);
-                    else
-                        batch.draw(yellowConveyor_beltImage, tile[i][k].x, tile[i][k].y);
+                    if (c.isBlueBelt) {
+                        if (c.pictureDir == 1)
+                            batch.draw(blueConveyor_beltImage1, tile[i][k].x, tile[i][k].y);
+                        else if (c.pictureDir == 2)
+                            batch.draw(blueConveyor_beltImage2, tile[i][k].x, tile[i][k].y);
+                        else if (c.pictureDir == 3)
+                            batch.draw(blueConveyor_beltImage3, tile[i][k].x, tile[i][k].y);
+                        else
+                            batch.draw(blueConveyor_beltImage4, tile[i][k].x, tile[i][k].y);
+                    } else {
+                        if (c.pictureDir == 4)
+                            batch.draw(yellowConveyor_beltImage4, tile[i][k].x, tile[i][k].y);
+                        else if (c.pictureDir == 2)
+                            batch.draw(yellowConveyor_beltImage2, tile[i][k].x, tile[i][k].y);
+                        else if (c.pictureDir == 1)
+                            batch.draw(yellowConveyor_beltImage1, tile[i][k].x, tile[i][k].y);
+                        else
+                            batch.draw(yellowConveyor_beltImage3, tile[i][k].x, tile[i][k].y);
+                    }
                 } else if (map.getBoardObject(new Position(j, i)) instanceof Wrench) {
                     batch.draw(wrenchImage, tile[i][k].x, tile[i][k].y);
                 } else if (map.getBoardObject(new Position(j, i)) instanceof Wrench_hammer) {
@@ -212,8 +235,6 @@ public class MapGUI extends ApplicationAdapter {
         // dispose of all
         robotImage.dispose();
         voidImage.dispose();
-        blueConveyor_beltImage.dispose();
-        yellowConveyor_beltImage.dispose();
         laserImage.dispose();
         nothingImage.dispose();
         rotatin_plateImage.dispose();
@@ -221,5 +242,15 @@ public class MapGUI extends ApplicationAdapter {
         wrenchImage.dispose();
         flagImage.dispose();
         batch.dispose();
+
+        yellowConveyor_beltImage1.dispose();
+        yellowConveyor_beltImage2.dispose();
+        yellowConveyor_beltImage3.dispose();
+        yellowConveyor_beltImage4.dispose();
+
+        blueConveyor_beltImage1.dispose();
+        blueConveyor_beltImage2.dispose();
+        blueConveyor_beltImage3.dispose();
+        blueConveyor_beltImage4.dispose();
     }
 }
