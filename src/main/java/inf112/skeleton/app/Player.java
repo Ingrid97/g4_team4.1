@@ -1,15 +1,11 @@
 package inf112.skeleton.app;
 
-import boardObjects.Wall;
-
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Scanner;
 
 
-public class Player implements KeyListener {
+public class Player {
     private boolean[] flagsWhichHasBeenVisited;
     private Robot robot;
     private ArrayList<MovementCard> theCardsToChooseYourProgramFrom;
@@ -117,72 +113,6 @@ public class Player implements KeyListener {
         this.flagsWhichHasBeenVisited[pos] = true;
 
     }
-
-    @Override
-    public void keyTyped(KeyEvent e) {
-
-    }
-
-    public Directions canGO;
-
-    public void keyPressed(KeyEvent key) {
-
-            if (key.getKeyChar() == KeyEvent.VK_W) {
-                canGO = Directions.UP;
-
-            } else if (key.getKeyChar() == KeyEvent.VK_S) {
-                canGO = Directions.DOWN;
-
-            } else if (key.getKeyChar() == KeyEvent.VK_D) {
-                canGO = Directions.RIGHT;
-
-            } else if (key.getKeyChar() == KeyEvent.VK_A) {
-                canGO = Directions.LEFT;
-
-            }
-
-        }
-
-
-    @Override
-    public void keyReleased(KeyEvent key) {
-        if(key.getKeyChar() == KeyEvent.CHAR_UNDEFINED){
-            canGO = null;
-        }
-
-    }
-
-
-    public boolean noticeWalls(Directions dir, Map map) {
-        //Map map = MapGUI.map;
-
-
-        if (dir == Directions.UP) {
-            if (map.getBoardObject(new Position(getX(), getY() + 1)) instanceof Wall) {
-            }
-            return false;
-
-        } else if (dir == Directions.DOWN) {
-            if (map.getBoardObject(new Position(getX(), getY() - 1)) instanceof Wall) {
-
-            }
-            return false;
-        } else if (dir == Directions.RIGHT) {
-            if (map.getBoardObject(new Position(getX() + 1, getY())) instanceof Wall) {
-
-
-            }
-            return false;
-        } else if (dir == Directions.LEFT) {
-            return !(map.getBoardObject(new Position(getX() - 1, getY())) instanceof Wall);
-        }
-
-
-
-        return true;
-    }
-
-
 
     public int getX() {
         return robot.getX();

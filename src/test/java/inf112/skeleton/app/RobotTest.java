@@ -111,6 +111,8 @@ public class RobotTest {
         assertEquals((memory - 2), theRobotGettingShot.getMemoryCapacity());
     }
 
+    // TODO! Sjekke videre på at roboten får mindre kort med mer skade
+
 
     @Test
     public void takingNineDamageResultInOneLessHP() {
