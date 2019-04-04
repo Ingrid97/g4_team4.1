@@ -154,17 +154,18 @@ public class MapTest {
         }
     }
 
-/*
+
     @Test
     public void testingRobotMovement() {
         Map map = build(10, 10);
         Robot robot = new Robot(5, 5, Directions.UP);
         Player player = new Player(0, robot);
+        RoboRally roboRally = new RoboRally();
         map.add(robot, 5, 5);
-        RoboRally.playMovementCard(new MovementCard(Directions.NODIRECTION, 3, 800), player);
+        map.moveRobot(robot, new Position(2, 5));
         assertTrue(map.getBoardObject(new Position(2, 5)) instanceof Robot);
     }
-    */
+
 
     @Test
     public void severalObjectsOnOneTile() {

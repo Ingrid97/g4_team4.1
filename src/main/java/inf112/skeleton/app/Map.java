@@ -1,7 +1,7 @@
 package inf112.skeleton.app;//Created by ingridjohansen on 04/02/2019.
 
-import boardObjects.Void;
 import boardObjects.*;
+import boardObjects.Void;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -153,7 +153,6 @@ public class Map {
                         else
                             c.isBlueBelt();
                         map.add(c, i, j);
-
                     } else if (l.contains("s")) {
                         map.add(new Wrench(i, j), i, j);
                     } else if (l.contains("h")) {

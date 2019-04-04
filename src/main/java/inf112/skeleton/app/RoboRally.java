@@ -23,7 +23,6 @@ public class RoboRally {
         if (map == null)
             System.exit(0);
 
-
         LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
         cfg.title = "Robo Rally";
         cfg.width = 640;
@@ -132,7 +131,8 @@ public class RoboRally {
                         if (legalPosition(newPos).equals("dead")) {
                             map.moveRobot(player.getRobot(), player.getRobot().getBackUpPosition());
                             player.getRobot().setPositionToBackUp();
-                            System.out.println("deadPosition: x: " + newPos.getX() + " y: " + newPos.getY() + "   Direction on MovCard: " + movCard.getDirection());
+                            System.out.println("deadPosition: x: " + newPos.getX() + " y: " + newPos.getY() +
+                                    "   Direction on MovCard: " + movCard.getDirection());
                             System.out.println("ROBOT DEAD");
                             return false;
                         }
@@ -217,6 +217,7 @@ public class RoboRally {
             System.out.println("ERROROROROR");
         }
     }
+
     /**
      * checking that given position is inside map, or not occupied by a wall or robot
      *
@@ -248,7 +249,6 @@ public class RoboRally {
             return "ok";
         }
     }
-
 
     /**
      * Moving a robot forward,
@@ -365,5 +365,4 @@ public class RoboRally {
                 return Directions.LEFT;
         }
     }
-
 }
