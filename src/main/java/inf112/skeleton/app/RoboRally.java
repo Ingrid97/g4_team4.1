@@ -264,15 +264,19 @@ public class RoboRally {
         switch (direction) {
                 case UP:
                     newPos = new Position(currentPos.getX(), (currentPos.getY() - 1));
+                    //newPos = new Position(currentPos.getY(), (currentPos.getX() - 1));
                     break;
                 case RIGHT:
                     newPos = new Position((currentPos.getX() + 1), currentPos.getY());
+                    //newPos = new Position((currentPos.getY() + 1), currentPos.getX());
                     break;
                 case LEFT:
                     newPos = new Position((currentPos.getX() - 1), currentPos.getY());
+                    //newPos = new Position((currentPos.getY() - 1), currentPos.getX());
                     break;
             default:
                 newPos = new Position(currentPos.getX(), (currentPos.getY() + 1));
+                //newPos = new Position(currentPos.getY(), (currentPos.getX() + 1));
                     break;
             }
         return newPos;

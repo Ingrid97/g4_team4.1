@@ -4,7 +4,6 @@ import boardObjects.*;
 import boardObjects.Void;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
@@ -12,9 +11,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.Screen;
-
-
 
 import java.util.ArrayList;
 
@@ -143,7 +139,8 @@ public class MapGUI extends ApplicationAdapter {
         roboid = 0;
         // For loop som går gjennom players og position til robotene
         for (int i = 0; i < listOfPLayers.size(); i++) {
-            batch.draw(robotImage, listOfPLayers.get(i).getRobot().getY() * 64, 576 - listOfPLayers.get(i).getRobot().getX() * 64);
+            //batch.draw(robotImage, listOfPLayers.get(i).getRobot().getY() * 64, 576 - listOfPLayers.get(i).getRobot().getX() * 64);
+            batch.draw(robotImage, listOfPLayers.get(i).getRobot().getX() * 64, listOfPLayers.get(i).getRobot().getY() * 64);
         }
 
 
@@ -185,12 +182,9 @@ public class MapGUI extends ApplicationAdapter {
          * which is used when placing the robots at the map. Therefore the start placement of the robot
          * is inconsistent, furthermore the movement is not correct
          */
-        for (int i = 0; i < 10; i++) {
-            for (int j = 0, k = 9; j < 10; j++, k--) {
-                if (map.getBoardObject(new Position(j, i)) instanceof Robot) {
-                    batch.draw(nothingImage, tile[i][k].x, tile[i][k].y);
-                    roboid++;
-                } else if (map.getBoardObject(new Position(j, i)) instanceof Void) {
+        /*for (int i = 0; i < 10; i++) {
+            for (int j = 0, k = 0; j < 10; j++, k++) {
+                if (map.getBoardObject(new Position(j, i)) instanceof Void) {
                     batch.draw(voidImage, tile[i][k].x, tile[i][k].y);
                 } else if (map.getBoardObject(new Position(j, i)) instanceof Laser) {
                     batch.draw(laserImage, tile[i][k].x, tile[i][k].y);
@@ -223,8 +217,57 @@ public class MapGUI extends ApplicationAdapter {
                     batch.draw(flagImage, tile[i][k].x, tile[i][k].y);
                 } else if (map.getBoardObject(new Position(j, i)) instanceof Rotating_belt) {
                     batch.draw(rotatin_plateImage, tile[i][k].x, tile[i][k].y);
+                } else if (map.getBoardObject(new Position(j, i)) instanceof Robot) {
+                    //batch.draw(nothingImage, tile[i][k].x, tile[i][k].y);
+                    batch.draw(nothingImage, tile[i][j].x, tile[i][j].y);
+                    roboid++;
                 } else {
                     batch.draw(nothingImage, tile[i][k].x, tile[i][k].y);
+                }
+            }
+        }*/
+
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0, k = 0; j < 10; j++, k++) {
+                if (map.getBoardObject(new Position(j, i)) instanceof Void) {
+                    batch.draw(voidImage, tile[j][i].x, tile[j][i].y);
+                } else if (map.getBoardObject(new Position(j, i)) instanceof Laser) {
+                    batch.draw(laserImage, tile[j][i].x, tile[j][i].y);
+                } else if (map.getBoardObject(new Position(j, i)) instanceof Conveyor_belt) {
+                    Conveyor_belt c = (Conveyor_belt) map.getBoardObject(new Position(j, i));
+                    if (c.isBlueBelt) {
+                        if (c.pictureDir == 1)
+                            batch.draw(blueConveyor_beltImage1, tile[j][i].x, tile[j][i].y);
+                        else if (c.pictureDir == 2)
+                            batch.draw(blueConveyor_beltImage2, tile[j][i].x, tile[j][i].y);
+                        else if (c.pictureDir == 3)
+                            batch.draw(blueConveyor_beltImage3, tile[j][i].x, tile[j][i].y);
+                        else
+                            batch.draw(blueConveyor_beltImage4, tile[j][i].x, tile[j][i].y);
+                    } else {
+                        if (c.pictureDir == 4)
+                            batch.draw(yellowConveyor_beltImage4, tile[j][i].x, tile[j][i].y);
+                        else if (c.pictureDir == 2)
+                            batch.draw(yellowConveyor_beltImage2, tile[j][i].x, tile[j][i].y);
+                        else if (c.pictureDir == 1)
+                            batch.draw(yellowConveyor_beltImage1, tile[j][i].x, tile[j][i].y);
+                        else
+                            batch.draw(yellowConveyor_beltImage3, tile[j][i].x, tile[j][i].y);
+                    }
+                } else if (map.getBoardObject(new Position(j, i)) instanceof Wrench) {
+                    batch.draw(wrenchImage, tile[j][i].x, tile[j][i].y);
+                } else if (map.getBoardObject(new Position(j, i)) instanceof Wrench_hammer) {
+                    batch.draw(wrench_hammer, tile[j][i].x, tile[j][i].y);
+                } else if (map.getBoardObject(new Position(j, i)) instanceof Flag) {
+                    batch.draw(flagImage, tile[j][i].x, tile[j][i].y);
+                } else if (map.getBoardObject(new Position(j, i)) instanceof Rotating_belt) {
+                    batch.draw(rotatin_plateImage, tile[j][i].x, tile[j][i].y);
+                } else if (map.getBoardObject(new Position(j, i)) instanceof Robot) {
+                    //batch.draw(nothingImage, tile[i][k].x, tile[i][k].y);
+                    batch.draw(nothingImage, tile[j][i].x, tile[j][i].y);
+                    roboid++;
+                } else {
+                    batch.draw(nothingImage, tile[j][i].x, tile[j][i].y);
                 }
             }
         }
