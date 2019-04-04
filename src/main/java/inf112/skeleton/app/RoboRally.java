@@ -263,7 +263,7 @@ public class RoboRally {
         Position newPos;
         switch (direction) {
                 case UP:
-                    newPos = new Position(currentPos.getX(), (currentPos.getY() + 1));
+                    newPos = new Position(currentPos.getX(), (currentPos.getY() - 1));
                     break;
                 case RIGHT:
                     newPos = new Position((currentPos.getX() + 1), currentPos.getY());
@@ -272,7 +272,7 @@ public class RoboRally {
                     newPos = new Position((currentPos.getX() - 1), currentPos.getY());
                     break;
             default:
-                newPos = new Position(currentPos.getX(), (currentPos.getY() - 1));
+                newPos = new Position(currentPos.getX(), (currentPos.getY() + 1));
                     break;
             }
         return newPos;
@@ -293,7 +293,7 @@ public class RoboRally {
             Directions direction = player.getRobot().getDirection();
             switch (direction) {
                 case UP:
-                    newPos = new Position(currentPos.getX(), (currentPos.getY() - 1));
+                    newPos = new Position(currentPos.getX(), (currentPos.getY() + 1));
                     break;
                 case RIGHT:
                     newPos = new Position(currentPos.getX() - 1, currentPos.getY());
@@ -302,7 +302,7 @@ public class RoboRally {
                     newPos = new Position(currentPos.getX() + 1, currentPos.getY());
                     break;
                 case DOWN:
-                    newPos = new Position(currentPos.getX(), (currentPos.getY() + 1));
+                    newPos = new Position(currentPos.getX(), (currentPos.getY() - 1));
                     break;
             }
         } else {
