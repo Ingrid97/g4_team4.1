@@ -1,7 +1,7 @@
 package inf112.skeleton.app;//Created by ingridjohansen on 04/02/2019.
 
-import boardObjects.Void;
 import boardObjects.*;
+import boardObjects.Void;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -42,7 +42,7 @@ public class Map {
      * @param s string to be converted
      * @return 1, 2, 3, 4(to be used for Direction)
      */
-    private static int getDir(String s) {
+    private int getDir(String s) {
         if (s.contains("1"))
             return 1;
         if (s.contains("2"))
@@ -115,7 +115,7 @@ public class Map {
      * @param filename
      * @return
      */
-    public static Map makeMap(String filename, ArrayList<Player> players) {
+    public Map makeMap(String filename, ArrayList<Player> players) {
         BufferedReader br;
         try {
             br = new BufferedReader(new FileReader(filename));
@@ -163,7 +163,6 @@ public class Map {
                             c.setPictureDir(4);
 
                         map.add(c, i, j);
-
                     } else if (l.contains("s")) {
                         map.add(new Wrench(i, j), i, j);
                     } else if (l.contains("h")) {
