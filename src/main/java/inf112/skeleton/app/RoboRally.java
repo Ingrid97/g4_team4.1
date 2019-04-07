@@ -101,15 +101,21 @@ public class RoboRally {
         boolean[] temp = player.getFlagsWhichHasBeenVisited();
         int identifier = flag.identifier;
         System.out.println("A player reached flag " + identifier);
-        int i = 0;
-        while (temp[i++] && i <= identifier) ;
-
-        // Må senke verdien av i med 1 etter while-loopen
-        i = i - 1;
-
-        if (i == identifier) {
+        if (identifier == 0) {
             player.setFlagsWhichHasBeenVisitedTrue(identifier);
-            return identifier == 2;
+            return false;
+        }
+        if (temp[0]) {
+            if (identifier == 1) {
+                player.setFlagsWhichHasBeenVisitedTrue(identifier);
+                return false;
+            }
+        }
+        if (temp[0]) {
+            if (temp[1]) {
+                player.setFlagsWhichHasBeenVisitedTrue(identifier);
+                return true;
+            }
         }
         return false;
     }
@@ -263,20 +269,20 @@ public class RoboRally {
         Position newPos;
         switch (direction) {
                 case UP:
-                    newPos = new Position(currentPos.getX(), (currentPos.getY() - 1));
-                    //newPos = new Position(currentPos.getY(), (currentPos.getX() - 1));
+                    //newPos = new Position(currentPos.getX(), (currentPos.getY() - 1));
+                    newPos = new Position((currentPos.getX() - 1), currentPos.getY());
                     break;
                 case RIGHT:
-                    newPos = new Position((currentPos.getX() + 1), currentPos.getY());
-                    //newPos = new Position((currentPos.getY() + 1), currentPos.getX());
+                    //newPos = new Position((currentPos.getX() + 1), currentPos.getY());
+                    newPos = new Position(currentPos.getX(), (currentPos.getY() + 1));
                     break;
                 case LEFT:
-                    newPos = new Position((currentPos.getX() - 1), currentPos.getY());
-                    //newPos = new Position((currentPos.getY() - 1), currentPos.getX());
+                    //newPos = new Position((currentPos.getX() - 1), currentPos.getY());
+                    newPos = new Position(currentPos.getX(), (currentPos.getY() - 1));
                     break;
             default:
-                newPos = new Position(currentPos.getX(), (currentPos.getY() + 1));
-                //newPos = new Position(currentPos.getY(), (currentPos.getX() + 1));
+                //newPos = new Position(currentPos.getX(), (currentPos.getY() + 1));
+                newPos = new Position((currentPos.getX() + 1), currentPos.getY());
                     break;
             }
         return newPos;
@@ -297,16 +303,16 @@ public class RoboRally {
             Directions direction = player.getRobot().getDirection();
             switch (direction) {
                 case UP:
-                    newPos = new Position(currentPos.getX(), (currentPos.getY() + 1));
+                    newPos = new Position((currentPos.getX() + 1), currentPos.getY());
                     break;
                 case RIGHT:
-                    newPos = new Position(currentPos.getX() - 1, currentPos.getY());
+                    newPos = new Position(currentPos.getX(), (currentPos.getY() - 1));
                     break;
                 case LEFT:
-                    newPos = new Position(currentPos.getX() + 1, currentPos.getY());
+                    newPos = new Position(currentPos.getX(), (currentPos.getY() + 1));
                     break;
                 case DOWN:
-                    newPos = new Position(currentPos.getX(), (currentPos.getY() - 1));
+                    newPos = new Position((currentPos.getX() - 1), currentPos.getY());
                     break;
             }
         } else {

@@ -92,12 +92,12 @@ public class MapGUI extends ApplicationAdapter {
         }
 
         for (int i = 0; i < 10; i++) {
-            for (int j = 0; j < 10; j++) {
-                tile[i][j] = new Rectangle();
-                tile[i][j].x = i * 64;
-                tile[i][j].y = j * 64;
-                tile[i][j].width = 64;
-                tile[i][j].height = 64;
+            for (int j = 0; j < 10; j++) { //swithced from tile[i][j] to tile[j][i]
+                tile[j][i] = new Rectangle();
+                tile[j][i].x = i * 64;
+                tile[j][i].y = (9 - j) * 64;
+                tile[j][i].width = 64;
+                tile[j][i].height = 64;
             }
         }
 
@@ -139,8 +139,8 @@ public class MapGUI extends ApplicationAdapter {
         roboid = 0;
         // For loop som går gjennom players og position til robotene
         for (int i = 0; i < listOfPLayers.size(); i++) {
-            //batch.draw(robotImage, listOfPLayers.get(i).getRobot().getY() * 64, 576 - listOfPLayers.get(i).getRobot().getX() * 64);
-            batch.draw(robotImage, listOfPLayers.get(i).getRobot().getX() * 64, listOfPLayers.get(i).getRobot().getY() * 64);
+            batch.draw(robotImage, listOfPLayers.get(i).getRobot().getY() * 64, 576 - listOfPLayers.get(i).getRobot().getX() * 64);
+            //batch.draw(robotImage, listOfPLayers.get(i).getRobot().getX() * 64, listOfPLayers.get(i).getRobot().getY() * 64);
         }
 
 
@@ -228,46 +228,48 @@ public class MapGUI extends ApplicationAdapter {
         }*/
 
         for (int i = 0; i < 10; i++) {
-            for (int j = 0, k = 0; j < 10; j++, k++) {
-                if (map.getBoardObject(new Position(j, i)) instanceof Void) {
-                    batch.draw(voidImage, tile[j][i].x, tile[j][i].y);
-                } else if (map.getBoardObject(new Position(j, i)) instanceof Laser) {
-                    batch.draw(laserImage, tile[j][i].x, tile[j][i].y);
-                } else if (map.getBoardObject(new Position(j, i)) instanceof Conveyor_belt) {
-                    Conveyor_belt c = (Conveyor_belt) map.getBoardObject(new Position(j, i));
+            for (int j = 0; j < 10; j++) {
+                IBoardObject object = map.getBoardObject(new Position(i, j));
+
+                if (object instanceof Void) {
+                    batch.draw(voidImage, tile[i][j].x, tile[i][j].y);
+                } else if (object instanceof Laser) {
+                    batch.draw(laserImage, tile[i][j].x, tile[i][j].y);
+                } else if (object instanceof Conveyor_belt) {
+                    Conveyor_belt c = (Conveyor_belt) map.getBoardObject(new Position(i, j));
                     if (c.isBlueBelt) {
                         if (c.pictureDir == 1)
-                            batch.draw(blueConveyor_beltImage1, tile[j][i].x, tile[j][i].y);
+                            batch.draw(blueConveyor_beltImage1, tile[i][j].x, tile[i][j].y);
                         else if (c.pictureDir == 2)
-                            batch.draw(blueConveyor_beltImage2, tile[j][i].x, tile[j][i].y);
+                            batch.draw(blueConveyor_beltImage2, tile[i][j].x, tile[i][j].y);
                         else if (c.pictureDir == 3)
-                            batch.draw(blueConveyor_beltImage3, tile[j][i].x, tile[j][i].y);
+                            batch.draw(blueConveyor_beltImage3, tile[i][j].x, tile[i][j].y);
                         else
-                            batch.draw(blueConveyor_beltImage4, tile[j][i].x, tile[j][i].y);
+                            batch.draw(blueConveyor_beltImage4, tile[i][j].x, tile[i][j].y);
                     } else {
                         if (c.pictureDir == 4)
-                            batch.draw(yellowConveyor_beltImage4, tile[j][i].x, tile[j][i].y);
+                            batch.draw(yellowConveyor_beltImage4, tile[i][j].x, tile[i][j].y);
                         else if (c.pictureDir == 2)
-                            batch.draw(yellowConveyor_beltImage2, tile[j][i].x, tile[j][i].y);
+                            batch.draw(yellowConveyor_beltImage2, tile[i][j].x, tile[i][j].y);
                         else if (c.pictureDir == 1)
-                            batch.draw(yellowConveyor_beltImage1, tile[j][i].x, tile[j][i].y);
+                            batch.draw(yellowConveyor_beltImage1, tile[i][j].x, tile[i][j].y);
                         else
-                            batch.draw(yellowConveyor_beltImage3, tile[j][i].x, tile[j][i].y);
+                            batch.draw(yellowConveyor_beltImage3, tile[i][j].x, tile[i][j].y);
                     }
-                } else if (map.getBoardObject(new Position(j, i)) instanceof Wrench) {
-                    batch.draw(wrenchImage, tile[j][i].x, tile[j][i].y);
-                } else if (map.getBoardObject(new Position(j, i)) instanceof Wrench_hammer) {
-                    batch.draw(wrench_hammer, tile[j][i].x, tile[j][i].y);
-                } else if (map.getBoardObject(new Position(j, i)) instanceof Flag) {
-                    batch.draw(flagImage, tile[j][i].x, tile[j][i].y);
-                } else if (map.getBoardObject(new Position(j, i)) instanceof Rotating_belt) {
-                    batch.draw(rotatin_plateImage, tile[j][i].x, tile[j][i].y);
-                } else if (map.getBoardObject(new Position(j, i)) instanceof Robot) {
+                } else if (object instanceof Wrench) {
+                    batch.draw(wrenchImage, tile[i][j].x, tile[i][j].y);
+                } else if (object instanceof Wrench_hammer) {
+                    batch.draw(wrench_hammer, tile[i][j].x, tile[i][j].y);
+                } else if (object instanceof Flag) {
+                    batch.draw(flagImage, tile[i][j].x, tile[i][j].y);
+                } else if (object instanceof Rotating_belt) {
+                    batch.draw(rotatin_plateImage, tile[i][j].x, tile[i][j].y);
+                } else if (object instanceof Robot) {
                     //batch.draw(nothingImage, tile[i][k].x, tile[i][k].y);
-                    batch.draw(nothingImage, tile[j][i].x, tile[j][i].y);
+                    batch.draw(nothingImage, tile[i][j].x, tile[i][j].y);
                     roboid++;
                 } else {
-                    batch.draw(nothingImage, tile[j][i].x, tile[j][i].y);
+                    batch.draw(nothingImage, tile[i][j].x, tile[i][j].y);
                 }
             }
         }

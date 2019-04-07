@@ -138,7 +138,7 @@ public class Map {
                     if (l.contains("*")) {
                         map.add(new Wall(i, j), i, j);
                     } else if (l.contains("r")) {
-                        Player player = new Player(0, new Robot(i, j, Directions.UP));
+                        Player player = new Player(3, new Robot(i, j, Directions.UP));
                         players.add(player);
                         map.add(player.getRobot(), i, j);
                     } else if (l.contains("v")) {
