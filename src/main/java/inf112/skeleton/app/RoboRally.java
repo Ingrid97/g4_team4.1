@@ -65,18 +65,17 @@ public class RoboRally {
             }
 
             //end of round
-            /* TODO! Sjekke om robot står på flag
-             *
-             */
-            for (int i = 0; i < players.size(); i++) {
-                Position pos = players.get(i).getRobot().getPosition();
+
+            for (Player player : players) {
+                Position pos = player.getRobot().getPosition();
                 ArrayList list = map.getBoardObjects(pos);
 
-                for (int j = 0; j < list.size(); j++) {
+                for (Object boardObject : list) {
 
                     // Sjekker om det er et flag i posisjonen roboten står
-                    if (list.get(j) instanceof Flag) {
-                        if (updateFlag(players.get(i), (Flag) list.get(j))) {
+                    if (boardObject instanceof Flag) {
+                        player.getRobot().dropBackUpAtCurrentPosition(); //oppdaterer backup position uansett hvilket flag den står på
+                        if (updateFlag(player, (Flag) boardObject)) {
                             gameOver = true;
                             System.out.println("WINNEEEER DING DING DING!");
                         }
@@ -125,6 +124,7 @@ public class RoboRally {
      *
      * @param movCard the movement card to be executed
      * @param player  the player that should be moved
+     * @return false if robot died during execution of movement card
      */
     public boolean playMovementCard(MovementCard movCard, Player player) {
         Position currentPos = player.getRobot().getPosition();
@@ -134,16 +134,12 @@ public class RoboRally {
                 try {
                     for (int i = 0; i < movCard.getNumberOfSteps(); i++) {
                         newPos = movingForward(player, currentPos);
-                        if (legalPosition(newPos).equals("dead")) {
-                            map.moveRobot(player.getRobot(), player.getRobot().getBackUpPosition());
-                            player.getRobot().setPositionToBackUp();
-                            System.out.println("deadPosition: x: " + newPos.getX() + " y: " + newPos.getY() +
-                                    "   Direction on MovCard: " + movCard.getDirection());
-                            System.out.println("ROBOT DEAD");
+                        if (playingBoardElements(newPos, player)) {
+                            moveTheRobotAndUpdateMapGUI(player, newPos);
+                            currentPos = newPos;
+                        } else {
                             return false;
                         }
-                        moveTheRobotAndUpdateMapGUI(player, newPos);
-                        currentPos = newPos;
                     }
                 } catch (IllegalArgumentException e) {
                     System.out.println("A robot has fallen1"); //robot fell outside map, should be returned to backup position
@@ -167,40 +163,59 @@ public class RoboRally {
                 player.getRobot().setDirection(newDirection2);
                 break;
         }
+        return playingBoardElements(newPos, player);
+    }
 
+    private boolean playingBoardElements(Position newPos, Player player) {
         String result = legalPosition(newPos);
+        System.out.println("RESULT: " + result);
         switch (result) {
-            /*case "robot":
-                //what do to if a robot collides with another robot
-                break;
-            case "wall":
-                //what do to if a robot collides with a wall
-                break;
-            case "laser":
-                //what do to if a robot collides with a laser
-                break;
-            case "wrench_hammer":
-                //what do to if a robot collides with a wrench:hammer
-                break;
+//            case "robot":
+//                //what do to if a robot collides with another robot
+//                break;
+//            case "wall":
+//                //what do to if a robot collides with a wall
+//                break;
+//            case "laser":
+//                //what do to if a robot collides with a laser
+//                break;
+//            case "wrench_hammer":
+//                //what do to if a robot collides with a wrench:hammer
+//                break;
+            case "conveyor_belt":
+                if (map.getBoardObject(newPos) instanceof Conveyor_belt) {
+                    Directions direction = ((Conveyor_belt) map.getBoardObject(newPos)).getDirection();
+                    Position newPosition;
+                    switch (direction) {
+                        case UP:
+                            newPosition = new Position((newPos.getX() - 1), newPos.getY());
+                            break;
+                        case RIGHT:
+                            newPosition = new Position(newPos.getX(), (newPos.getY() + 1));
+                            break;
+                        case LEFT:
+                            newPosition = new Position(newPos.getX(), (newPos.getY() - 1));
+                            break;
+                        default:
+                            newPosition = new Position((newPos.getX() + 1), newPos.getY());
+                            break;
+                    }
+                    moveTheRobotAndUpdateMapGUI(player, newPosition);
+                }
+                return true;
             case "rotating_belt":
-                //what do to if a robot collides with a rotating_belt
-                break;
-            case "void":
-                //what do to if a robot collides with a void
-                break;
-            case "tile":
-                //what do to if a robot collides with a tile
-                break;*/
+                player.getRobot().setDirection(turningLeft(player.getRobot().getDirection()));
+                moveTheRobotAndUpdateMapGUI(player, newPos);
+                return true;
             case "dead":
                 map.moveRobot(player.getRobot(), player.getRobot().getBackUpPosition());
                 player.getRobot().setPositionToBackUp();
-                System.out.println("deadPosition: x: " + newPos.getX() + " y: " + newPos.getY() + "   Direction on MovCard: " + movCard.getDirection());
+                System.out.println("deadPosition: x: " + newPos.getX() + " y: " + newPos.getY());
                 System.out.println("ROBOT DEAD");
                 return false;
             default://default is when none of the other case occurs, then it moves the robot to the actual position
                 moveTheRobotAndUpdateMapGUI(player, newPos);
                 return true;
-
         }
     }
 
@@ -245,10 +260,10 @@ public class RoboRally {
             return "wrench_hammer";
         } else if (map.getBoardObject(position) instanceof Rotating_belt) {
             return "rotating_belt";
+        } else if (map.getBoardObject(position) instanceof Conveyor_belt) {
+            return "conveyor_belt";
         } else if (map.getBoardObject(position) instanceof Void) {
-            return "void";
-        } else if (map.getBoardObject(position) instanceof Tile) {
-            return "tile";
+            return "dead";
         } else if (map.getBoardObject(position) instanceof Flag) {
             return "flag";
         } else {
@@ -269,19 +284,15 @@ public class RoboRally {
         Position newPos;
         switch (direction) {
                 case UP:
-                    //newPos = new Position(currentPos.getX(), (currentPos.getY() - 1));
                     newPos = new Position((currentPos.getX() - 1), currentPos.getY());
                     break;
                 case RIGHT:
-                    //newPos = new Position((currentPos.getX() + 1), currentPos.getY());
                     newPos = new Position(currentPos.getX(), (currentPos.getY() + 1));
                     break;
                 case LEFT:
-                    //newPos = new Position((currentPos.getX() - 1), currentPos.getY());
                     newPos = new Position(currentPos.getX(), (currentPos.getY() - 1));
                     break;
             default:
-                //newPos = new Position(currentPos.getX(), (currentPos.getY() + 1));
                 newPos = new Position((currentPos.getX() + 1), currentPos.getY());
                     break;
             }

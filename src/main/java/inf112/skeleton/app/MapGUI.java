@@ -161,14 +161,6 @@ public class MapGUI extends ApplicationAdapter {
         }
 
         moveonce++;
-
-
-        /*
-        if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) robot[1].y += 64;
-        if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) robot[1].y -= 64;
-        if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) robot[1].x -= 64;
-        if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) robot[1].x += 64;
-        */
     }
 
     public void drawTable() {
@@ -176,56 +168,6 @@ public class MapGUI extends ApplicationAdapter {
 
         drawnTable = true;
         roboid = 0;
-
-        /* TODO! Logic in drawTable vs makeMap in RoboRally
-         * Here there is one type of logic of how to place objects on the map, this logic is not the same
-         * which is used when placing the robots at the map. Therefore the start placement of the robot
-         * is inconsistent, furthermore the movement is not correct
-         */
-        /*for (int i = 0; i < 10; i++) {
-            for (int j = 0, k = 0; j < 10; j++, k++) {
-                if (map.getBoardObject(new Position(j, i)) instanceof Void) {
-                    batch.draw(voidImage, tile[i][k].x, tile[i][k].y);
-                } else if (map.getBoardObject(new Position(j, i)) instanceof Laser) {
-                    batch.draw(laserImage, tile[i][k].x, tile[i][k].y);
-                } else if (map.getBoardObject(new Position(j, i)) instanceof Conveyor_belt) {
-                    Conveyor_belt c = (Conveyor_belt) map.getBoardObject(new Position(j, i));
-                    if (c.isBlueBelt) {
-                        if (c.pictureDir == 1)
-                            batch.draw(blueConveyor_beltImage1, tile[i][k].x, tile[i][k].y);
-                        else if (c.pictureDir == 2)
-                            batch.draw(blueConveyor_beltImage2, tile[i][k].x, tile[i][k].y);
-                        else if (c.pictureDir == 3)
-                            batch.draw(blueConveyor_beltImage3, tile[i][k].x, tile[i][k].y);
-                        else
-                            batch.draw(blueConveyor_beltImage4, tile[i][k].x, tile[i][k].y);
-                    } else {
-                        if (c.pictureDir == 4)
-                            batch.draw(yellowConveyor_beltImage4, tile[i][k].x, tile[i][k].y);
-                        else if (c.pictureDir == 2)
-                            batch.draw(yellowConveyor_beltImage2, tile[i][k].x, tile[i][k].y);
-                        else if (c.pictureDir == 1)
-                            batch.draw(yellowConveyor_beltImage1, tile[i][k].x, tile[i][k].y);
-                        else
-                            batch.draw(yellowConveyor_beltImage3, tile[i][k].x, tile[i][k].y);
-                    }
-                } else if (map.getBoardObject(new Position(j, i)) instanceof Wrench) {
-                    batch.draw(wrenchImage, tile[i][k].x, tile[i][k].y);
-                } else if (map.getBoardObject(new Position(j, i)) instanceof Wrench_hammer) {
-                    batch.draw(wrench_hammer, tile[i][k].x, tile[i][k].y);
-                } else if (map.getBoardObject(new Position(j, i)) instanceof Flag) {
-                    batch.draw(flagImage, tile[i][k].x, tile[i][k].y);
-                } else if (map.getBoardObject(new Position(j, i)) instanceof Rotating_belt) {
-                    batch.draw(rotatin_plateImage, tile[i][k].x, tile[i][k].y);
-                } else if (map.getBoardObject(new Position(j, i)) instanceof Robot) {
-                    //batch.draw(nothingImage, tile[i][k].x, tile[i][k].y);
-                    batch.draw(nothingImage, tile[i][j].x, tile[i][j].y);
-                    roboid++;
-                } else {
-                    batch.draw(nothingImage, tile[i][k].x, tile[i][k].y);
-                }
-            }
-        }*/
 
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {

@@ -6,16 +6,15 @@ import inf112.skeleton.app.Position;
 public class Conveyor_belt implements IBoardObject{
 
     public boolean isBlueBelt;
-    Directions dir;
-    int placeDir;
-    boolean isYellowBelt;
+    private Directions dir;
+    private int placeDir;
+    private boolean isYellowBelt;
     private Position position;
     public int pictureDir;
 
     public Conveyor_belt(int x, int y){
         isBlueBelt = false;
         isYellowBelt = false;
-
         this.position = new Position(x, y);
     }
 
@@ -34,7 +33,16 @@ public class Conveyor_belt implements IBoardObject{
     }
 
     public Directions getDirection(){
-        return this.dir;
+        switch (pictureDir) {
+            case 2:
+                return Directions.UP;
+            case 1:
+                return Directions.DOWN;
+            case 3:
+                return Directions.RIGHT;
+            default:
+                return Directions.LEFT;
+        }
     }
 
     public void setPlaceDir(int d){
@@ -58,8 +66,6 @@ public class Conveyor_belt implements IBoardObject{
     public Position getPosition() {
         return this.position;
     }
-
-
 
     @Override
     public int color() {
