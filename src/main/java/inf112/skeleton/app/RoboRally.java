@@ -1,7 +1,7 @@
 package inf112.skeleton.app;//Created by ingridjohansen on 04/02/2019.
 
-import boardObjects.Void;
 import boardObjects.*;
+import boardObjects.Void;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
@@ -133,12 +133,15 @@ public class RoboRally {
             case NODIRECTION: //moving forward
                 try {
                     for (int i = 0; i < movCard.getNumberOfSteps(); i++) {
-                        newPos = movingForward(player, currentPos);
-                        if (playingBoardElements(newPos, player)) {
+                        Directions direction = player.getRobot().getDirection();
+                        newPos = movingForward(currentPos, direction);
+                        if (legalPosition(newPos) == "dead") {
+                            map.moveRobot(player.getRobot(), player.getRobot().getBackUpPosition());
+                            player.getRobot().setPositionToBackUp();
+                            return false;
+                        } else {
                             moveTheRobotAndUpdateMapGUI(player, newPos);
                             currentPos = newPos;
-                        } else {
-                            return false;
                         }
                     }
                 } catch (IllegalArgumentException e) {
@@ -147,7 +150,7 @@ public class RoboRally {
                 break;
             case DOWN://moving backward or turning 180degrees
                 try {
-                    newPos = backingUpOrTurning180Degrees(movCard, player, currentPos, newPos);
+                    newPos = backingUpOrTurning180Degrees(movCard, player);
                 } catch (IllegalArgumentException e) {
                     System.out.println("A robot has fallen2");    //robot fell outside map, should be returned to backup position
                 }
@@ -163,10 +166,16 @@ public class RoboRally {
                 player.getRobot().setDirection(newDirection2);
                 break;
         }
-        return playingBoardElements(newPos, player);
+        Position result = playingBoardElements(newPos, player);
+        if (result == null) {
+            return false;
+        } else {
+            moveTheRobotAndUpdateMapGUI(player, newPos);
+        }
+        return true;
     }
 
-    private boolean playingBoardElements(Position newPos, Player player) {
+    private Position playingBoardElements(Position newPos, Player player) {
         String result = legalPosition(newPos);
         System.out.println("RESULT: " + result);
         switch (result) {
@@ -176,46 +185,29 @@ public class RoboRally {
 //            case "wall":
 //                //what do to if a robot collides with a wall
 //                break;
-//            case "laser":
-//                //what do to if a robot collides with a laser
-//                break;
-//            case "wrench_hammer":
-//                //what do to if a robot collides with a wrench:hammer
-//                break;
+            case "laser":
+                //what do to if a robot collides with a laser
+                return newPos;
             case "conveyor_belt":
                 if (map.getBoardObject(newPos) instanceof Conveyor_belt) {
                     Directions direction = ((Conveyor_belt) map.getBoardObject(newPos)).getDirection();
-                    Position newPosition;
-                    switch (direction) {
-                        case UP:
-                            newPosition = new Position((newPos.getX() - 1), newPos.getY());
-                            break;
-                        case RIGHT:
-                            newPosition = new Position(newPos.getX(), (newPos.getY() + 1));
-                            break;
-                        case LEFT:
-                            newPosition = new Position(newPos.getX(), (newPos.getY() - 1));
-                            break;
-                        default:
-                            newPosition = new Position((newPos.getX() + 1), newPos.getY());
-                            break;
-                    }
+                    Position newPosition = movingForward(newPos, direction);
                     moveTheRobotAndUpdateMapGUI(player, newPosition);
                 }
-                return true;
+                return newPos;
             case "rotating_belt":
                 player.getRobot().setDirection(turningLeft(player.getRobot().getDirection()));
                 moveTheRobotAndUpdateMapGUI(player, newPos);
-                return true;
+                return newPos;
             case "dead":
                 map.moveRobot(player.getRobot(), player.getRobot().getBackUpPosition());
                 player.getRobot().setPositionToBackUp();
                 System.out.println("deadPosition: x: " + newPos.getX() + " y: " + newPos.getY());
                 System.out.println("ROBOT DEAD");
-                return false;
+                return null;
             default://default is when none of the other case occurs, then it moves the robot to the actual position
                 moveTheRobotAndUpdateMapGUI(player, newPos);
-                return true;
+                return newPos;
         }
     }
 
@@ -258,18 +250,12 @@ public class RoboRally {
             return "wall";
         } else if (map.getBoardObject(position) instanceof Laser) {
             return "laser";
-        } else if (map.getBoardObject(position) instanceof Wrench) {
-            return "wrench";
-        } else if (map.getBoardObject(position) instanceof Wrench_hammer) {
-            return "wrench_hammer";
         } else if (map.getBoardObject(position) instanceof Rotating_belt) {
             return "rotating_belt";
         } else if (map.getBoardObject(position) instanceof Conveyor_belt) {
             return "conveyor_belt";
         } else if (map.getBoardObject(position) instanceof Void) {
             return "dead";
-        } else if (map.getBoardObject(position) instanceof Flag) {
-            return "flag";
         } else {
             return "ok";
         }
@@ -278,13 +264,12 @@ public class RoboRally {
     /**
      * Moving a robot forward,
      *
-     * @param player     player to move
      * @param currentPos current position of robot
+     * @param direction
      * @return the final new position, ex the third position if the movCard said 3 steps
      * @throws IllegalArgumentException throws if the robot moves outside the board
      */
-    public Position movingForward(Player player, Position currentPos) throws IllegalArgumentException {
-        Directions direction = player.getRobot().getDirection();
+    public Position movingForward(Position currentPos, Directions direction) throws IllegalArgumentException {
         Position newPos;
         switch (direction) {
                 case UP:
@@ -308,12 +293,12 @@ public class RoboRally {
      *
      * @param movCard    movement card for knowing if to turn or move
      * @param player     player to move
-     * @param currentPos current position of robot
-     * @param newPos     new position where the robot is going next step
      * @return the final new position
      * @throws IllegalArgumentException if robot is outside map
      */
-    public Position backingUpOrTurning180Degrees(MovementCard movCard, Player player, Position currentPos, Position newPos) throws IllegalArgumentException {
+    public Position backingUpOrTurning180Degrees(MovementCard movCard, Player player) throws IllegalArgumentException {
+        Position newPos;
+        Position currentPos = player.getRobot().getPosition();
         if (movCard.getNumberOfSteps() == 1) {
             Directions direction = player.getRobot().getDirection();
             switch (direction) {
@@ -326,7 +311,7 @@ public class RoboRally {
                 case LEFT:
                     newPos = new Position(currentPos.getX(), (currentPos.getY() + 1));
                     break;
-                case DOWN:
+                default:
                     newPos = new Position((currentPos.getX() - 1), currentPos.getY());
                     break;
             }

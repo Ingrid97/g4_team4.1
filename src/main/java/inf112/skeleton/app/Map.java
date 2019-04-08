@@ -95,9 +95,9 @@ public class Map {
         // This needs to be changed! Throws exception
         if (isValidPosition(position)) {
             ArrayList listOfObjects = map[position.getX()][position.getY()];
-            for (int i = 0; i < listOfObjects.size(); i++) {
-                if (listOfObjects.get(i) instanceof Robot) {
-                    return (IBoardObject) listOfObjects.get(i);
+            for (Object boardObjects : listOfObjects) {
+                if (boardObjects instanceof Robot) {
+                    return (IBoardObject) boardObjects;
                 }
             }
             if (listOfObjects.size() == 0) {
@@ -112,8 +112,8 @@ public class Map {
     /**
      * making the map from a given file
      *
-     * @param filename
-     * @return
+     * @param filename name of the map file
+     * @return the map built from the map file
      */
     public Map makeMap(String filename, ArrayList<Player> players) {
         BufferedReader br;
