@@ -9,6 +9,7 @@ public class Robot implements IRobot {
     private boolean alive;
     private int laserStrength;
     private Directions direction;
+    private final int memCap = 9;
 
 
 
@@ -16,7 +17,7 @@ public class Robot implements IRobot {
         this.positionOfRobot = new Position(x, y);
         this.backUpPosition = positionOfRobot;
         this.healthPoints = 3;
-        this.memoryCapacity = 9;
+        this.memoryCapacity = memCap;
         this.laserStrength = 1;
         this.direction = direction;
         this.alive = true;
@@ -69,10 +70,22 @@ public class Robot implements IRobot {
         this.positionOfRobot = position;
     }
 
+    /**
+     * Move the robot when it has walked out of bounds / in a pit
+     * It is not needed to call this method if the robot is being shot dead by a laser from another robot / the map
+     */
     public void setPositionToBackUp() {
-        // TODO! Miste liv osv.
-        this.positionOfRobot = this.backUpPosition;
-        this.direction = Directions.UP;
+
+        if (this.healthPoints > 1) {
+            healthPoints--;
+            this.memoryCapacity = memCap;
+            this.alive = true;
+
+            this.positionOfRobot = this.backUpPosition;
+            this.direction = Directions.UP;
+        } else {
+            this.alive = false;
+        }
     }
 
 
@@ -107,7 +120,7 @@ public class Robot implements IRobot {
 
         if (memoryCapacity < 1) {
             this.healthPoints--;
-            this.memoryCapacity = 9;
+            this.memoryCapacity = memCap;
             this.positionOfRobot = this.backUpPosition;
         }
         if (this.healthPoints < 1) {
