@@ -1,7 +1,7 @@
 package inf112.skeleton.app;//Created by ingridjohansen on 04/02/2019.
 
-import boardObjects.*;
 import boardObjects.Void;
+import boardObjects.*;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
@@ -229,7 +229,11 @@ public class RoboRally {
         if (newPos.getY() == 1000 || newPos.getX() == 1000) {
             return;
         }
-        map.moveRobot(player.getRobot(), newPos);
+        if (player.getRobot().isAlive()) {
+            map.moveRobot(player.getRobot(), newPos);
+        } else {
+            // TODO! Hva gjør vi med robotene når de ikke lenger er i live?
+        }
         player.getRobot().setPosition(newPos);
         mapGUI.updateMap(map);
         try {
