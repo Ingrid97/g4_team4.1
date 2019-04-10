@@ -95,11 +95,6 @@ public class Map {
         // This needs to be changed! Throws exception
         if (isValidPosition(position)) {
             ArrayList listOfObjects = map[position.getX()][position.getY()];
-            for (Object boardObjects : listOfObjects) {
-                if (boardObjects instanceof Robot) {
-                    return (IBoardObject) boardObjects;
-                }
-            }
             if (listOfObjects.size() == 0) {
                 return null;
             } else {

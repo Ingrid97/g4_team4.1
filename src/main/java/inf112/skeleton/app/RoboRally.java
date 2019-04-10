@@ -191,13 +191,11 @@ public class RoboRally {
             case "conveyor_belt":
                 if (map.getBoardObject(newPos) instanceof Conveyor_belt) {
                     Directions direction = ((Conveyor_belt) map.getBoardObject(newPos)).getDirection();
-                    Position newPosition = movingForward(newPos, direction);
-                    moveTheRobotAndUpdateMapGUI(player, newPosition);
+                    return movingForward(newPos, direction);
                 }
                 return newPos;
             case "rotating_belt":
                 player.getRobot().setDirection(turningLeft(player.getRobot().getDirection()));
-                moveTheRobotAndUpdateMapGUI(player, newPos);
                 return newPos;
             case "dead":
                 map.moveRobot(player.getRobot(), player.getRobot().getBackUpPosition());
@@ -244,17 +242,19 @@ public class RoboRally {
     public String legalPosition(Position position) {
         if (!map.isValidPosition(position)) {
             return "dead";
-        } else if (map.getBoardObject(position) instanceof Robot) {
+        }
+        IBoardObject boardObject = map.getBoardObject(position);
+        if (boardObject instanceof Robot) {
             return "robot";
-        } else if (map.getBoardObject(position) instanceof Wall) {
+        } else if (boardObject instanceof Wall) {
             return "wall";
-        } else if (map.getBoardObject(position) instanceof Laser) {
+        } else if (boardObject instanceof Laser) {
             return "laser";
-        } else if (map.getBoardObject(position) instanceof Rotating_belt) {
+        } else if (boardObject instanceof Rotating_belt) {
             return "rotating_belt";
-        } else if (map.getBoardObject(position) instanceof Conveyor_belt) {
+        } else if (boardObject instanceof Conveyor_belt) {
             return "conveyor_belt";
-        } else if (map.getBoardObject(position) instanceof Void) {
+        } else if (boardObject instanceof Void) {
             return "dead";
         } else {
             return "ok";
