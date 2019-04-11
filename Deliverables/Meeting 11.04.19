@@ -1,8 +1,10 @@
 Meeting 11.04.2019
 Attendance: Faltin, Brede, Ingrid and Sandra and Magnus
 We talked about how we are trying to cover all the MVP criteria. Together we decided upon rather making a program meeting all the MVP’s rather than spending time refactoring the code (making the code look prettier and more affiant) . 
-Faltin: Fixed general movments of objects such as the belt.
-Brede: Fixing lasers, making it move in the right direction
+
+
+Faltin: Fixed general movments of objects such as the belt, adding laser functions
+Brede: powerdown 
 Magnus: add tests
-Ingrid: working on AI
+Ingrid: working on AI, lasers in the right directions
 Sandra: Try making it possible to push robots, add test.  Think about the powerpoint presentation.
