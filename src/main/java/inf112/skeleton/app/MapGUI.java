@@ -73,13 +73,13 @@ public class MapGUI extends ApplicationAdapter {
 
         // create the camera and the SpriteBatch
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, 640, 940);
+        camera.setToOrtho(false, 768, 1024);
 
         batch = new SpriteBatch();
 
 
         // create a list of Rectangles to logically represent the objects
-        tile = new Rectangle[10][10];
+        tile = new Rectangle[16][16];
         robot = new Rectangle[10];
         cards = new Rectangle[9];
 
@@ -91,16 +91,16 @@ public class MapGUI extends ApplicationAdapter {
             robot[i].width = 64;
         }
 
-        for (int i = 0; i < 10; i++) {
-            for (int j = 0; j < 10; j++) { //swithced from tile[i][j] to tile[j][i]
+        for (int i = 0; i < 16; i++) {
+            for (int j = 0; j < 16; j++) { //swithced from tile[i][j] to tile[j][i]
                 tile[j][i] = new Rectangle();
                 tile[j][i].x = i * 64;
-                tile[j][i].y = (9 - j) * 64;
+                tile[j][i].y = (15 - j) * 64;
                 tile[j][i].width = 64;
                 tile[j][i].height = 64;
             }
         }
-
+/*
         for (int i = 0; i < 9; i++) {
             cards[i] = new Rectangle();
             cards[i].x = 32 + i * 64;
@@ -108,7 +108,7 @@ public class MapGUI extends ApplicationAdapter {
             cards[i].height = 96;
             cards[i].width = 64;
         }
-
+*/
         moveonce = 0;
 
 
@@ -139,16 +139,17 @@ public class MapGUI extends ApplicationAdapter {
         roboid = 0;
         // For loop som går gjennom players og position til robotene
         for (int i = 0; i < listOfPLayers.size(); i++) {
-            batch.draw(robotImage, listOfPLayers.get(i).getRobot().getY() * 64, 576 - listOfPLayers.get(i).getRobot().getX() * 64);
+            batch.draw(robotImage, listOfPLayers.get(i).getRobot().getY() * 64, 960 - listOfPLayers.get(i).getRobot().getX() * 64);
             //batch.draw(robotImage, listOfPLayers.get(i).getRobot().getX() * 64, listOfPLayers.get(i).getRobot().getY() * 64);
         }
-
-
+        //
+        batch.end();
+/*
         for (int i = 0; i < 9; i++) {
             batch.draw(cardTester, cards[i].x, cards[i].y);
-        }
+        }*/
 
-        batch.end();
+
 
         //stuff for moving
         witchRobot++;
@@ -169,8 +170,8 @@ public class MapGUI extends ApplicationAdapter {
         drawnTable = true;
         roboid = 0;
 
-        for (int i = 0; i < 10; i++) {
-            for (int j = 0; j < 10; j++) {
+        for (int i = 0; i < 16; i++) {
+            for (int j = 0; j < 16; j++) {
                 IBoardObject object = map.getBoardObject(new Position(i, j));
 
                 if (object instanceof Void) {

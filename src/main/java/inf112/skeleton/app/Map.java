@@ -124,9 +124,9 @@ public class Map {
         int identifier = 0;
 
         System.out.println("Making the map...");
-        Map map = new Map(10, 10);
+        Map map = new Map(16, 16);
         try {
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < 16; i++) {
                 String[] line = br.readLine().split(",");
                 int j = 0;
                 for (String l : line) {
@@ -179,6 +179,7 @@ public class Map {
             return null;
         }
 
+        //printMap();
         System.out.println("Adding stuff to the map...");
 
         return map;

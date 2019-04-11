@@ -18,15 +18,16 @@ public class RoboRally {
         // Lager alle kortene
         //leser inn map fra fil
         this.players = new ArrayList<>();
-        map = new Map(10, 10);
+        map = new Map(16, 16);
         map = map.makeMap("testMap1.txt", players);
+        //map.printMap();
         if (map == null)
             System.exit(0);
 
         LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
         cfg.title = "Robo Rally";
-        cfg.width = 640;
-        cfg.height = 940;
+        cfg.width = 768;
+        cfg.height = 1024;
         mapGUI = new MapGUI(map, players);
         new LwjglApplication(mapGUI, cfg);//instantiating MapGUI and updating the map it prints
 
