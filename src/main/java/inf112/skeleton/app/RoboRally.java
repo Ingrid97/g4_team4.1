@@ -171,7 +171,7 @@ public class RoboRally {
         if (result == null) {
             return false;
         } else {
-            moveTheRobotAndUpdateMapGUI(player, newPos);
+            moveTheRobotAndUpdateMapGUI(player, result);
         }
         return true;
     }
