@@ -34,14 +34,14 @@ public class Conveyor_belt implements IBoardObject{
 
     public Directions getDirection(){
         switch (pictureDir) {
+            case 1:
+                return Directions.LEFT;
             case 2:
                 return Directions.UP;
-            case 1:
-                return Directions.DOWN;
             case 3:
                 return Directions.RIGHT;
             default:
-                return Directions.LEFT;
+                return Directions.DOWN;
         }
     }
 

@@ -192,6 +192,11 @@ public class RoboRally {
             case "conveyor_belt":
                 if (map.getBoardObject(newPos) instanceof Conveyor_belt) {
                     Directions direction = ((Conveyor_belt) map.getBoardObject(newPos)).getDirection();
+                    if (((Conveyor_belt) map.getBoardObject(newPos)).isBlueBelt) {
+                        Position p = movingForward(newPos, direction);
+                        moveTheRobotAndUpdateMapGUI(player, p);
+                        return movingForward(p, direction);
+                    }
                     return movingForward(newPos, direction);
                 }
                 return newPos;
