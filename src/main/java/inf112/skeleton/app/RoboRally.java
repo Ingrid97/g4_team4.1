@@ -1,7 +1,7 @@
 package inf112.skeleton.app;//Created by ingridjohansen on 04/02/2019.
 
-import boardObjects.*;
 import boardObjects.Void;
+import boardObjects.*;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
@@ -188,6 +188,8 @@ public class RoboRally {
 //                break;
             case "laser":
                 //what do to if a robot collides with a laser
+                // TODO! Impact of lasers! (Laser starts at 2,11, and goes to 2,10 -> 2,9)
+
                 return newPos;
             case "conveyor_belt":
                 if (map.getBoardObject(newPos) instanceof Conveyor_belt) {
