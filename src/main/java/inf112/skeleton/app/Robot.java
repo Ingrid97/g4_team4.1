@@ -10,8 +10,7 @@ public class Robot implements IRobot {
     private int laserStrength;
     private Directions direction;
     private final int memCap = 9;
-
-
+    private boolean powerdown;
 
     public Robot(int x, int y, Directions direction) {
         this.positionOfRobot = new Position(x, y);
@@ -21,6 +20,7 @@ public class Robot implements IRobot {
         this.laserStrength = 1;
         this.direction = direction;
         this.alive = true;
+        this.powerdown = false;
     }
 
 
@@ -68,6 +68,18 @@ public class Robot implements IRobot {
 
     public void setPosition(Position position) {
         this.positionOfRobot = position;
+    }
+
+    public void setMaxMemCap() {
+        this.memoryCapacity = memCap;
+    }
+
+    public void setPowerdown() {
+        this.powerdown = true;
+    }
+
+    public void finnishPowerdown() {
+        this.powerdown = false;
     }
 
     /**
