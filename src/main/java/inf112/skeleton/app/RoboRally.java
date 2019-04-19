@@ -1,7 +1,7 @@
 package inf112.skeleton.app;//Created by ingridjohansen on 04/02/2019.
 
-import boardObjects.*;
 import boardObjects.Void;
+import boardObjects.*;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
@@ -40,50 +40,75 @@ public class RoboRally {
     public void playGame() {
         boolean gameOver = false;
         while (!gameOver) {
-            //getting movement cards from player/s
-            ArrayList<ArrayList> listOfPrioritizedListsOfMovementCardsFromPlayers = new ArrayList<>();
+            //getting movement cards from player/s making array List of prioritized listing of our movement cards from player class
+            ArrayList<ArrayList> PrioritizedMovementCards = new ArrayList<>();
             for (int i = 0; i < players.size(); i++) {
                 ArrayList<MovementCard> movementCardsToBeExecuted;
-                System.out.println("Player " + (i + 1) + " choose your cards!");
-                movementCardsToBeExecuted = players.get(i).theMovementCardsThePlayerChose();
-                listOfPrioritizedListsOfMovementCardsFromPlayers.add(movementCardsToBeExecuted);
-            }
+                if(!players.get(i).getRobot().getPowerDown()){
+                    System.out.println("Player " + (i + 1) + " choose your cards!");
+                    movementCardsToBeExecuted = players.get(i).theMovementCardsThePlayerChose();
+                    PrioritizedMovementCards.add(movementCardsToBeExecuted);
+                }
 
+            }
             MovementCardDeck.dealOutMovementCards(players);
 
             //playing movement cards from players'
             boolean[] playersWhosDead = new boolean[players.size()];
             for (int j = 0; j < 5; j++) {//the max number for this for loop chooses how many movementcards is supposed to be played
                 for (int i = 0; i < players.size(); i++) {
-                    if (playersWhosDead[i]) {
-                        continue;
+                    if(!players.get(i).getRobot().getPowerDown()){
+                        if (playersWhosDead[i]) {
+                            continue;
+                        }
+                        System.out.println("position: x: " + players.get(i).getRobot().getX() + " y: " + players.get(i).getRobot().getY());
+                        boolean isRobotAlive = playMovementCard((MovementCard) PrioritizedMovementCards.get(i).get(j), players.get(i));
+                        if (!isRobotAlive) {
+                            playersWhosDead[i] = true;
+                        }
                     }
-                    System.out.println("position: x: " + players.get(i).getRobot().getX() + " y: " + players.get(i).getRobot().getY());
-                    boolean isRobotAlive = playMovementCard((MovementCard) listOfPrioritizedListsOfMovementCardsFromPlayers.get(i).get(j), players.get(i));
-                    if (!isRobotAlive) {
-                        playersWhosDead[i] = true;
-                    }
+
+
+
                 }
             }
 
             //end of round
+
             for (Player player : players) {
-                Position pos = player.getRobot().getPosition();
-                ArrayList list = map.getBoardObjects(pos);
+                if(player.getRobot().getPowerDown()){
+                    player.powerDown();
+                    player.getRobot().finishPowerdown();
+                }
+                else{
+                    Position pos = player.getRobot().getPosition();
+                    ArrayList list = map.getBoardObjects(pos);
 
-                for (Object boardObject : list) {
+                    for (Object boardObject : list) {
 
-                    // Sjekker om det er et flag i posisjonen roboten står
-                    if (boardObject instanceof Flag) {
-                        player.getRobot().dropBackUpAtCurrentPosition(); //oppdaterer backup position uansett hvilket flag den står på
-                        if (updateFlag(player, (Flag) boardObject)) {
-                            gameOver = true;
-                            System.out.println("WINNEEEER DING DING DING!");
+                        // Sjekker om det er et flag i posisjonen roboten står
+                        if (boardObject instanceof Flag) {
+                            player.getRobot().dropBackUpAtCurrentPosition(); //oppdaterer backup position uansett hvilket flag den står på
+                            if (updateFlag(player, (Flag) boardObject)) {
+                                gameOver = true;
+                                System.out.println("WINNEEEER DING DING DING!");
+                            }
                         }
                     }
+                    System.out.println("Do you want to take a PowerDown? Yes/No ");
+                    boolean playerPowerDown = player.choosePowerdown();
+
+                    if(playerPowerDown){
+                        player.getRobot().takePowerdown();
+                    }
+
                 }
+
+
+
             }
         }
+
     }
 
     // Litt usikker på om denne er helt riktig

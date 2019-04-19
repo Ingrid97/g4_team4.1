@@ -60,6 +60,10 @@ public class Robot implements IRobot {
         return direction;
     }
 
+    public boolean getPowerDown(){
+        return this.powerdown;
+    }
+
 
     // Setters
     public void setDirection(Directions direction) {
@@ -74,7 +78,7 @@ public class Robot implements IRobot {
         this.memoryCapacity = memCap;
     }
 
-    public void setPowerdown() {
+    public void takePowerdown() {
         this.powerdown = true;
     }
 
