@@ -5,13 +5,15 @@ import java.util.Collections;
 
 public class MovementCardDeck {
 
-    public static ArrayList<MovementCard> theFullDeckOfAllMovementCards;
+    //The full deck of all movement cards
+    public static ArrayList<MovementCard> fullDeck;
 
     /**
      * Making the movement card deck
      */
     public static void setUpTheFullDeckOfCards() {
-        theFullDeckOfAllMovementCards = new ArrayList<>();
+
+        fullDeck = new ArrayList<>();
 
         // Rotate cards
         // Left rotation, right rotation, forward movement 1
@@ -19,9 +21,9 @@ public class MovementCardDeck {
         int priorityForRight = 70;
         int priorityForMovementForward = 490;
         for (int i = 0; i < 18; i++) {
-            theFullDeckOfAllMovementCards.add(new MovementCard(Directions.LEFT, 0, priorityForLeft));
-            theFullDeckOfAllMovementCards.add(new MovementCard(Directions.RIGHT, 0, priorityForRight));
-            theFullDeckOfAllMovementCards.add(new MovementCard(Directions.NODIRECTION, 1, priorityForMovementForward));
+            fullDeck.add(new MovementCard(Directions.LEFT, 0, priorityForLeft));
+            fullDeck.add(new MovementCard(Directions.RIGHT, 0, priorityForRight));
+            fullDeck.add(new MovementCard(Directions.NODIRECTION, 1, priorityForMovementForward));
             priorityForLeft += 20;
             priorityForRight += 20;
             priorityForMovementForward += 20;
@@ -30,7 +32,7 @@ public class MovementCardDeck {
         // Movement forward 2
         priorityForMovementForward = 670;
         for (int i = 0; i < 12; i++) {
-            theFullDeckOfAllMovementCards.add(new MovementCard(Directions.NODIRECTION, 2, priorityForMovementForward));
+            fullDeck.add(new MovementCard(Directions.NODIRECTION, 2, priorityForMovementForward));
             priorityForMovementForward += 20;
         }
 
@@ -39,9 +41,9 @@ public class MovementCardDeck {
         int priorityForMovementBackwards = 430;
         int priorityFor180Turn = 10;
         for (int i = 0; i < 6; i++) {
-            theFullDeckOfAllMovementCards.add(new MovementCard(Directions.NODIRECTION, 3, priorityForMovementForward));
-            theFullDeckOfAllMovementCards.add(new MovementCard(Directions.DOWN, 0, priorityFor180Turn));
-            theFullDeckOfAllMovementCards.add(new MovementCard(Directions.DOWN, 1, priorityForMovementBackwards));
+            fullDeck.add(new MovementCard(Directions.NODIRECTION, 3, priorityForMovementForward));
+            fullDeck.add(new MovementCard(Directions.DOWN, 0, priorityFor180Turn));
+            fullDeck.add(new MovementCard(Directions.DOWN, 1, priorityForMovementBackwards));
             priorityForMovementForward += 10;
             priorityFor180Turn += 10;
             priorityForMovementBackwards += 10;
@@ -54,7 +56,7 @@ public class MovementCardDeck {
      * @param players list of player to deal cards to
      */
     public static void dealOutMovementCards(ArrayList<Player> players) {
-        ArrayList<MovementCard> copy = new ArrayList<>(theFullDeckOfAllMovementCards);
+        ArrayList<MovementCard> copy = new ArrayList<>(fullDeck);
         Collections.shuffle(copy);
 
         for (int i = 0; i < players.size(); i++) {

@@ -8,6 +8,6 @@ public class MovementCardDeckTest {
     @Test
     public void numberOfCardsInFullDeck() {
         MovementCardDeck.setUpTheFullDeckOfCards();
-        assertEquals(MovementCardDeck.theFullDeckOfAllMovementCards.size(), 84);
+        assertEquals(MovementCardDeck.fullDeck.size(), 84);
     }
 }
