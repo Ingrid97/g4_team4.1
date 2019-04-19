@@ -114,6 +114,12 @@ public class Player {
 
     }
 
+
+    public void powerDown() {
+        this.robot.setMaxMemCap();
+        this.robot.setPowerdown();
+    }
+
     public int getX() {
         return robot.getX();
     }
@@ -125,6 +131,7 @@ public class Player {
     public Robot getRobot() {
         return robot;
     }
+
 
 }
 
