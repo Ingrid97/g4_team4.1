@@ -1,7 +1,7 @@
 package inf112.skeleton.app;//Created by ingridjohansen on 04/02/2019.
 
-import boardObjects.Void;
 import boardObjects.*;
+import boardObjects.Void;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
@@ -40,14 +40,15 @@ public class RoboRally {
     public void playGame() {
         boolean gameOver = false;
         while (!gameOver) {
-            //getting movement cards from player/s making array List of prioritized listing of our movement cards from player class
-            ArrayList<ArrayList> PrioritizedMovementCards = new ArrayList<>();
+            //getting movement cards from player/s
+            ArrayList<ArrayList> listOfPrioritizedListsOfMovementCardsFromPlayers = new ArrayList<>();
             for (int i = 0; i < players.size(); i++) {
                 ArrayList<MovementCard> movementCardsToBeExecuted;
                 System.out.println("Player " + (i + 1) + " choose your cards!");
                 movementCardsToBeExecuted = players.get(i).theMovementCardsThePlayerChose();
-                PrioritizedMovementCards.add(movementCardsToBeExecuted);
+                listOfPrioritizedListsOfMovementCardsFromPlayers.add(movementCardsToBeExecuted);
             }
+
             MovementCardDeck.dealOutMovementCards(players);
 
             //playing movement cards from players'
@@ -58,7 +59,7 @@ public class RoboRally {
                         continue;
                     }
                     System.out.println("position: x: " + players.get(i).getRobot().getX() + " y: " + players.get(i).getRobot().getY());
-                    boolean isRobotAlive = playMovementCard((MovementCard) PrioritizedMovementCards.get(i).get(j), players.get(i));
+                    boolean isRobotAlive = playMovementCard((MovementCard) listOfPrioritizedListsOfMovementCardsFromPlayers.get(i).get(j), players.get(i));
                     if (!isRobotAlive) {
                         playersWhosDead[i] = true;
                     }
@@ -66,7 +67,6 @@ public class RoboRally {
             }
 
             //end of round
-
             for (Player player : players) {
                 Position pos = player.getRobot().getPosition();
                 ArrayList list = map.getBoardObjects(pos);
@@ -82,10 +82,8 @@ public class RoboRally {
                         }
                     }
                 }
-
             }
         }
-
     }
 
     // Litt usikker på om denne er helt riktig

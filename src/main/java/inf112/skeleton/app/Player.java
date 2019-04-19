@@ -46,7 +46,6 @@ public class Player {
             System.out.println("\nCard number " + (i + 1) + "\n" + theCardsToChooseYourProgramFrom.get(i).toString());
         }
 
-
         int counter = 0;
 
         // Gjør at man bare velger antallet kort man kan ut i fra skaden roboten har tatt
@@ -79,9 +78,11 @@ public class Player {
                     System.out.println("You have already chosen this card!");
                     continue;
                 } else {
+
                     programForRobotToExecute.add(theCardsToChooseYourProgramFrom.get(number - 1));
                     counter++;
                     list.add(number);
+
                 }
             } else {
                 sc.next();
@@ -119,7 +120,14 @@ public class Player {
 
     public void powerDown() {
         this.robot.setMaxMemCap();
-        this.robot.setPowerdown();
+    }
+
+    public boolean choosePowerdown() {
+        Scanner scn = new Scanner(System.in);
+        String in = scn.nextLine().toLowerCase();
+        if (in.equals("yes"))
+            return true;
+        return false;
     }
 
     public int getX() {

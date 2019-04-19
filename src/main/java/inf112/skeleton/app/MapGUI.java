@@ -260,7 +260,6 @@ public class MapGUI extends ApplicationAdapter {
         blueConveyor_beltImage3.dispose();
         blueConveyor_beltImage4.dispose();
 
-
         laserImage1.dispose();
         laserImage2.dispose();
         laserImage3.dispose();
