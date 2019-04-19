@@ -16,10 +16,12 @@ import java.util.ArrayList;
 
 public class MapGUI extends ApplicationAdapter {
 
-    private Texture robotImage, voidImage, laserImage, wrenchImage, wrench_hammer, rotatin_plateImage, flagImage, nothingImage, cardTester;
+    private Texture robotImage, voidImage, wrenchImage, wrench_hammer, rotatin_plateImage, flagImage, nothingImage, cardTester;
     private Texture blueConveyor_beltImage1, blueConveyor_beltImage2, blueConveyor_beltImage3, blueConveyor_beltImage4;
     private Texture yellowConveyor_beltImage1, yellowConveyor_beltImage2, yellowConveyor_beltImage3, yellowConveyor_beltImage4;
+    private Texture laserImage1, laserImage2, laserImage3, laserImage4, laserImage5, laserImage6;
 
+    //private Texture[] lasers = {laserImage1, laserImage2, laserImage3, laserImage4, laserImage5, laserImage6};
     private Sound dropSound;
     private Music rainMusic;
     private SpriteBatch batch;
@@ -63,13 +65,19 @@ public class MapGUI extends ApplicationAdapter {
         blueConveyor_beltImage2 = getImage("b2.png");
         blueConveyor_beltImage3 = getImage("b3.png");
         blueConveyor_beltImage4 = getImage("b4.png");
-        laserImage = getImage("l.png");
         wrenchImage = getImage("s.png");
         wrench_hammer = getImage("s_h.png");
         rotatin_plateImage = getImage("g.png");
         flagImage = getImage("f.png");
         nothingImage = getImage("n.png");
         cardTester = getImage("card_Tester.png");
+
+        laserImage1 = getImage("l1.png");
+        laserImage2 = getImage("l2.png");
+        laserImage3 = getImage("l3.png");
+        laserImage4 = getImage("l4.png");
+        laserImage5 = getImage("l5.png");
+        laserImage6 = getImage("l6.png");
 
         // create the camera and the SpriteBatch
         camera = new OrthographicCamera();
@@ -177,7 +185,19 @@ public class MapGUI extends ApplicationAdapter {
                 if (object instanceof Void) {
                     batch.draw(voidImage, tile[i][j].x, tile[i][j].y);
                 } else if (object instanceof Laser) {
-                    batch.draw(laserImage, tile[i][j].x, tile[i][j].y);
+                    Laser l = (Laser) map.getBoardObject(new Position(i, j));
+                    if (l.pictureDir == 1)
+                        batch.draw(laserImage1, tile[i][j].x, tile[i][j].y);
+                    else if (l.pictureDir == 2)
+                        batch.draw(laserImage2, tile[i][j].x, tile[i][j].y);
+                    else if (l.pictureDir == 3)
+                        batch.draw(laserImage3, tile[i][j].x, tile[i][j].y);
+                    else if (l.pictureDir == 4)
+                        batch.draw(laserImage4, tile[i][j].x, tile[i][j].y);
+                    else if (l.pictureDir == 5)
+                        batch.draw(laserImage5, tile[i][j].x, tile[i][j].y);
+                    else
+                        batch.draw(laserImage6, tile[i][j].x, tile[i][j].y);
                 } else if (object instanceof Conveyor_belt) {
                     Conveyor_belt c = (Conveyor_belt) map.getBoardObject(new Position(i, j));
                     if (c.isBlueBelt) {
@@ -223,7 +243,6 @@ public class MapGUI extends ApplicationAdapter {
         // dispose of all
         robotImage.dispose();
         voidImage.dispose();
-        laserImage.dispose();
         nothingImage.dispose();
         rotatin_plateImage.dispose();
         wrench_hammer.dispose();
@@ -240,5 +259,13 @@ public class MapGUI extends ApplicationAdapter {
         blueConveyor_beltImage2.dispose();
         blueConveyor_beltImage3.dispose();
         blueConveyor_beltImage4.dispose();
+
+
+        laserImage1.dispose();
+        laserImage2.dispose();
+        laserImage3.dispose();
+        laserImage4.dispose();
+        laserImage5.dispose();
+        laserImage6.dispose();
     }
 }

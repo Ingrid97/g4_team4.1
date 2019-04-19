@@ -1,6 +1,6 @@
  s,  ,  ,2y,  ,4y,2y,  ,4y,  ,2y,  ,
 1y,  , v,2y,  ,4y,2y, f,4y,  , p,1y,
-  ,  ,  ,2y,  ,4y,2y,  ,4y,  ,  , l,
+  ,  ,  ,2y,  ,4y,2y,  ,4y,3l,6l,1l,
 3y,3y,3y, p,  ,4y,2y,  ,4y,3b,3b,3b,
   , f,  ,  ,  ,4y,2y,  ,  ,  ,  ,  ,
 1y,1y,1y,1y,1y,  ,  ,1y,1y,1y,1y,1y,
@@ -34,6 +34,8 @@
   ,  ,3y,3y,3y,  , r,1y,1y,1y,  ,  ,
 
 
+
+
 lite testMap
   ,  ,  ,  ,  ,  ,  ,  ,3y,3y,
   , s, f,  ,3b,3b,  , f,2y,  ,
@@ -52,7 +54,8 @@ Symbols on the board
 '*' = Wall (1,2,3,4)
 'r' = Robot
 'v' = Void
-'l' = Laser (1,2,3,4)
+'l' = Laser from wall (1,2,3,4)
+'l' = Laser (5,6)
 'b' = Blue_Belt (1,2,3,4)
 'y' = Yellow_Belt (1,2,3,4)
 's' = Wrench
@@ -63,5 +66,6 @@ Symbols on the board
 
 
 1: west, 2: north, 3:east, 4: south
+5: vertically, 6: horrisontalt
 
 

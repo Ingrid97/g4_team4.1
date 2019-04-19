@@ -5,9 +5,11 @@ import inf112.skeleton.app.Position;
 public class Laser implements IBoardObject{
 
     private Position position;
+    public int pictureDir;
 
     public Laser(int x, int y){
-    this.position = new Position(x, y);
+        this.position = new Position(x, y);
+        this.pictureDir = 0;
     }
 
     @Override
@@ -22,6 +24,11 @@ public class Laser implements IBoardObject{
 
     public Position getPosition() {
         return this.position;
+    }
+
+
+    public void setPictureDir(int d) {
+        this.pictureDir = d;
     }
 
     @Override
