@@ -1,5 +1,6 @@
 package inf112.skeleton.app;
 
+import com.badlogic.gdx.Files;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -7,11 +8,18 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.files.FileHandle;
+
+import java.awt.*;
 
 
 //implementing screen gives us important functions for making the menu-bar and gives us overrides we might need
 public class MenuBar implements Screen{
+
+    private static final int BackgroundX = 640;
+    private static final int BackgroundY = 940;
 
     private static final int PLAY_BUTTON_HEIGHT = 250;
     private static final int PLAY_BUTTON_WEIGHT = 200;
@@ -25,7 +33,6 @@ public class MenuBar implements Screen{
 
 
     //needs a refrence to game
-    private Game game;
 
     private Stage stage;
 
@@ -43,16 +50,26 @@ public class MenuBar implements Screen{
 
 
 
-    public MenuBar(Game game){
-        this.game = game;
+    public MenuBar(){
+        //this.RoboRally = RoboRally;
 
-        backGround = new Texture("starBackground.jpg");
+           camera = new OrthographicCamera();
+           camera.setToOrtho(false, 640, 940);
 
-        playButtonActive = new Texture("playButton.png");
-        playButtonInactive = new Texture("playButton.png");
 
-        exitButtonActive = new Texture("exitButton.png");
-        exitButtoninActive = new Texture("exitButton.png");
+        batch = new SpriteBatch();
+
+            backGround = new Texture(Gdx.files.internal("starsBackground.jpg"));
+
+            playButtonActive = new Texture(Gdx.files.internal("playbutton"));
+
+            playButtonInactive = new Texture(Gdx.files.internal("playbutton"));
+
+            // playButtonInactive = new Texture("playButton.png");
+
+            exitButtonActive = new Texture(Gdx.files.internal("exitButton.png"));
+
+            //exitButtoninActive = new Texture("exitButton.png");
 
 
 
@@ -64,6 +81,7 @@ public class MenuBar implements Screen{
 
     @Override
     public void show() {
+
         //Set what filles the screen
 
     }
@@ -71,13 +89,15 @@ public class MenuBar implements Screen{
     @Override
     public void render(float delta) {
         //Screen must be ready/clear in order for next set of images to be drawn
-        Gdx.gl.glClearColor(1,0,0,1);
+        Gdx.gl.glClearColor(1,0,0.2f,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        batch.begin();
+
 
         //draws background
-        batch.draw(backGround, 640, 940); //find out how to use (backGround, 0,0, Game.WIDTH. Game.HEIGHT)
+        batch.setProjectionMatrix(camera.combined);
+        batch.begin();
+        batch.draw(backGround, BackgroundX, BackgroundY); //find out how to use (backGround, 0,0, Game.WIDTH. Game.HEIGHT)
 
         //draws button for when they are being touched and not
 
@@ -124,6 +144,9 @@ public class MenuBar implements Screen{
 
     @Override
     public void dispose() {
+        backGround.dispose();
+        batch.dispose();
+
 
     }
 }

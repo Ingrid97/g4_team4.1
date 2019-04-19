@@ -60,7 +60,7 @@ public class MovementCardDeck {
         for (int i = 0; i < players.size(); i++) {
 
             for (int j = 0; j < players.get(i).memoryCapacityForThisPlayer(); j++) {
-                players.get(i).giveMovementCardsToThePlayer(copy.get(j));
+                players.get(i).giveMovementCards(copy.get(j));
                 copy.remove(j);
             }
         }

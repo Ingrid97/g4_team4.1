@@ -64,14 +64,14 @@ public class RoboRallyTest {
     public void backingUp() {
         Player player = new Player(0, new Robot(5, 5, Directions.UP));
         MovementCard movementCard = new MovementCard(Directions.DOWN, 1, 0);
-        assertEquals(roboRally.backingUpOrTurning180Degrees(movementCard, player).getX(), 6);
+        assertEquals(roboRally.Uturn(movementCard, player).getX(), 6);
     }
 
     @Test
     public void uTurn() {
         Player player = new Player(0, new Robot(5, 5, Directions.UP));
         MovementCard movementCard = new MovementCard(Directions.DOWN, 0, 0);
-        Position pos = roboRally.backingUpOrTurning180Degrees(movementCard, player);
+        Position pos = roboRally.Uturn(movementCard, player);
         assertEquals(pos.getY(), 5);
         assertEquals(player.getRobot().getDirection(), Directions.DOWN);
     }

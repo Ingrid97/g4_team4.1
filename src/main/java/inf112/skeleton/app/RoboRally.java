@@ -98,22 +98,22 @@ public class RoboRally {
      * @return
      */
     private boolean updateFlag(Player player, Flag flag) {
-        boolean[] temp = player.getFlagsWhichHasBeenVisited();
+        boolean[] temp = player.getFlagsVisited();
         int identifier = flag.identifier;
         System.out.println("A player reached flag " + identifier);
         if (identifier == 0) {
-            player.setFlagsWhichHasBeenVisitedTrue(identifier);
+            player.setFlagsVisitedTrue(identifier);
             return false;
         }
         if (temp[0]) {
             if (identifier == 1) {
-                player.setFlagsWhichHasBeenVisitedTrue(identifier);
+                player.setFlagsVisitedTrue(identifier);
                 return false;
             }
         }
         if (temp[0]) {
             if (temp[1]) {
-                player.setFlagsWhichHasBeenVisitedTrue(identifier);
+                player.setFlagsVisitedTrue(identifier);
                 return true;
             }
         }
@@ -151,7 +151,7 @@ public class RoboRally {
                 break;
             case DOWN://moving backward or turning 180degrees
                 try {
-                    newPos = backingUpOrTurning180Degrees(movCard, player);
+                    newPos = Uturn(movCard, player);
                 } catch (IllegalArgumentException e) {
                     System.out.println("A robot has fallen2");    //robot fell outside map, should be returned to backup position
                 }
@@ -304,7 +304,8 @@ public class RoboRally {
      * @return the final new position
      * @throws IllegalArgumentException if robot is outside map
      */
-    public Position backingUpOrTurning180Degrees(MovementCard movCard, Player player) throws IllegalArgumentException {
+    // if number of steps is 1 backup else trun 180 Degress
+    public Position Uturn(MovementCard movCard, Player player) throws IllegalArgumentException {
         Position newPos;
         Position currentPos = player.getRobot().getPosition();
         if (movCard.getNumberOfSteps() == 1) {
