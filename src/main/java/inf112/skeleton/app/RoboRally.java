@@ -40,13 +40,13 @@ public class RoboRally {
     public void playGame() {
         boolean gameOver = false;
         while (!gameOver) {
-            //getting movement cards from player/s
-            ArrayList<ArrayList> listOfPrioritizedListsOfMovementCardsFromPlayers = new ArrayList<>();
+            //getting movement cards from player/s making array List of prioritized listing of our movement cards from player class
+            ArrayList<ArrayList> PrioritizedMovementCards = new ArrayList<>();
             for (int i = 0; i < players.size(); i++) {
                 ArrayList<MovementCard> movementCardsToBeExecuted;
                 System.out.println("Player " + (i + 1) + " choose your cards!");
                 movementCardsToBeExecuted = players.get(i).theMovementCardsThePlayerChose();
-                listOfPrioritizedListsOfMovementCardsFromPlayers.add(movementCardsToBeExecuted);
+                PrioritizedMovementCards.add(movementCardsToBeExecuted);
             }
             MovementCardDeck.dealOutMovementCards(players);
 
@@ -58,7 +58,7 @@ public class RoboRally {
                         continue;
                     }
                     System.out.println("position: x: " + players.get(i).getRobot().getX() + " y: " + players.get(i).getRobot().getY());
-                    boolean isRobotAlive = playMovementCard((MovementCard) listOfPrioritizedListsOfMovementCardsFromPlayers.get(i).get(j), players.get(i));
+                    boolean isRobotAlive = playMovementCard((MovementCard) PrioritizedMovementCards.get(i).get(j), players.get(i));
                     if (!isRobotAlive) {
                         playersWhosDead[i] = true;
                     }

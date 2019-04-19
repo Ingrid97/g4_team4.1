@@ -78,7 +78,7 @@ public class Robot implements IRobot {
         this.powerdown = true;
     }
 
-    public void finnishPowerdown() {
+    public void finishPowerdown() {
         this.powerdown = false;
     }
 
