@@ -210,10 +210,11 @@ public class RoboRally {
 //                //what do to if a robot collides with a wall
 //                break;
             case "laser":
-                //what do to if a robot collides with a laser
-                // TODO! Impact of lasers! (Laser starts at 2,11, and goes to 2,10 -> 2,9)
+                // The laser deals 1 damage to the robots
+                player.getRobot().takeDamage(1);
+                System.out.println("Robot \nhp: " + player.getRobot().getHealthPoints() + "\nmemCap: " + player.getRobot().getMemoryCapacity());
+                return player.getRobot().getPosition();
 
-                return newPos;
             case "conveyor_belt":
                 if (map.getBoardObject(newPos) instanceof Conveyor_belt) {
                     Directions direction = ((Conveyor_belt) map.getBoardObject(newPos)).getDirection();

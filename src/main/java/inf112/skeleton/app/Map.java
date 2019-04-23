@@ -87,7 +87,6 @@ public class Map {
 
     }
 
-    // TODO! Throws ArrayIndexOutOfBoundException, does not safe check positions right
     /**
      * Finding a IBoardObject in a Position on the map
      *

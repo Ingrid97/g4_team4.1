@@ -130,7 +130,7 @@ public class Robot implements IRobot {
         this.backUpPosition = this.positionOfRobot;
     }
 
-    private void takeDamage(int laserStrength) {
+    public void takeDamage(int laserStrength) {
 
         this.memoryCapacity -= laserStrength;
 
