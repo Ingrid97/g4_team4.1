@@ -5,6 +5,4 @@ public interface IBoardObject {
     int getX();
 
     int getY();
-
-    int color();
 }

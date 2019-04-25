@@ -25,8 +25,4 @@ public class Wall implements IBoardObject{
         return this.position;
     }
 
-    @Override
-    public int color() {
-        return 0;
-    }
 }

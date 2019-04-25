@@ -237,38 +237,5 @@ public class Map {
         }
     }
 
-    /**
-     * prints the map to the conosle
-     */
-    public void printMap() {
-        System.out.println("Map:");
-        //TODO: make switch and fix GUI stuffs
-        for (int i = 0; i < getX(); i++) {
-            for (int j = 0; j < getY(); j++) {
-                if (getBoardObject(new Position(i, j)) instanceof Wall) {
-                    System.out.print('*');
-                } else if (getBoardObject(new Position(i, j)) instanceof Robot) {
-                    System.out.print('r');
-                } else if (getBoardObject(new Position(i, j)) instanceof Void) {
-                    System.out.print('v');
-                } else if (getBoardObject(new Position(i, j)) instanceof Laser) {
-                    System.out.print('l');
-                } else if (getBoardObject(new Position(i, j)) instanceof Conveyor_belt) {
-                    System.out.print('b');
-                } else if (getBoardObject(new Position(i, j)) instanceof Wrench) {
-                    System.out.print('s');
-                } else if (getBoardObject(new Position(i, j)) instanceof Wrench_hammer) {
-                    System.out.print('h');
-                } else if (getBoardObject(new Position(i, j)) instanceof Flag) {
-                    System.out.print('f');
-                } else if (getBoardObject(new Position(i, j)) instanceof Rotating_belt) {
-                    System.out.print('p');
-                } else {
-                    System.out.print(' ');
-                }
-            }
-            System.out.println();
-        }
-    }
 
 }

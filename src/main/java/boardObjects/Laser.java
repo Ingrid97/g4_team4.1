@@ -31,8 +31,4 @@ public class Laser implements IBoardObject{
         this.pictureDir = d;
     }
 
-    @Override
-    public int color() {
-        return 0;
-    }
 }

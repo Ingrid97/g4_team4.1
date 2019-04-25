@@ -1,21 +1,16 @@
 package inf112.skeleton.app;
 
-import com.badlogic.gdx.Files;
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.files.FileHandle;
-
-import java.awt.*;
 
 
 //implementing screen gives us important functions for making the menu-bar and gives us overrides we might need
+// TODO! Is the whole menubar class redundant?
 public class MenuBar implements Screen{
 
     private static final int BackgroundX = 640;

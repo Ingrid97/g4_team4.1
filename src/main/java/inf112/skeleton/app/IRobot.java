@@ -29,11 +29,6 @@ public interface IRobot extends IBoardObject {
          */
         void move (int numberOfSteps);
 
-        /**
-         *
-         * @return The current Position of the robot
-         */
-        Position getPositionOfRobot();
 
 
 }

@@ -49,10 +49,7 @@ public class MapGUI extends ApplicationAdapter {
 
     @Override
     public void create() {
-
-        //TODO make manu screen appear first
-        //((MenuBar)Gdx.app.getApplicationListener()).setScreen(new MenuBar());
-
+        
 
         //Testing with other picture
         robotImage = getImage("r.png");

@@ -24,8 +24,4 @@ public class Void implements IBoardObject {
         return this.position;
     }
 
-    @Override
-    public int color() {
-        return 0;
-    }
 }
