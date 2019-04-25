@@ -43,6 +43,10 @@ public class RoboRally {
             //getting movement cards from player/s making array List of prioritized listing of our movement cards from player class
             ArrayList<ArrayList> PrioritizedMovementCards = new ArrayList<>();
             for (int i = 0; i < players.size(); i++) {
+                if (!players.get(i).getRobot().isAlive()) {
+                    players.remove(i);
+                    continue;
+                }
                 ArrayList<MovementCard> movementCardsToBeExecuted;
                 if(!players.get(i).getRobot().getPowerDown()){
                     System.out.println("Player " + (i + 1) + " choose your cards!");
