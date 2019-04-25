@@ -227,7 +227,16 @@ public class RoboRally {
                         moveTheRobotAndUpdateMapGUI(player, p);
                         return movingForward(p, direction);
                     }
-                    return movingForward(newPos, direction);
+                    try {
+
+                        return movingForward(newPos, direction);
+                    } catch (IllegalArgumentException e) {
+                        map.moveRobot(player.getRobot(), player.getRobot().getBackUpPosition());
+                        player.getRobot().setPositionToBackUp();
+                        System.out.println("deadPosition: x: " + newPos.getX() + " y: " + newPos.getY());
+                        System.out.println("ROBOT DEAD");
+                        return null;
+                    }
                 }
                 return newPos;
             case "rotating_belt":
