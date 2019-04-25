@@ -1,7 +1,7 @@
 package inf112.skeleton.app;//Created by ingridjohansen on 04/02/2019.
 
-import boardObjects.Void;
 import boardObjects.*;
+import boardObjects.Void;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
@@ -56,6 +56,8 @@ public class RoboRally {
             //playing movement cards from players'
             boolean[] playersWhosDead = new boolean[players.size()];
             for (int j = 0; j < 5; j++) {//the max number for this for loop chooses how many movementcards is supposed to be played
+                //between phases
+                robotLasersFire();
                 for (int i = 0; i < players.size(); i++) {
                     if(!players.get(i).getRobot().getPowerDown()){
                         if (playersWhosDead[i]) {
@@ -109,6 +111,34 @@ public class RoboRally {
             }
         }
 
+    }
+
+    /**
+     * Method for the robots lasers to fire and deal damage to other robots
+     * This happens between phases
+     */
+    private void robotLasersFire() {
+//        for (Player player: this.players) {
+//            Position pos = player.getRobot().getPosition();
+//            while (this.map.isValidPosition(pos)) {
+//                try {
+//                    pos = movingForward(pos, player.getRobot().getDirection());
+//                } catch (IllegalArgumentException e) {
+//                    return;
+//                }
+//                ArrayList<IBoardObject> boardObjects = this.map.getBoardObjects(pos);
+//                if(boardObjects.size()>0) {
+//                    for (int i=0; i<boardObjects.size(); i++) {
+//                        if (boardObjects.get(i) instanceof Robot) {
+//                            ((Robot) boardObjects.get(i)).takeDamage(1);
+//                            System.out.println("A ROBOT SHOT ANOTHER ROBOT!");
+//                            return;
+//                        }
+//                    }
+//                }
+//            }
+//
+//        }
     }
 
     // Litt usikker på om denne er helt riktig
@@ -305,12 +335,14 @@ public class RoboRally {
         Position newPos;
         switch (direction) {
                 case UP:
+                    if (currentPos.getX() == 0) return null;
                     newPos = new Position((currentPos.getX() - 1), currentPos.getY());
                     break;
                 case RIGHT:
                     newPos = new Position(currentPos.getX(), (currentPos.getY() + 1));
                     break;
                 case LEFT:
+                    if (currentPos.getY() == 0) return null;
                     newPos = new Position(currentPos.getX(), (currentPos.getY() - 1));
                     break;
             default:
