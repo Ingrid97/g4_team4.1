@@ -122,27 +122,29 @@ public class RoboRally {
      * This happens between phases
      */
     private void robotLasersFire() {
-//        for (Player player: this.players) {
-//            Position pos = player.getRobot().getPosition();
-//            while (this.map.isValidPosition(pos)) {
-//                try {
-//                    pos = movingForward(pos, player.getRobot().getDirection());
-//                } catch (IllegalArgumentException e) {
-//                    return;
-//                }
-//                ArrayList<IBoardObject> boardObjects = this.map.getBoardObjects(pos);
-//                if(boardObjects.size()>0) {
-//                    for (int i=0; i<boardObjects.size(); i++) {
-//                        if (boardObjects.get(i) instanceof Robot) {
-//                            ((Robot) boardObjects.get(i)).takeDamage(1);
-//                            System.out.println("A ROBOT SHOT ANOTHER ROBOT!");
-//                            return;
-//                        }
-//                    }
-//                }
-//            }
-//
-//        }
+        for (Player player : this.players) {
+            Position pos = player.getRobot().getPosition();
+            while (true) {
+                try {
+                    pos = movingForward(pos, player.getRobot().getDirection());
+                    if (!this.map.isValidPosition(pos)) {
+                        return;
+                    }
+                } catch (IllegalArgumentException e) {
+                    return;
+                }
+                ArrayList boardObjects = this.map.getBoardObjects(pos);
+                if (boardObjects != null) {
+                    for (int i = 0; i < boardObjects.size(); i++) {
+                        if (boardObjects.get(i) instanceof Robot) {
+                            ((Robot) boardObjects.get(i)).takeDamage(1);
+                            System.out.println("A ROBOT SHOT ANOTHER ROBOT!");
+                            return;
+                        }
+                    }
+                }
+            }
+        }
     }
 
     // Litt usikker på om denne er helt riktig
@@ -193,7 +195,7 @@ public class RoboRally {
                     for (int i = 0; i < movCard.getNumberOfSteps(); i++) {
                         Directions direction = player.getRobot().getDirection();
                         newPos = movingForward(currentPos, direction);
-                        if (legalPosition(newPos) == "dead") {
+                        if (legalPosition(newPos).equals("dead")) {
                             map.moveRobot(player.getRobot(), player.getRobot().getBackUpPosition());
                             player.getRobot().setPositionToBackUp();
                             return false;
@@ -340,7 +342,7 @@ public class RoboRally {
      * Moving a robot forward,
      *
      * @param currentPos current position of robot
-     * @param direction
+     * @param direction direction to move
      * @return the final new position, ex the third position if the movCard said 3 steps
      * @throws IllegalArgumentException throws if the robot moves outside the board
      */
@@ -348,14 +350,12 @@ public class RoboRally {
         Position newPos;
         switch (direction) {
                 case UP:
-                    if (currentPos.getX() == 0) return null;
                     newPos = new Position((currentPos.getX() - 1), currentPos.getY());
                     break;
                 case RIGHT:
                     newPos = new Position(currentPos.getX(), (currentPos.getY() + 1));
                     break;
                 case LEFT:
-                    if (currentPos.getY() == 0) return null;
                     newPos = new Position(currentPos.getX(), (currentPos.getY() - 1));
                     break;
             default:

@@ -214,8 +214,7 @@ public class Map {
         if (position.getY() < 0) return false;
         if (position.getX() < 0) return false;
         if (position.getX() > getX() - 1) return false;
-        return position.getX() <= getY() - 1;
-
+        return position.getY() <= getY() - 1;
     }
 
     /**
