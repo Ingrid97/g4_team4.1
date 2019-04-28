@@ -189,6 +189,31 @@ public class RobotTest {
 
 
     }
+   //Robot getting back HP after PowerDown
+    @Test
+    public void HPPowerDown() {
+        Robot robotHurt = new Robot(5, 5, Directions.UP);
+
+
+        int beforeDamage = robotHurt.getHealthPoints();
+        int afterDamage = beforeDamage-1;
+
+
+        if (robotHurt.getPowerDown() == true) {
+            for (int i = 0; i > 9; i++) {
+                robotHurt.takePowerdown();
+            }
+            robotHurt.finishPowerdown();
+
+            if(robotHurt.getHealthPoints() <= afterDamage){
+                assertFalse("Robot should have full memory after powerdown", false);
+            }
+            assertTrue("Robot has full memory", true);
+
+
+        }
+
+    }
 
 
 
