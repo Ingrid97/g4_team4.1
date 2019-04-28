@@ -9,6 +9,7 @@ public class Robot implements IRobot {
     private boolean alive;
     private int laserStrength;
     private Directions direction;
+    private int pictureDir;
     private final int memCap = 9;
     private boolean powerdown;
 
@@ -19,6 +20,7 @@ public class Robot implements IRobot {
         this.memoryCapacity = memCap;
         this.laserStrength = 1;
         this.direction = direction;
+        this.pictureDir = 1;
         this.alive = true;
         this.powerdown = false;
     }
@@ -60,6 +62,10 @@ public class Robot implements IRobot {
         return direction;
     }
 
+    public int getPictureDir() {
+        return pictureDir;
+    }
+
     public boolean getPowerDown(){
         return this.powerdown;
     }
@@ -68,6 +74,19 @@ public class Robot implements IRobot {
     // Setters
     public void setDirection(Directions direction) {
         this.direction = direction;
+        switch (direction) {
+            case LEFT:
+                this.pictureDir = 0;
+                break;
+            case UP:
+                this.pictureDir = 1;
+                break;
+            case RIGHT:
+                this.pictureDir = 2;
+                break;
+            default:
+                this.pictureDir = 3;
+        }
     }
 
     public void setPosition(Position position) {

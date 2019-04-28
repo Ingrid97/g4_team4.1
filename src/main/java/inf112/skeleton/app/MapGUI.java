@@ -12,8 +12,6 @@ import com.badlogic.gdx.math.Rectangle;
 
 import java.util.ArrayList;
 
-import static inf112.skeleton.app.Directions.*;
-
 public class MapGUI extends ApplicationAdapter {
 
     public String[] namesOfRobotd = {"BB-8", "R2-D2", "Darlek", "Turrent", "EEVe", "Wall-E", "", "Bender"};
@@ -21,6 +19,10 @@ public class MapGUI extends ApplicationAdapter {
     private Texture yellowConveyor_beltImage1, yellowConveyor_beltImage2, yellowConveyor_beltImage3, yellowConveyor_beltImage4;
     private Texture laserImage1, laserImage2, laserImage3, laserImage4, laserImage5, laserImage6;
     private Texture voidImage, wrenchImage, wrench_hammer, rotatin_plateImage, flagImage, nothingImage, cardTester;
+    private Texture[] BB_8;
+    private Texture[] turrent;
+    private Texture[] wall_E;
+    private Texture[] eve;
 
     private SpriteBatch batch;
     private OrthographicCamera camera;
@@ -33,7 +35,6 @@ public class MapGUI extends ApplicationAdapter {
     public int witchRobot = 0;
     public ArrayList<Player> listOfPLayers;
     public int moveonce;
-    private Texture BB8_1, BB8_2, BB8_3, BB8_4;
 
 
 
@@ -49,10 +50,30 @@ public class MapGUI extends ApplicationAdapter {
     @Override
     public void create() {
 
-        BB8_1 = getImage("BB-8_1.png");
-        BB8_2 = getImage("BB-8_2.png");
-        BB8_3 = getImage("BB-8_3.png");
-        BB8_4 = getImage("BB-8_4.png");
+        BB_8 = new Texture[4];
+        BB_8[0] = getImage("BB-8_1.png");
+        BB_8[1] = getImage("BB-8_2.png");
+        BB_8[2] = getImage("BB-8_3.png");
+        BB_8[3] = getImage("BB-8_4.png");
+
+        turrent = new Texture[4];
+        turrent[0] = getImage("turrent_1.png");
+        turrent[1] = getImage("turrent_2.png");
+        turrent[2] = getImage("turrent_3.png");
+        turrent[3] = getImage("turrent_4.png");
+
+        wall_E = new Texture[4];
+        wall_E[0] = getImage("wall_E_1.png");
+        wall_E[1] = getImage("wall_E_2.png");
+        wall_E[2] = getImage("wall_E_3.png");
+        wall_E[3] = getImage("wall_E_4.png");
+
+        eve = new Texture[4];
+        eve[0] = getImage("eve_1.png");
+        eve[1] = getImage("eve_2.png");
+        eve[2] = getImage("eve_3.png");
+        eve[3] = getImage("eve_4.png");
+
 
         voidImage = getImage("v.png");
         yellowConveyor_beltImage1 = getImage("y1.png");
@@ -76,6 +97,8 @@ public class MapGUI extends ApplicationAdapter {
         laserImage4 = getImage("l4.png");
         laserImage5 = getImage("l5.png");
         laserImage6 = getImage("l6.png");
+
+        //Texture[]
 
         // create the camera and the SpriteBatch
         camera = new OrthographicCamera();
@@ -136,15 +159,24 @@ public class MapGUI extends ApplicationAdapter {
         // For loop som går gjennom players og position til robotene
         for (int i = 0; i < listOfPLayers.size(); i++) {
             listOfPLayers.get(i).setName(namesOfRobotd[i]);
-            Directions d = listOfPLayers.get(i).getRobot().getDirection();
-            if (d == LEFT)
-                batch.draw(BB8_1, listOfPLayers.get(i).getRobot().getY() * 64, 960 - listOfPLayers.get(i).getRobot().getX() * 64);
-            else if (d == UP)
-                batch.draw(BB8_2, listOfPLayers.get(i).getRobot().getY() * 64, 960 - listOfPLayers.get(i).getRobot().getX() * 64);
-            else if (d == RIGHT)
-                batch.draw(BB8_3, listOfPLayers.get(i).getRobot().getY() * 64, 960 - listOfPLayers.get(i).getRobot().getX() * 64);
-            else
-                batch.draw(BB8_4, listOfPLayers.get(i).getRobot().getY() * 64, 960 - listOfPLayers.get(i).getRobot().getX() * 64);
+            int d = listOfPLayers.get(i).getRobot().getPictureDir();
+            switch (i) {
+                case 0:
+                    batch.draw(BB_8[d], listOfPLayers.get(i).getRobot().getY() * 64, 960 - listOfPLayers.get(i).getRobot().getX() * 64);
+                    break;
+                case 1:
+                    batch.draw(turrent[d], listOfPLayers.get(i).getRobot().getY() * 64, 960 - listOfPLayers.get(i).getRobot().getX() * 64);
+                    break;
+                case 2:
+                    batch.draw(wall_E[d], listOfPLayers.get(i).getRobot().getY() * 64, 960 - listOfPLayers.get(i).getRobot().getX() * 64);
+                    break;
+                case 3:
+                    batch.draw(eve[d], listOfPLayers.get(i).getRobot().getY() * 64, 960 - listOfPLayers.get(i).getRobot().getX() * 64);
+                    break;
+                default:
+                    batch.draw(BB_8[d], listOfPLayers.get(i).getRobot().getY() * 64, 960 - listOfPLayers.get(i).getRobot().getX() * 64);
+
+            }
             //batch.draw(robotImage, listOfPLayers.get(i).getRobot().getX() * 64, listOfPLayers.get(i).getRobot().getY() * 64);
         }
         //
@@ -257,9 +289,11 @@ public class MapGUI extends ApplicationAdapter {
         laserImage5.dispose();
         laserImage6.dispose();
 
-        BB8_1.dispose();
-        BB8_2.dispose();
-        BB8_3.dispose();
-        BB8_4.dispose();
+        for (int i = 0; i < 4; i++) {
+            BB_8[i].dispose();
+            turrent[i].dispose();
+            wall_E[i].dispose();
+            eve[i].dispose();
+        }
     }
 }
