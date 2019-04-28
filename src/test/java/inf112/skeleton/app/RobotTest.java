@@ -171,6 +171,26 @@ public class RobotTest {
         assertEquals(3, theRobotGettingShot.getY());
 
     }
+    @Test
+
+    //Test to check if powerdown can be choosen after required one round
+
+    public void choosePowerDown() {
+        Robot robot = new Robot(5, 5, Directions.UP);
+
+
+        for(int i = 0; i >= 9; i++) {
+            robot.takePowerdown();
+        }
+        if(robot.getPowerDown() == true ){
+            assertTrue("PowerDown being taken", true);
+        }
+        assertFalse("PowerDown not working", false);
+
+
+    }
+
+
 
 
 }
