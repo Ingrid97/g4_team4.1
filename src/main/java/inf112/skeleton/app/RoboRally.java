@@ -53,7 +53,6 @@ public class RoboRally {
                     movementCardsToBeExecuted = players.get(i).theMovementCardsThePlayerChose();
                     PrioritizedMovementCards.add(movementCardsToBeExecuted);
                 }
-
             }
             MovementCardDeck.dealOutMovementCards(players);
 
@@ -73,20 +72,15 @@ public class RoboRally {
                             playersWhosDead[i] = true;
                         }
                     }
-
-
-
                 }
             }
 
             //end of round
-
             for (Player player : players) {
                 if(player.getRobot().getPowerDown()){
                     player.powerDown();
                     player.getRobot().finishPowerdown();
-                }
-                else{
+                } else {
                     Position pos = player.getRobot().getPosition();
                     ArrayList list = map.getBoardObjects(pos);
 
@@ -101,20 +95,15 @@ public class RoboRally {
                             }
                         }
                     }
-                    System.out.println("Do you want to take a PowerDown? Yes/No ");
+                    System.out.println(player.getName() + ": Do you want to take a PowerDown? Yes/No ");
                     boolean playerPowerDown = player.choosePowerdown();
 
                     if(playerPowerDown){
                         player.getRobot().takePowerdown();
                     }
-
                 }
-
-
-
             }
         }
-
     }
 
     /**

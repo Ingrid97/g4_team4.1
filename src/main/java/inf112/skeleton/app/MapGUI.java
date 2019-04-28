@@ -4,8 +4,6 @@ import boardObjects.*;
 import boardObjects.Void;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -14,16 +12,16 @@ import com.badlogic.gdx.math.Rectangle;
 
 import java.util.ArrayList;
 
+import static inf112.skeleton.app.Directions.*;
+
 public class MapGUI extends ApplicationAdapter {
 
-    private Texture robotImage, voidImage, wrenchImage, wrench_hammer, rotatin_plateImage, flagImage, nothingImage, cardTester;
+    public String[] namesOfRobotd = {"BB-8", "R2-D2", "Darlek", "Turrent", "EEVe", "Wall-E", "", "Bender"};
     private Texture blueConveyor_beltImage1, blueConveyor_beltImage2, blueConveyor_beltImage3, blueConveyor_beltImage4;
     private Texture yellowConveyor_beltImage1, yellowConveyor_beltImage2, yellowConveyor_beltImage3, yellowConveyor_beltImage4;
     private Texture laserImage1, laserImage2, laserImage3, laserImage4, laserImage5, laserImage6;
+    private Texture voidImage, wrenchImage, wrench_hammer, rotatin_plateImage, flagImage, nothingImage, cardTester;
 
-    //private Texture[] lasers = {laserImage1, laserImage2, laserImage3, laserImage4, laserImage5, laserImage6};
-    private Sound dropSound;
-    private Music rainMusic;
     private SpriteBatch batch;
     private OrthographicCamera camera;
     private Rectangle[][] tile;
@@ -35,6 +33,7 @@ public class MapGUI extends ApplicationAdapter {
     public int witchRobot = 0;
     public ArrayList<Player> listOfPLayers;
     public int moveonce;
+    private Texture BB8_1, BB8_2, BB8_3, BB8_4;
 
 
 
@@ -49,10 +48,12 @@ public class MapGUI extends ApplicationAdapter {
 
     @Override
     public void create() {
-        
 
-        //Testing with other picture
-        robotImage = getImage("r.png");
+        BB8_1 = getImage("BB-8_1.png");
+        BB8_2 = getImage("BB-8_2.png");
+        BB8_3 = getImage("BB-8_3.png");
+        BB8_4 = getImage("BB-8_4.png");
+
         voidImage = getImage("v.png");
         yellowConveyor_beltImage1 = getImage("y1.png");
         yellowConveyor_beltImage2 = getImage("y2.png");
@@ -105,18 +106,8 @@ public class MapGUI extends ApplicationAdapter {
                 tile[j][i].height = 64;
             }
         }
-/*
-        for (int i = 0; i < 9; i++) {
-            cards[i] = new Rectangle();
-            cards[i].x = 32 + i * 64;
-            cards[i].y = 700;
-            cards[i].height = 96;
-            cards[i].width = 64;
-        }
-*/
+
         moveonce = 0;
-
-
     }
 
     public Texture getImage(String s) {
@@ -144,16 +135,20 @@ public class MapGUI extends ApplicationAdapter {
         roboid = 0;
         // For loop som går gjennom players og position til robotene
         for (int i = 0; i < listOfPLayers.size(); i++) {
-            batch.draw(robotImage, listOfPLayers.get(i).getRobot().getY() * 64, 960 - listOfPLayers.get(i).getRobot().getX() * 64);
+            listOfPLayers.get(i).setName(namesOfRobotd[i]);
+            Directions d = listOfPLayers.get(i).getRobot().getDirection();
+            if (d == LEFT)
+                batch.draw(BB8_1, listOfPLayers.get(i).getRobot().getY() * 64, 960 - listOfPLayers.get(i).getRobot().getX() * 64);
+            else if (d == UP)
+                batch.draw(BB8_2, listOfPLayers.get(i).getRobot().getY() * 64, 960 - listOfPLayers.get(i).getRobot().getX() * 64);
+            else if (d == RIGHT)
+                batch.draw(BB8_3, listOfPLayers.get(i).getRobot().getY() * 64, 960 - listOfPLayers.get(i).getRobot().getX() * 64);
+            else
+                batch.draw(BB8_4, listOfPLayers.get(i).getRobot().getY() * 64, 960 - listOfPLayers.get(i).getRobot().getX() * 64);
             //batch.draw(robotImage, listOfPLayers.get(i).getRobot().getX() * 64, listOfPLayers.get(i).getRobot().getY() * 64);
         }
         //
         batch.end();
-/*
-        for (int i = 0; i < 9; i++) {
-            batch.draw(cardTester, cards[i].x, cards[i].y);
-        }*/
-
 
 
         //stuff for moving
@@ -225,7 +220,6 @@ public class MapGUI extends ApplicationAdapter {
                 } else if (object instanceof Rotating_belt) {
                     batch.draw(rotatin_plateImage, tile[i][j].x, tile[i][j].y);
                 } else if (object instanceof Robot) {
-                    //batch.draw(nothingImage, tile[i][k].x, tile[i][k].y);
                     batch.draw(nothingImage, tile[i][j].x, tile[i][j].y);
                     roboid++;
                 } else {
@@ -238,7 +232,6 @@ public class MapGUI extends ApplicationAdapter {
     @Override
     public void dispose() {
         // dispose of all
-        robotImage.dispose();
         voidImage.dispose();
         nothingImage.dispose();
         rotatin_plateImage.dispose();
@@ -263,5 +256,10 @@ public class MapGUI extends ApplicationAdapter {
         laserImage4.dispose();
         laserImage5.dispose();
         laserImage6.dispose();
+
+        BB8_1.dispose();
+        BB8_2.dispose();
+        BB8_3.dispose();
+        BB8_4.dispose();
     }
 }

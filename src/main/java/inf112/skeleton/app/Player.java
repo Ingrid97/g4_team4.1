@@ -8,6 +8,7 @@ import java.util.Scanner;
 public class Player {
     //variable that collects flags that has been visited to a boolean array
     private boolean[] flagsVisited;
+    private String name;
     private Robot robot;
     private ArrayList<MovementCard> theCardsToChooseYourProgramFrom;
     private ArrayList<MovementCard> programForRobotToExecute = new ArrayList<>();
@@ -113,9 +114,11 @@ public class Player {
     }
 
     public void setFlagsVisitedTrue(int pos) {
-
         this.flagsVisited[pos] = true;
+    }
 
+    public String getName() {
+        return this.name;
     }
 
 
@@ -141,6 +144,10 @@ public class Player {
 
     public Robot getRobot() {
         return robot;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
 
