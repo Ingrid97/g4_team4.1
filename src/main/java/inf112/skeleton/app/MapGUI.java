@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 public class MapGUI extends ApplicationAdapter {
 
-    public String[] namesOfRobotd = {"BB-8", "R2-D2", "Darlek", "Turrent", "EEVe", "Wall-E", "", "Bender"};
+    public String[] namesOfRobotd = {"BB-8", "Turrent", "Wall-E", "eve", "R2-D2", "Darlek", "Big-hero-6", "Bender"};
     private Texture blueConveyor_beltImage1, blueConveyor_beltImage2, blueConveyor_beltImage3, blueConveyor_beltImage4;
     private Texture yellowConveyor_beltImage1, yellowConveyor_beltImage2, yellowConveyor_beltImage3, yellowConveyor_beltImage4;
     private Texture laserImage1, laserImage2, laserImage3, laserImage4, laserImage5, laserImage6;
@@ -28,8 +28,7 @@ public class MapGUI extends ApplicationAdapter {
     private OrthographicCamera camera;
     private Rectangle[][] tile;
     private Rectangle[] robot;
-    private Rectangle[] cards;
-    private int roboid;
+    //private int roboid;
     public Map map;
     public boolean drawnTable = false;
     public int witchRobot = 0;
@@ -50,55 +49,8 @@ public class MapGUI extends ApplicationAdapter {
     @Override
     public void create() {
 
-        BB_8 = new Texture[4];
-        BB_8[0] = getImage("BB-8_1.png");
-        BB_8[1] = getImage("BB-8_2.png");
-        BB_8[2] = getImage("BB-8_3.png");
-        BB_8[3] = getImage("BB-8_4.png");
-
-        turrent = new Texture[4];
-        turrent[0] = getImage("turrent_1.png");
-        turrent[1] = getImage("turrent_2.png");
-        turrent[2] = getImage("turrent_3.png");
-        turrent[3] = getImage("turrent_4.png");
-
-        wall_E = new Texture[4];
-        wall_E[0] = getImage("wall_E_1.png");
-        wall_E[1] = getImage("wall_E_2.png");
-        wall_E[2] = getImage("wall_E_3.png");
-        wall_E[3] = getImage("wall_E_4.png");
-
-        eve = new Texture[4];
-        eve[0] = getImage("eve_1.png");
-        eve[1] = getImage("eve_2.png");
-        eve[2] = getImage("eve_3.png");
-        eve[3] = getImage("eve_4.png");
-
-
-        voidImage = getImage("v.png");
-        yellowConveyor_beltImage1 = getImage("y1.png");
-        yellowConveyor_beltImage2 = getImage("y2.png");
-        yellowConveyor_beltImage3 = getImage("y3.png");
-        yellowConveyor_beltImage4 = getImage("y4.png");
-        blueConveyor_beltImage1 = getImage("b1.png");
-        blueConveyor_beltImage2 = getImage("b2.png");
-        blueConveyor_beltImage3 = getImage("b3.png");
-        blueConveyor_beltImage4 = getImage("b4.png");
-        wrenchImage = getImage("s.png");
-        wrench_hammer = getImage("s_h.png");
-        rotatin_plateImage = getImage("g.png");
-        flagImage = getImage("f.png");
-        nothingImage = getImage("n.png");
-        cardTester = getImage("card_Tester.png");
-
-        laserImage1 = getImage("l1.png");
-        laserImage2 = getImage("l2.png");
-        laserImage3 = getImage("l3.png");
-        laserImage4 = getImage("l4.png");
-        laserImage5 = getImage("l5.png");
-        laserImage6 = getImage("l6.png");
-
-        //Texture[]
+        //get the pictures
+        getPictures();
 
         // create the camera and the SpriteBatch
         camera = new OrthographicCamera();
@@ -110,7 +62,6 @@ public class MapGUI extends ApplicationAdapter {
         // create a list of Rectangles to logically represent the objects
         tile = new Rectangle[16][16];
         robot = new Rectangle[10];
-        cards = new Rectangle[9];
 
         for (int i = 0; i < 10; i++) {
             robot[i] = new Rectangle();
@@ -154,9 +105,6 @@ public class MapGUI extends ApplicationAdapter {
 
 
         drawTable();
-
-        roboid = 0;
-        // For loop som går gjennom players og position til robotene
         for (int i = 0; i < listOfPLayers.size(); i++) {
             listOfPLayers.get(i).setName(namesOfRobotd[i]);
             int d = listOfPLayers.get(i).getRobot().getPictureDir();
@@ -177,30 +125,14 @@ public class MapGUI extends ApplicationAdapter {
                     batch.draw(BB_8[d], listOfPLayers.get(i).getRobot().getY() * 64, 960 - listOfPLayers.get(i).getRobot().getX() * 64);
 
             }
-            //batch.draw(robotImage, listOfPLayers.get(i).getRobot().getX() * 64, listOfPLayers.get(i).getRobot().getY() * 64);
         }
-        //
         batch.end();
-
-
-        //stuff for moving
-        witchRobot++;
-        if (witchRobot > 2) {
-            witchRobot = 0;
-        }
-
-        if (moveonce < 64*5){
-            robot[1].y += 1;
-        }
-
-        moveonce++;
     }
 
     public void drawTable() {
 
 
         drawnTable = true;
-        roboid = 0;
 
         for (int i = 0; i < 16; i++) {
             for (int j = 0; j < 16; j++) {
@@ -253,12 +185,61 @@ public class MapGUI extends ApplicationAdapter {
                     batch.draw(rotatin_plateImage, tile[i][j].x, tile[i][j].y);
                 } else if (object instanceof Robot) {
                     batch.draw(nothingImage, tile[i][j].x, tile[i][j].y);
-                    roboid++;
                 } else {
                     batch.draw(nothingImage, tile[i][j].x, tile[i][j].y);
                 }
             }
         }
+    }
+
+    public void getPictures() {
+        BB_8 = new Texture[4];
+        BB_8[0] = getImage("BB-8_1.png");
+        BB_8[1] = getImage("BB-8_2.png");
+        BB_8[2] = getImage("BB-8_3.png");
+        BB_8[3] = getImage("BB-8_4.png");
+
+        turrent = new Texture[4];
+        turrent[0] = getImage("turrent_1.png");
+        turrent[1] = getImage("turrent_2.png");
+        turrent[2] = getImage("turrent_3.png");
+        turrent[3] = getImage("turrent_4.png");
+
+        wall_E = new Texture[4];
+        wall_E[0] = getImage("wall_E_1.png");
+        wall_E[1] = getImage("wall_E_2.png");
+        wall_E[2] = getImage("wall_E_3.png");
+        wall_E[3] = getImage("wall_E_4.png");
+
+        eve = new Texture[4];
+        eve[0] = getImage("eve_1.png");
+        eve[1] = getImage("eve_2.png");
+        eve[2] = getImage("eve_3.png");
+        eve[3] = getImage("eve_4.png");
+
+
+        voidImage = getImage("v.png");
+        yellowConveyor_beltImage1 = getImage("y1.png");
+        yellowConveyor_beltImage2 = getImage("y2.png");
+        yellowConveyor_beltImage3 = getImage("y3.png");
+        yellowConveyor_beltImage4 = getImage("y4.png");
+        blueConveyor_beltImage1 = getImage("b1.png");
+        blueConveyor_beltImage2 = getImage("b2.png");
+        blueConveyor_beltImage3 = getImage("b3.png");
+        blueConveyor_beltImage4 = getImage("b4.png");
+        wrenchImage = getImage("s.png");
+        wrench_hammer = getImage("s_h.png");
+        rotatin_plateImage = getImage("g.png");
+        flagImage = getImage("f.png");
+        nothingImage = getImage("n.png");
+        cardTester = getImage("card_Tester.png");
+
+        laserImage1 = getImage("l1.png");
+        laserImage2 = getImage("l2.png");
+        laserImage3 = getImage("l3.png");
+        laserImage4 = getImage("l4.png");
+        laserImage5 = getImage("l5.png");
+        laserImage6 = getImage("l6.png");
     }
 
     @Override
