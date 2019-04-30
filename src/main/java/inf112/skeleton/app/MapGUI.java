@@ -14,24 +14,26 @@ import java.util.ArrayList;
 
 public class MapGUI extends ApplicationAdapter {
 
-    public String[] namesOfRobotd = {"BB-8", "Turrent", "Wall-E", "eve", "R2-D2", "Darlek", "Big-hero-6", "Bender"};
+    public String[] namesOfRobotd = {"BB-8", "R2-D2", "Turrent", "Wall-E", "eve", "Darlek", "Baymax", "Bender"};
     private Texture blueConveyor_beltImage1, blueConveyor_beltImage2, blueConveyor_beltImage3, blueConveyor_beltImage4;
     private Texture yellowConveyor_beltImage1, yellowConveyor_beltImage2, yellowConveyor_beltImage3, yellowConveyor_beltImage4;
     private Texture laserImage1, laserImage2, laserImage3, laserImage4, laserImage5, laserImage6;
-    private Texture voidImage, wrenchImage, wrench_hammer, rotatin_plateImage, flagImage, nothingImage, cardTester;
+    private Texture voidImage, wrenchImage, wrench_hammer, rotatin_plateImage, flagImage, nothingImage;
     private Texture[] BB_8;
+    private Texture[] r2d2;
     private Texture[] turrent;
     private Texture[] wall_E;
     private Texture[] eve;
+    private Texture[] dalek;
+    private Texture[] baymax;
+    private Texture[] bender;
 
     private SpriteBatch batch;
     private OrthographicCamera camera;
     private Rectangle[][] tile;
     private Rectangle[] robot;
-    //private int roboid;
     public Map map;
     public boolean drawnTable = false;
-    public int witchRobot = 0;
     public ArrayList<Player> listOfPLayers;
     public int moveonce;
 
@@ -72,7 +74,7 @@ public class MapGUI extends ApplicationAdapter {
         }
 
         for (int i = 0; i < 16; i++) {
-            for (int j = 0; j < 16; j++) { //swithced from tile[i][j] to tile[j][i]
+            for (int j = 0; j < 16; j++) {
                 tile[j][i] = new Rectangle();
                 tile[j][i].x = i * 64;
                 tile[j][i].y = (15 - j) * 64;
@@ -103,7 +105,6 @@ public class MapGUI extends ApplicationAdapter {
         // begin a new batch and draw the board
         batch.begin();
 
-
         drawTable();
         for (int i = 0; i < listOfPLayers.size(); i++) {
             listOfPLayers.get(i).setName(namesOfRobotd[i]);
@@ -113,17 +114,28 @@ public class MapGUI extends ApplicationAdapter {
                     batch.draw(BB_8[d], listOfPLayers.get(i).getRobot().getY() * 64, 960 - listOfPLayers.get(i).getRobot().getX() * 64);
                     break;
                 case 1:
-                    batch.draw(turrent[d], listOfPLayers.get(i).getRobot().getY() * 64, 960 - listOfPLayers.get(i).getRobot().getX() * 64);
+                    batch.draw(r2d2[d], listOfPLayers.get(i).getRobot().getY() * 64, 960 - listOfPLayers.get(i).getRobot().getX() * 64);
                     break;
                 case 2:
-                    batch.draw(wall_E[d], listOfPLayers.get(i).getRobot().getY() * 64, 960 - listOfPLayers.get(i).getRobot().getX() * 64);
+                    batch.draw(turrent[d], listOfPLayers.get(i).getRobot().getY() * 64, 960 - listOfPLayers.get(i).getRobot().getX() * 64);
                     break;
                 case 3:
+                    batch.draw(wall_E[d], listOfPLayers.get(i).getRobot().getY() * 64, 960 - listOfPLayers.get(i).getRobot().getX() * 64);
+                    break;
+                case 4:
                     batch.draw(eve[d], listOfPLayers.get(i).getRobot().getY() * 64, 960 - listOfPLayers.get(i).getRobot().getX() * 64);
+                    break;
+                case 5:
+                    batch.draw(dalek[d], listOfPLayers.get(i).getRobot().getY() * 64, 960 - listOfPLayers.get(i).getRobot().getX() * 64);
+                    break;
+                case 6:
+                    batch.draw(baymax[d], listOfPLayers.get(i).getRobot().getY() * 64, 960 - listOfPLayers.get(i).getRobot().getX() * 64);
+                    break;
+                case 7:
+                    batch.draw(bender[d], listOfPLayers.get(i).getRobot().getY() * 64, 960 - listOfPLayers.get(i).getRobot().getX() * 64);
                     break;
                 default:
                     batch.draw(BB_8[d], listOfPLayers.get(i).getRobot().getY() * 64, 960 - listOfPLayers.get(i).getRobot().getX() * 64);
-
             }
         }
         batch.end();
@@ -199,6 +211,12 @@ public class MapGUI extends ApplicationAdapter {
         BB_8[2] = getImage("BB-8_3.png");
         BB_8[3] = getImage("BB-8_4.png");
 
+        r2d2 = new Texture[4];
+        r2d2[0] = getImage("r2_d2_1.png");
+        r2d2[1] = getImage("r2_d2_2.png");
+        r2d2[2] = getImage("r2_d2_3.png");
+        r2d2[3] = getImage("r2_d2_4.png");
+
         turrent = new Texture[4];
         turrent[0] = getImage("turrent_1.png");
         turrent[1] = getImage("turrent_2.png");
@@ -217,6 +235,24 @@ public class MapGUI extends ApplicationAdapter {
         eve[2] = getImage("eve_3.png");
         eve[3] = getImage("eve_4.png");
 
+        dalek = new Texture[4];
+        dalek[0] = getImage("dalek_1.png");
+        dalek[1] = getImage("dalek_2.png");
+        dalek[2] = getImage("dalek_3.png");
+        dalek[3] = getImage("dalek_4.png");
+
+        baymax = new Texture[4];
+        baymax[0] = getImage("baymax_1.png");
+        baymax[1] = getImage("baymax_2.png");
+        baymax[2] = getImage("baymax_3.png");
+        baymax[3] = getImage("baymax_4.png");
+
+        bender = new Texture[4];
+        bender[0] = getImage("bender_1.png");
+        bender[1] = getImage("bender_2.png");
+        bender[2] = getImage("bender_3.png");
+        bender[3] = getImage("bender_4.png");
+
 
         voidImage = getImage("v.png");
         yellowConveyor_beltImage1 = getImage("y1.png");
@@ -232,7 +268,6 @@ public class MapGUI extends ApplicationAdapter {
         rotatin_plateImage = getImage("g.png");
         flagImage = getImage("f.png");
         nothingImage = getImage("n.png");
-        cardTester = getImage("card_Tester.png");
 
         laserImage1 = getImage("l1.png");
         laserImage2 = getImage("l2.png");

@@ -25,7 +25,6 @@ public class Robot implements IRobot {
         this.powerdown = false;
     }
 
-
     // Getters
     @Override
     public Position getPosition() {
