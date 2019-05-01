@@ -309,7 +309,7 @@ public class RoboRally {
     /**
      * checking that given position is inside map, or not occupied by a wall or robot
      *
-     * @param position position to check
+     * @param position position to check                   
      * @return name of object
      */
     public String legalPosition(Position position) {
