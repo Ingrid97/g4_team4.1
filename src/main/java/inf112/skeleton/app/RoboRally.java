@@ -1,7 +1,7 @@
 package inf112.skeleton.app;//Created by ingridjohansen on 04/02/2019.
 
-import boardObjects.*;
 import boardObjects.Void;
+import boardObjects.*;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
@@ -113,25 +113,32 @@ public class RoboRally {
     private void robotLasersFire() {
         for (Player player : this.players) {
             Position pos = player.getRobot().getPosition();
+            boolean hitSomeone = false;
             while (true) {
                 try {
-                    pos = movingForward(pos, player.getRobot().getDirection());
+                    pos = CalculatePosition.movingForward(pos, player.getRobot().getDirection());
                     if (!this.map.isValidPosition(pos)) {
-                        return;
+                        break;
                     }
                 } catch (IllegalArgumentException e) {
-                    return;
+                    break;
                 }
                 ArrayList boardObjects = this.map.getBoardObjects(pos);
                 if (boardObjects != null) {
                     for (int i = 0; i < boardObjects.size(); i++) {
                         if (boardObjects.get(i) instanceof Robot) {
                             ((Robot) boardObjects.get(i)).takeDamage(1);
-                            System.out.println("A ROBOT SHOT ANOTHER ROBOT!");
-                            return;
+                            if (!((Robot) boardObjects.get(i)).isAlive()) {
+                                System.out.println(player.getName() + " killed another robot!");
+                            } else {
+                                System.out.println(player.getName() + " SHOT ANOTHER ROBOT!");
+                            }
+                            hitSomeone = true;
+                            break;
                         }
                     }
                 }
+                if (hitSomeone) break;
             }
         }
     }
@@ -183,7 +190,7 @@ public class RoboRally {
                 try {
                     for (int i = 0; i < movCard.getNumberOfSteps(); i++) {
                         Directions direction = player.getRobot().getDirection();
-                        newPos = movingForward(currentPos, direction);
+                        newPos = CalculatePosition.movingForward(currentPos, direction);
                         if (legalPosition(newPos).equals("dead")) {
                             map.moveRobot(player.getRobot(), player.getRobot().getBackUpPosition());
                             player.getRobot().setPositionToBackUp();
@@ -199,19 +206,19 @@ public class RoboRally {
                 break;
             case DOWN://moving backward or turning 180degrees
                 try {
-                    newPos = Uturn(movCard, player);
+                    newPos = CalculatePosition.Uturn(movCard, player);
                 } catch (IllegalArgumentException e) {
                     System.out.println("A robot has fallen2");    //robot fell outside map, should be returned to backup position
                 }
                 break;
             case LEFT: //turning left
                 newPos = currentPos;
-                Directions newDirection1 = turningLeft(player.getRobot().getDirection());
+                Directions newDirection1 = CalculatePosition.turningLeft(player.getRobot().getDirection());
                 player.getRobot().setDirection(newDirection1);
                 break;
             default: //turning right
                 newPos = currentPos;
-                Directions newDirection2 = turningRight(player.getRobot().getDirection());
+                Directions newDirection2 = CalculatePosition.turningRight(player.getRobot().getDirection());
                 player.getRobot().setDirection(newDirection2);
                 break;
         }
@@ -244,13 +251,13 @@ public class RoboRally {
                 if (map.getBoardObject(newPos) instanceof Conveyor_belt) {
                     Directions direction = ((Conveyor_belt) map.getBoardObject(newPos)).getDirection();
                     if (((Conveyor_belt) map.getBoardObject(newPos)).isBlueBelt) {
-                        Position p = movingForward(newPos, direction);
+                        Position p = CalculatePosition.movingForward(newPos, direction);
                         moveTheRobotAndUpdateMapGUI(player, p);
-                        return movingForward(p, direction);
+                        return CalculatePosition.movingForward(p, direction);
                     }
                     try {
 
-                        return movingForward(newPos, direction);
+                        return CalculatePosition.movingForward(newPos, direction);
                     } catch (IllegalArgumentException e) {
                         map.moveRobot(player.getRobot(), player.getRobot().getBackUpPosition());
                         player.getRobot().setPositionToBackUp();
@@ -261,7 +268,7 @@ public class RoboRally {
                 }
                 return newPos;
             case "rotating_belt":
-                player.getRobot().setDirection(turningLeft(player.getRobot().getDirection()));
+                player.getRobot().setDirection(CalculatePosition.turningLeft(player.getRobot().getDirection()));
                 return newPos;
             case "dead":
                 map.moveRobot(player.getRobot(), player.getRobot().getBackUpPosition());
@@ -324,122 +331,6 @@ public class RoboRally {
             return "dead";
         } else {
             return "ok";
-        }
-    }
-
-    /**
-     * Moving a robot forward,
-     *
-     * @param currentPos current position of robot
-     * @param direction direction to move
-     * @return the final new position, ex the third position if the movCard said 3 steps
-     * @throws IllegalArgumentException throws if the robot moves outside the board
-     */
-    public Position movingForward(Position currentPos, Directions direction) throws IllegalArgumentException {
-        Position newPos;
-        switch (direction) {
-                case UP:
-                    newPos = new Position((currentPos.getX() - 1), currentPos.getY());
-                    break;
-                case RIGHT:
-                    newPos = new Position(currentPos.getX(), (currentPos.getY() + 1));
-                    break;
-                case LEFT:
-                    newPos = new Position(currentPos.getX(), (currentPos.getY() - 1));
-                    break;
-            default:
-                newPos = new Position((currentPos.getX() + 1), currentPos.getY());
-                    break;
-            }
-        return newPos;
-    }
-
-    /**
-     * Moving a robot backward or turns it 180 degrees depends on movCard
-     *
-     * @param movCard    movement card for knowing if to turn or move
-     * @param player     player to move
-     * @return the final new position
-     * @throws IllegalArgumentException if robot is outside map
-     */
-    // if number of steps is 1 backup else trun 180 Degress
-    public Position Uturn(MovementCard movCard, Player player) throws IllegalArgumentException {
-        Position newPos;
-        Position currentPos = player.getRobot().getPosition();
-        if (movCard.getNumberOfSteps() == 1) {
-            Directions direction = player.getRobot().getDirection();
-            switch (direction) {
-                case UP:
-                    newPos = new Position((currentPos.getX() + 1), currentPos.getY());
-                    break;
-                case RIGHT:
-                    newPos = new Position(currentPos.getX(), (currentPos.getY() - 1));
-                    break;
-                case LEFT:
-                    newPos = new Position(currentPos.getX(), (currentPos.getY() + 1));
-                    break;
-                default:
-                    newPos = new Position((currentPos.getX() - 1), currentPos.getY());
-                    break;
-            }
-        } else {
-            Directions direction = player.getRobot().getDirection();
-            newPos = currentPos;
-            switch (direction) {
-                case UP:
-                    player.getRobot().setDirection(Directions.DOWN);
-                    break;
-                case RIGHT:
-                    player.getRobot().setDirection(Directions.LEFT);
-                    break;
-                case LEFT:
-                    player.getRobot().setDirection(Directions.RIGHT);
-                    break;
-                case DOWN:
-                    player.getRobot().setDirection(Directions.UP);
-                    break;
-            }
-        }
-        return newPos;
-    }
-
-    /**
-     * calculating the new direction for a robot given a direction it returns the direction left for the current direction
-     *
-     * @param direction current direction
-     * @return direction left from current
-     * @throws IllegalArgumentException
-     */
-    public Directions turningLeft(Directions direction) throws IllegalArgumentException {
-        switch (direction) {
-            case UP:
-                return Directions.LEFT;
-            case RIGHT:
-                return Directions.UP;
-            case LEFT:
-                return Directions.DOWN;
-            default:
-                return Directions.RIGHT;
-        }
-    }
-
-    /**
-     * calculating the new direction for a robot given a direction it returns the direction right for the current direction
-     *
-     * @param direction current direction
-     * @return direction right from current
-     * @throws IllegalArgumentException
-     */
-    public Directions turningRight(Directions direction) throws IllegalArgumentException {
-        switch (direction) {
-            case UP:
-                return Directions.RIGHT;
-            case RIGHT:
-                return Directions.DOWN;
-            case LEFT:
-                return Directions.UP;
-            default:
-                return Directions.LEFT;
         }
     }
 }

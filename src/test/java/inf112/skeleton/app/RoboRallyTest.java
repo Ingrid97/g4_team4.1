@@ -22,56 +22,56 @@ public class RoboRallyTest {
 
     @Test
     public void turningRightUp() {
-        assertEquals(roboRally.turningRight(Directions.UP), Directions.RIGHT);
+        assertEquals(CalculatePosition.turningRight(Directions.UP), Directions.RIGHT);
     }
 
     @Test
     public void turningRightDown() {
-        assertEquals(roboRally.turningRight(Directions.DOWN), Directions.LEFT);
+        assertEquals(CalculatePosition.turningRight(Directions.DOWN), Directions.LEFT);
     }
 
     @Test
     public void turningRightLeft() {
-        assertEquals(roboRally.turningRight(Directions.LEFT), Directions.UP);
+        assertEquals(CalculatePosition.turningRight(Directions.LEFT), Directions.UP);
     }
 
     @Test
     public void turningRight() {
-        assertEquals(roboRally.turningRight(Directions.RIGHT), Directions.DOWN);
+        assertEquals(CalculatePosition.turningRight(Directions.RIGHT), Directions.DOWN);
     }
 
     @Test
     public void turningLeftUp() {
-        assertEquals(roboRally.turningLeft(Directions.UP), Directions.LEFT);
+        assertEquals(CalculatePosition.turningLeft(Directions.UP), Directions.LEFT);
     }
 
     @Test
     public void turningLeftDown() {
-        assertEquals(roboRally.turningLeft(Directions.DOWN), Directions.RIGHT);
+        assertEquals(CalculatePosition.turningLeft(Directions.DOWN), Directions.RIGHT);
     }
 
     @Test
     public void turningLeftRight() {
-        assertEquals(roboRally.turningLeft(Directions.RIGHT), Directions.UP);
+        assertEquals(CalculatePosition.turningLeft(Directions.RIGHT), Directions.UP);
     }
 
     @Test
     public void turningLeft() {
-        assertEquals(roboRally.turningLeft(Directions.LEFT), Directions.DOWN);
+        assertEquals(CalculatePosition.turningLeft(Directions.LEFT), Directions.DOWN);
     }
 
     @Test
     public void backingUp() {
         Player player = new Player(0, new Robot(5, 5, Directions.UP));
         MovementCard movementCard = new MovementCard(Directions.DOWN, 1, 0);
-        assertEquals(roboRally.Uturn(movementCard, player).getX(), 6);
+        assertEquals(CalculatePosition.Uturn(movementCard, player).getX(), 6);
     }
 
     @Test
     public void uTurn() {
         Player player = new Player(0, new Robot(5, 5, Directions.UP));
         MovementCard movementCard = new MovementCard(Directions.DOWN, 0, 0);
-        Position pos = roboRally.Uturn(movementCard, player);
+        Position pos = CalculatePosition.Uturn(movementCard, player);
         assertEquals(pos.getY(), 5);
         assertEquals(player.getRobot().getDirection(), Directions.DOWN);
     }
@@ -79,28 +79,28 @@ public class RoboRallyTest {
     @Test
     public void movingForwardUp() {
         Player player = new Player(0, new Robot(5, 5, Directions.UP));
-        Position pos = roboRally.movingForward(new Position(5, 5), Directions.UP);
+        Position pos = CalculatePosition.movingForward(new Position(5, 5), Directions.UP);
         assertEquals(pos.getX(), 4);
     }
 
     @Test
     public void movingForwardRight() {
         Player player = new Player(0, new Robot(5, 5, Directions.RIGHT));
-        Position pos = roboRally.movingForward(new Position(5, 5), Directions.RIGHT);
+        Position pos = CalculatePosition.movingForward(new Position(5, 5), Directions.RIGHT);
         assertEquals(pos.getY(), 6);
     }
 
     @Test
     public void movingForwardLeft() {
         Player player = new Player(0, new Robot(5, 5, Directions.LEFT));
-        Position pos = roboRally.movingForward(new Position(5, 5), Directions.LEFT);
+        Position pos = CalculatePosition.movingForward(new Position(5, 5), Directions.LEFT);
         assertEquals(pos.getY(), 4);
     }
 
     @Test
     public void movingForwardDown() {
         Player player = new Player(0, new Robot(5, 5, Directions.DOWN));
-        Position pos = roboRally.movingForward(new Position(5, 5), Directions.DOWN);
+        Position pos = CalculatePosition.movingForward(new Position(5, 5), Directions.DOWN);
         assertEquals(pos.getX(), 6);
     }
 }
