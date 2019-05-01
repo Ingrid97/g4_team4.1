@@ -60,7 +60,6 @@ public class RoboRally {
             boolean[] playersWhosDead = new boolean[players.size()];
             for (int j = 0; j < 5; j++) {//the max number for this for loop chooses how many movementcards is supposed to be played
                 //between phases
-                robotLasersFire();
                 for (int i = 0; i < players.size(); i++) {
                     if(!players.get(i).getRobot().getPowerDown()){
                         if (playersWhosDead[i]) {
@@ -73,6 +72,7 @@ public class RoboRally {
                         }
                     }
                 }
+                robotLasersFire();
             }
 
             //end of round
@@ -191,10 +191,24 @@ public class RoboRally {
                     for (int i = 0; i < movCard.getNumberOfSteps(); i++) {
                         Directions direction = player.getRobot().getDirection();
                         newPos = CalculatePosition.movingForward(currentPos, direction);
-                        if (legalPosition(newPos).equals("dead")) {
+                        String movingForwardResult = legalPosition(newPos);
+                        if (movingForwardResult.equals("dead")) {
                             map.moveRobot(player.getRobot(), player.getRobot().getBackUpPosition());
                             player.getRobot().setPositionToBackUp();
                             return false;
+                        } else if (movingForwardResult.equals("robot")) {
+                            IBoardObject boardObject = map.getBoardObject(newPos);
+                            if (boardObject instanceof Robot) {
+                                if (boardObject != (player.getRobot())) {
+                                    newPos = currentPos;
+                                    System.out.println(player.getName() + " crashed with another robot!");
+                                    break;
+                                } else {
+                                    System.out.println("DIDNT crash with another robot!");
+                                    moveTheRobotAndUpdateMapGUI(player, newPos);
+                                    currentPos = newPos;
+                                }
+                            }
                         } else {
                             moveTheRobotAndUpdateMapGUI(player, newPos);
                             currentPos = newPos;
@@ -225,6 +239,8 @@ public class RoboRally {
         Position result = playingBoardElements(newPos, player);
         if (result == null) {
             return false;
+        } else if (result.getX() == 1000) {
+            moveTheRobotAndUpdateMapGUI(player, currentPos);
         } else {
             moveTheRobotAndUpdateMapGUI(player, result);
         }
@@ -235,12 +251,16 @@ public class RoboRally {
         String result = legalPosition(newPos);
         System.out.println("RESULT: " + result);
         switch (result) {
-//            case "robot":
-//                //what do to if a robot collides with another robot
-//                break;
-//            case "wall":
-//                //what do to if a robot collides with a wall
-//                break;
+            case "robot":
+                IBoardObject boardObject = map.getBoardObject(newPos);
+                if (boardObject instanceof Robot) {
+                    if (boardObject != (player.getRobot())) {
+                        return new Position(1000, 1000);
+                    } else {
+                        return newPos;
+                    }
+                }
+
             case "laser":
                 // The laser deals 1 damage to the robots
                 player.getRobot().takeDamage(1);
@@ -277,7 +297,6 @@ public class RoboRally {
                 System.out.println("ROBOT DEAD");
                 return null;
             default://default is when none of the other case occurs, then it moves the robot to the actual position
-                moveTheRobotAndUpdateMapGUI(player, newPos);
                 return newPos;
         }
     }
