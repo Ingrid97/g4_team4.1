@@ -10,7 +10,7 @@ public class Player {
     private boolean[] flagsVisited;
     private String name;
     private Robot robot;
-    private ArrayList<MovementCard> theCardsToChooseYourProgramFrom;
+    public ArrayList<MovementCard> theCardsToChooseYourProgramFrom;
     private ArrayList<MovementCard> programForRobotToExecute = new ArrayList<>();
 
 
@@ -129,9 +129,7 @@ public class Player {
     public boolean choosePowerdown() {
         Scanner scn = new Scanner(System.in);
         String in = scn.nextLine().toLowerCase();
-        if (in.equals("yes"))
-            return true;
-        return false;
+        return in.equals("yes");
     }
 
     public int getX() {

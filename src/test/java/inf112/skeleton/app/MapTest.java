@@ -27,6 +27,18 @@ public class MapTest {
         return map;
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void tooBigInputThrowsException() {
+        Map map = build(10, 10);
+        map.add(new Robot(5, 5, Directions.NODIRECTION), 20, 5);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void tooSmallInputThrowsException() {
+        Map map = build(10, 10);
+        map.add(new Robot(5, 5, Directions.NODIRECTION), -1, 5);
+    }
+
     @Test
     public void GivenInputXOnMapIsCorrect() {
         assertEquals(build(10, 20).getX(), 10);
@@ -47,7 +59,7 @@ public class MapTest {
         build(3, -1);
     }
 
-    @Test(expected = ArrayIndexOutOfBoundsException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void placingObjectOutsideMapThrowsException() {
         Map map = build(10, 20);
         map.add(new Robot(15, 10, Directions.UP), 15, 10);

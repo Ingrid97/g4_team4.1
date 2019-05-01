@@ -1,7 +1,7 @@
 package inf112.skeleton.app;//Created by ingridjohansen on 04/02/2019.
 
-import boardObjects.*;
 import boardObjects.Void;
+import boardObjects.*;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -79,9 +79,9 @@ public class Map {
      */
     public void add(IBoardObject c, int x, int y) {
         if (x < 0 || y < 0) {
-            if (x > getX() || y > getY()) {
-                throw new IllegalArgumentException("Cannot place object with these values: x= " + x + " y= " + y);
-            }
+            throw new IllegalArgumentException("Cannot place object with these values: x= " + x + " y= " + y);
+        } else if (x > getX() || y > getY()) {
+            throw new IllegalArgumentException("Cannot place object with these values: x= " + x + " y= " + y);
         }
         map[x][y].add(c);
 
