@@ -10,6 +10,15 @@ import static org.junit.Assert.*;
 public class RobotTest {
 
     @Test
+    public void setPosToBackup() {
+        Robot robot = new Robot(5, 5, Directions.UP);
+        robot.dropBackUpAtCurrentPosition();
+        robot.setPosition(new Position(0, 0));
+        robot.setPositionToBackUp();
+        assertEquals(5, robot.getPosition().getX());
+    }
+
+    @Test
     public void xValueOfANewRobotIsCorrectX() {
         Robot robot = new Robot(5, 5, Directions.UP);
         assertEquals(5, robot.getX());

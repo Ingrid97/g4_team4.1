@@ -172,7 +172,7 @@ public class MapTest {
         Map map = build(10, 10);
         Robot robot = new Robot(5, 5, Directions.UP);
         Player player = new Player(0, robot);
-        RoboRally roboRally = new RoboRally();
+        RoboRally roboRally = new RoboRally("testMap2.txt");
         map.add(robot, 5, 5);
         map.moveRobot(robot, new Position(2, 5));
         assertTrue(map.getBoardObject(new Position(2, 5)) instanceof Robot);

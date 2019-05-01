@@ -6,8 +6,7 @@ import java.util.Scanner;
 
 
 public class Player {
-    //variable that collects flags that has been visited to a boolean array
-    private boolean[] flagsVisited;
+    private boolean[] flagsVisited; //variable that collects flags that has been visited in a boolean array
     private String name;
     private Robot robot;
     public ArrayList<MovementCard> theCardsToChooseYourProgramFrom;

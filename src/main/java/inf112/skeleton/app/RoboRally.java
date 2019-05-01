@@ -14,12 +14,12 @@ public class RoboRally {
     private ArrayList<Player> players;
 
 
-    public RoboRally() {
+    public RoboRally(String filename) {
         // Lager alle kortene
         //leser inn map fra fil
         this.players = new ArrayList<>();
         map = new Map(16, 16);
-        map = map.makeMap("testMap1.txt", players);
+        map = map.makeMap(filename, players);
         //map.printMap();
         if (map == null)
             System.exit(0);
@@ -110,7 +110,7 @@ public class RoboRally {
      * Method for the robots lasers to fire and deal damage to other robots
      * This happens between phases
      */
-    private void robotLasersFire() {
+    public void robotLasersFire() {
         for (Player player : this.players) {
             Position pos = player.getRobot().getPosition();
             boolean hitSomeone = false;
@@ -125,10 +125,10 @@ public class RoboRally {
                 }
                 ArrayList boardObjects = this.map.getBoardObjects(pos);
                 if (boardObjects != null) {
-                    for (int i = 0; i < boardObjects.size(); i++) {
-                        if (boardObjects.get(i) instanceof Robot) {
-                            ((Robot) boardObjects.get(i)).takeDamage(1);
-                            if (!((Robot) boardObjects.get(i)).isAlive()) {
+                    for (Object boardObject : boardObjects) {
+                        if (boardObject instanceof Robot) {
+                            ((Robot) boardObject).takeDamage(1);
+                            if (!((Robot) boardObject).isAlive()) {
                                 System.out.println(player.getName() + " killed another robot!");
                             } else {
                                 System.out.println(player.getName() + " SHOT ANOTHER ROBOT!");
@@ -146,13 +146,13 @@ public class RoboRally {
     // Litt usikker på om denne er helt riktig
 
     /**
-     * Returns true if someone has won
+     * method for updating the number of flags a player have touched and checks if the player has won
      *
-     * @param player
-     * @param flag
-     * @return
+     * @param player player to update
+     * @param flag the flag the player reached
+     * @return returns true if someone win
      */
-    private boolean updateFlag(Player player, Flag flag) {
+    public boolean updateFlag(Player player, Flag flag) {
         boolean[] temp = player.getFlagsVisited();
         int identifier = flag.identifier;
         System.out.println("A player reached flag " + identifier);
@@ -351,5 +351,9 @@ public class RoboRally {
         } else {
             return "ok";
         }
+    }
+
+    public ArrayList<Player> getPlayers() {
+        return this.players;
     }
 }
