@@ -25,20 +25,53 @@ public class RoboRallyTest {
 
     @Test
     public void robotOnConveyorBelt() {
-        roboRally.playMovementCard(new MovementCard(Directions.NODIRECTION, 1, 1), roboRally.getPlayers().get(3));
-        assertEquals(14, roboRally.getPlayers().get(3).getX());
-        assertEquals(10, roboRally.getPlayers().get(3).getY());
+        roboRally.playMovementCard(new MovementCard(Directions.NODIRECTION, 1, 1), roboRally.getPlayers().get(4));
+        assertEquals(14, roboRally.getPlayers().get(4).getX());
+        assertEquals(10, roboRally.getPlayers().get(4).getY());
     }
 
     @Test
     public void robotMovingBackwardsIntoVoid() {
         ArrayList<Player> players = roboRally.getPlayers();
-        players.get(2).getRobot().setPosition(new Position(4, 4));
-        players.get(2).getRobot().dropBackUpAtCurrentPosition();
-        players.get(2).getRobot().setPosition(new Position(14, 0));
-        roboRally.playMovementCard(new MovementCard(Directions.DOWN, 1, 1), roboRally.getPlayers().get(2));
-        assertEquals(4, roboRally.getPlayers().get(2).getX());
-        assertEquals(4, roboRally.getPlayers().get(2).getY());
+        players.get(3).getRobot().setPosition(new Position(4, 4));
+        players.get(3).getRobot().dropBackUpAtCurrentPosition();
+        players.get(3).getRobot().setPosition(new Position(14, 0));
+        roboRally.playMovementCard(new MovementCard(Directions.DOWN, 1, 1), roboRally.getPlayers().get(3));
+        assertEquals(4, roboRally.getPlayers().get(3).getX());
+        assertEquals(4, roboRally.getPlayers().get(3).getY());
+    }
+
+    @Test
+    public void robotOnLaser() {
+        roboRally.playMovementCard(new MovementCard(Directions.NODIRECTION, 1, 1), roboRally.getPlayers().get(2));
+        assertEquals(8, roboRally.getPlayers().get(2).getRobot().getMemoryCapacity());
+    }
+
+    @Test
+    public void robotFaceLeft() {
+        roboRally.playMovementCard(new MovementCard(Directions.LEFT, 0, 1), roboRally.getPlayers().get(2));
+        assertEquals(Directions.LEFT, roboRally.getPlayers().get(2).getRobot().getDirection());
+    }
+
+    @Test
+    public void robotFaceRight() {
+        roboRally.playMovementCard(new MovementCard(Directions.RIGHT, 0, 1), roboRally.getPlayers().get(2));
+        assertEquals(Directions.RIGHT, roboRally.getPlayers().get(2).getRobot().getDirection());
+    }
+
+    @Test
+    public void robotMoveOutsideMap() {
+        roboRally.playMovementCard(new MovementCard(Directions.NODIRECTION, 1, 1), roboRally.getPlayers().get(0));
+        assertEquals(0, roboRally.getPlayers().get(0).getRobot().getPosition().getX());
+        assertEquals(0, roboRally.getPlayers().get(0).getRobot().getPosition().getY());
+        assertEquals(2, roboRally.getPlayers().get(0).getRobot().getHealthPoints());
+    }
+
+    @Test
+    public void robotCollide() {
+        roboRally.playMovementCard(new MovementCard(Directions.NODIRECTION, 2, 1), roboRally.getPlayers().get(1));
+        assertEquals(1, roboRally.getPlayers().get(1).getRobot().getPosition().getX());
+        assertEquals(0, roboRally.getPlayers().get(1).getRobot().getPosition().getY());
     }
 
     @Test
