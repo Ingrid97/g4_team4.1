@@ -25,9 +25,20 @@ public class RoboRallyTest {
 
     @Test
     public void robotOnConveyorBelt() {
-        roboRally.playMovementCard(new MovementCard(Directions.NODIRECTION, 1, 1), roboRally.getPlayers().get(2));
-        assertEquals(14, roboRally.getPlayers().get(2).getX());
-        assertEquals(10, roboRally.getPlayers().get(2).getY());
+        roboRally.playMovementCard(new MovementCard(Directions.NODIRECTION, 1, 1), roboRally.getPlayers().get(3));
+        assertEquals(14, roboRally.getPlayers().get(3).getX());
+        assertEquals(10, roboRally.getPlayers().get(3).getY());
+    }
+
+    @Test
+    public void robotMovingBackwardsIntoVoid() {
+        ArrayList<Player> players = roboRally.getPlayers();
+        players.get(2).getRobot().setPosition(new Position(4, 4));
+        players.get(2).getRobot().dropBackUpAtCurrentPosition();
+        players.get(2).getRobot().setPosition(new Position(14, 0));
+        roboRally.playMovementCard(new MovementCard(Directions.DOWN, 1, 1), roboRally.getPlayers().get(2));
+        assertEquals(4, roboRally.getPlayers().get(2).getX());
+        assertEquals(4, roboRally.getPlayers().get(2).getY());
     }
 
     @Test
