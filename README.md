@@ -21,3 +21,7 @@ To start the game you have to run the Main class.
 You choose your cards in the console by typing 
 the given number of the card. The phase starts
 when you have decided on which cards to play!
+
+## Testing
+If you use IntelliJ you run the test classes with coverage. For each class you've run you click "add to active suites". 
+If you do not have IntelliJ run the test classes.
