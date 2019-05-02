@@ -1,7 +1,7 @@
 package inf112.skeleton.app;//Created by ingridjohansen on 04/02/2019.
 
-import boardObjects.Void;
 import boardObjects.*;
+import boardObjects.Void;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -25,8 +25,8 @@ public class Map {
         if (x < 0 || y < 0) {
             throw new IllegalArgumentException("the x or y value of the map cannot be less than zero");
         }
-        length = x;
-        height = y;
+        length = x - 1;
+        height = y - 1;
         map = new ArrayList[x][y];
         for (int i = 0; i < x; i++) {
             for (int j = 0; j < y; j++) {
@@ -126,8 +126,8 @@ public class Map {
         // Identifier for the flags
         int identifier = 0;
 
-        System.out.println("Making the map...");
-        Map map = new Map(16, 16);
+        //System.out.println("Making the map...");
+        Map map = new Map(16, 12);
         try {
             for (int i = 0; i < 16; i++) {
                 String[] line = br.readLine().split(",");
@@ -176,9 +176,6 @@ public class Map {
             return null;
         }
 
-        //printMap();
-        System.out.println("Adding stuff to the map...");
-
         return map;
     }
 
@@ -213,8 +210,8 @@ public class Map {
     public boolean isValidPosition(Position position) {
         if (position.getY() < 0) return false;
         if (position.getX() < 0) return false;
-        if (position.getX() > getX() - 1) return false;
-        return position.getY() <= getY() - 1;
+        if (position.getX() > getX()) return false;
+        return position.getY() <= getY();
     }
 
     /**
