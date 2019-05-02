@@ -12,6 +12,7 @@ public class Player {
     private Robot robot;
     private ArrayList<MovementCard> theCardsToChooseYourProgramFrom;
     private ArrayList<MovementCard> programForRobotToExecute;
+    private boolean isAIPlayer;
 
 
 
@@ -21,6 +22,7 @@ public class Player {
         this.theCardsToChooseYourProgramFrom = new ArrayList<>();
         programForRobotToExecute = new ArrayList<>();
         this.name = "";
+        this.isAIPlayer = false;
     }
 
     /**
@@ -33,7 +35,15 @@ public class Player {
         this.theCardsToChooseYourProgramFrom.add(card);
     }
 
-    public ArrayList<MovementCard> theMovementCardsThePlayerChoseAI() {
+    public ArrayList<MovementCard> theMovementCardsThePlayerChose() {
+        if (isAIPlayer)
+            return movementCardsAI();
+        else
+            return movementCardsPlayer();
+    }
+
+
+    public ArrayList<MovementCard> movementCardsAI() {
 
         //TODO: AI random cards
         //skla ikke trenge å tenke på memCap
@@ -58,7 +68,8 @@ public class Player {
      *
      * @return prioritized list of movement cars to be executed
      */
-    public ArrayList<MovementCard> theMovementCardsThePlayerChose() {
+    public ArrayList<MovementCard> movementCardsPlayer() {
+
         Scanner sc = new Scanner(System.in);
 
         // Informasjon til bruker
@@ -149,16 +160,21 @@ public class Player {
     }
 
     public boolean choosePowerdown() {
+        if (isAIPlayer)
+            return choosePowerdownAI();
+        else
+            return choosePowerdownPlayer();
+    }
+
+    public boolean choosePowerdownPlayer() {
         Scanner scn = new Scanner(System.in);
         String in = scn.nextLine().toLowerCase();
         return in.equals("yes");
     }
 
-
     public boolean choosePowerdownAI() {
-        /*if(this.robot.getMemoryCapacity() <= 5){
+        if (this.robot.getMemoryCapacity() <= 5)
             return true;
-        }*/
         return false;
     }
 
@@ -179,7 +195,9 @@ public class Player {
         this.name = name;
     }
 
-
+    public void setAI() {
+        this.isAIPlayer = true;
+    }
 }
 
 

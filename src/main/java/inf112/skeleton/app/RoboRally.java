@@ -43,31 +43,37 @@ public class RoboRally {
 
         int choice = makeGameChoice();
 
-        if (choice == 1) {
-            playGameWithAI();
-        } else {
-            playGameWithOthers();
-        }
+        if (choice == 1)
+            for (int i = 1; i < players.size(); i++)
+                players.get(i).setAI();
+
+
+        playTheGame();
 
     }
 
-    public void playGameWithAI() {
+
+    public void playTheGame() {
         boolean gameOver = false;
 
         while (!gameOver) {
 
             //part 1
-            ArrayList<ArrayList> prioritizedMovementCards = chooseThePlayingCardsAI();
+            //getting movement cards from player/s making array List of prioritized listing of our movement cards from player class
+            ArrayList<ArrayList> prioritizedMovementCards = chooseThePlayingCards();
 
             //part 2
+            //playing movement cards from players'
             playingMovementCards(prioritizedMovementCards);
 
             //part 3
-            gameOver = endGameAI(gameOver);
+            //end of round
+            gameOver = endGame(gameOver);
         }
     }
 
-    public ArrayList<ArrayList> chooseThePlayingCardsAI() {
+
+    public ArrayList<ArrayList> chooseThePlayingCards() {
         ArrayList<ArrayList> prioritizedMovementCards = new ArrayList<>();
         for (int i = 0; i < players.size(); i++) {
             if (!players.get(i).getRobot().isAlive()) {
@@ -76,14 +82,13 @@ public class RoboRally {
             }
             ArrayList<MovementCard> movementCardsToBeExecuted;
             if (!players.get(i).getRobot().getPowerDown()) {
-                System.out.println("Player " + (i + 1) + " choosing Cards");
-                movementCardsToBeExecuted = players.get(i).theMovementCardsThePlayerChoseAI();
+                System.out.println("Player " + (i + 1) + " choose your cards!");
+                movementCardsToBeExecuted = players.get(i).theMovementCardsThePlayerChose();
                 prioritizedMovementCards.add(movementCardsToBeExecuted);
             }
         }
         MovementCardDeck.dealOutMovementCards(players);
         return prioritizedMovementCards;
-
     }
 
     public void playingMovementCards(ArrayList<ArrayList> prioritizedMovementCards) {
@@ -110,7 +115,7 @@ public class RoboRally {
         }
     }
 
-    public boolean endGameAI(boolean gameOver) {
+    public boolean endGame(boolean gameOver) {
         for (Player player : players) {
             if (player.getRobot().getPowerDown()) {
                 player.powerDown();
@@ -126,12 +131,12 @@ public class RoboRally {
                         player.getRobot().dropBackUpAtCurrentPosition(); //oppdaterer backup position uansett hvilket flag den står på
                         if (updateFlag(player, (Flag) boardObject)) {
                             gameOver = true;
-                            System.out.println("You have defeeted !");
+                            System.out.println("WINNEEEER DING DING DING!");
                         }
                     }
                 }
-
-                boolean playerPowerDown = player.choosePowerdownAI();
+                System.out.println(player.getName() + ": Do you want to take a PowerDown? Yes/No ");
+                boolean playerPowerDown = player.choosePowerdown();
 
                 if (playerPowerDown) {
                     player.getRobot().takePowerdown();
@@ -139,78 +144,6 @@ public class RoboRally {
             }
         }
         return gameOver;
-    }
-
-    public void playGameWithOthers() {
-        boolean gameOver = false;
-
-        while (!gameOver) {
-            //getting movement cards from player/s making array List of prioritized listing of our movement cards from player class
-            ArrayList<ArrayList> prioritizedMovementCards = new ArrayList<>();
-            for (int i = 0; i < players.size(); i++) {
-                if (!players.get(i).getRobot().isAlive()) {
-                    players.remove(i);
-                    continue;
-                }
-                ArrayList<MovementCard> movementCardsToBeExecuted;
-                if(!players.get(i).getRobot().getPowerDown()){
-                    System.out.println("Player " + (i + 1) + " choose your cards!");
-                    movementCardsToBeExecuted = players.get(i).theMovementCardsThePlayerChose();
-                    prioritizedMovementCards.add(movementCardsToBeExecuted);
-                }
-            }
-            MovementCardDeck.dealOutMovementCards(players);
-
-            //playing movement cards from players'
-            playingMovementCards(prioritizedMovementCards);
-            //playing movement cards from players'
-            /*boolean[] playersWhosDead = new boolean[players.size()];
-            for (int j = 0; j < 5; j++) {//the max number for this for loop chooses how many movementcards is supposed to be played
-                //between phases
-                for (int i = 0; i < players.size(); i++) {
-                    if(!players.get(i).getRobot().getPowerDown()){
-                        if (playersWhosDead[i]) {
-                            continue;
-                        }
-                        System.out.println("position: x: " + players.get(i).getRobot().getX() + " y: " + players.get(i).getRobot().getY());
-                        boolean isRobotAlive = playMovementCard((MovementCard) prioritizedMovementCards.get(i).get(j), players.get(i));
-                        if (!isRobotAlive) {
-                            playersWhosDead[i] = true;
-                        }
-                    }
-                }
-                robotLasersFire();
-            }*/
-
-            //end of round
-            for (Player player : players) {
-                if(player.getRobot().getPowerDown()){
-                    player.powerDown();
-                    player.getRobot().finishPowerdown();
-                } else {
-                    Position pos = player.getRobot().getPosition();
-                    ArrayList list = map.getBoardObjects(pos);
-
-                    for (Object boardObject : list) {
-
-                        // Sjekker om det er et flag i posisjonen roboten står
-                        if (boardObject instanceof Flag) {
-                            player.getRobot().dropBackUpAtCurrentPosition(); //oppdaterer backup position uansett hvilket flag den står på
-                            if (updateFlag(player, (Flag) boardObject)) {
-                                gameOver = true;
-                                System.out.println("WINNEEEER DING DING DING!");
-                            }
-                        }
-                    }
-                    System.out.println(player.getName() + ": Do you want to take a PowerDown? Yes/No ");
-                    boolean playerPowerDown = player.choosePowerdown();
-
-                    if(playerPowerDown){
-                        player.getRobot().takePowerdown();
-                    }
-                }
-            }
-        }
     }
 
     /**
