@@ -21,7 +21,6 @@ public class RoboRally {
         this.players = new ArrayList<>();
         map = new Map(16, 12);
         map = map.makeMap(filename, players);
-        //map.printMap();
         if (map == null)
             System.exit(0);
 
@@ -98,6 +97,9 @@ public class RoboRally {
                         continue;
                     }
                     System.out.println("position: x: " + players.get(i).getRobot().getX() + " y: " + players.get(i).getRobot().getY());
+                    System.out.println("1: \n" + "i: " + i + " length: " + prioritizedMovementCards.size());
+                    System.out.println("j: " + j + " length: " + prioritizedMovementCards.get(i).size());
+                    System.out.println("i: " + i + " length: " + players.size());
                     boolean isRobotAlive = playMovementCard((MovementCard) prioritizedMovementCards.get(i).get(j), players.get(i));
                     if (!isRobotAlive) {
                         playersWhosDead[i] = true;
@@ -162,7 +164,7 @@ public class RoboRally {
             //playing movement cards from players'
             playingMovementCards(prioritizedMovementCards);
             //playing movement cards from players'
-            boolean[] playersWhosDead = new boolean[players.size()];
+            /*boolean[] playersWhosDead = new boolean[players.size()];
             for (int j = 0; j < 5; j++) {//the max number for this for loop chooses how many movementcards is supposed to be played
                 //between phases
                 for (int i = 0; i < players.size(); i++) {
@@ -178,7 +180,7 @@ public class RoboRally {
                     }
                 }
                 robotLasersFire();
-            }
+            }*/
 
             //end of round
             for (Player player : players) {

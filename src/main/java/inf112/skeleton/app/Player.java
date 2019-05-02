@@ -41,7 +41,7 @@ public class Player {
         Random rnd = new Random();
         boolean[] choosen = new boolean[theCardsToChooseYourProgramFrom.size()];
         int cards = 5;
-        while (cards > 1) {
+        while (cards > 0) {
             int randomInt = rnd.nextInt(theCardsToChooseYourProgramFrom.size());
             if (!choosen[randomInt]) {
                 programForRobotToExecute.add(theCardsToChooseYourProgramFrom.get(randomInt));
