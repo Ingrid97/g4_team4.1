@@ -1,0 +1,8 @@
+Møte 02.05.2019
+Oppmøte: Faltin, Magnus, Sandra og Ingrid
+Vi gikk gjennom hva vi må få gjort innen i morgen og hva som har blitt gjort. 
+Deretter laget vi en liste med TODOs innen i morgen.
+Sjekket warnings på de ulike makinene, funnet ut at windows maskinen får andre warnings enn MAC.
+Sjekket coveragen på testene og funet ut at vi bør øke den til nærmere 50 prosent
+Passe på at robotene kommet tilbake på backup posisjonen sin om de faller ut fra brettet.
+Skriver ferdig innleveringsoppgave 5, og diskuterer known errors
