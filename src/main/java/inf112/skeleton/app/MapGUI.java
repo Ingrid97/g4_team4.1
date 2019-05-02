@@ -62,7 +62,7 @@ public class MapGUI extends ApplicationAdapter {
 
 
         // create a list of Rectangles to logically represent the objects
-        tile = new Rectangle[16][16];
+        tile = new Rectangle[16][12];
         robot = new Rectangle[10];
 
         for (int i = 0; i < 10; i++) {
@@ -73,7 +73,7 @@ public class MapGUI extends ApplicationAdapter {
             robot[i].width = 64;
         }
 
-        for (int i = 0; i < 16; i++) {
+        for (int i = 0; i < 12; i++) {
             for (int j = 0; j < 16; j++) {
                 tile[j][i] = new Rectangle();
                 tile[j][i].x = i * 64;
@@ -147,7 +147,7 @@ public class MapGUI extends ApplicationAdapter {
         drawnTable = true;
 
         for (int i = 0; i < 16; i++) {
-            for (int j = 0; j < 16; j++) {
+            for (int j = 0; j < 12; j++) {
                 IBoardObject object = map.getBoardObject(new Position(i, j));
 
                 if (object instanceof Void) {

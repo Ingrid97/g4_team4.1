@@ -1,11 +1,12 @@
 package inf112.skeleton.app;//Created by ingridjohansen on 04/02/2019.
 
-import boardObjects.Void;
 import boardObjects.*;
+import boardObjects.Void;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 public class RoboRally {
@@ -18,7 +19,7 @@ public class RoboRally {
         // Lager alle kortene
         //leser inn map fra fil
         this.players = new ArrayList<>();
-        map = new Map(16, 16);
+        map = new Map(16, 12);
         map = map.makeMap(filename, players);
         //map.printMap();
         if (map == null)
@@ -37,11 +38,113 @@ public class RoboRally {
     /**
      * Initiates the game and runs continuosly while the game runs, in loops of rounds and phases of the game.
      */
+
+    //TODO: Veldig rotetet I KNOW!! men eg jobber med det!
     public void playGame() {
+
+        int choice = makeGameChoice();
+
+        if (choice == 1) {
+            playGameWithAI();
+        } else {
+            playGameWithOthers();
+        }
+
+    }
+
+    public void playGameWithAI() {
         boolean gameOver = false;
+
+        while (!gameOver) {
+
+            //part 1
+            ArrayList<ArrayList> prioritizedMovementCards = chooseThePlayingCardsAI();
+
+            //part 2
+            playingMovementCards(prioritizedMovementCards);
+
+            //part 3
+            gameOver = endGameAI(gameOver);
+        }
+    }
+
+    public ArrayList<ArrayList> chooseThePlayingCardsAI() {
+        ArrayList<ArrayList> prioritizedMovementCards = new ArrayList<>();
+        for (int i = 0; i < players.size(); i++) {
+            if (!players.get(i).getRobot().isAlive()) {
+                players.remove(i);
+                continue;
+            }
+            ArrayList<MovementCard> movementCardsToBeExecuted;
+            if (!players.get(i).getRobot().getPowerDown()) {
+                System.out.println("Player " + (i + 1) + " choosing Cards");
+                movementCardsToBeExecuted = players.get(i).theMovementCardsThePlayerChoseAI();
+                prioritizedMovementCards.add(movementCardsToBeExecuted);
+            }
+        }
+        MovementCardDeck.dealOutMovementCards(players);
+        return prioritizedMovementCards;
+
+    }
+
+    public void playingMovementCards(ArrayList<ArrayList> prioritizedMovementCards) {
+
+        boolean[] playersWhosDead = new boolean[players.size()];
+        for (int j = 0; j < 5; j++) {//the max number for this for loop chooses how many movementcards is supposed to be played
+            //between phases
+            for (int i = 0; i < players.size(); i++) {
+                if (!players.get(i).getRobot().getPowerDown()) {
+                    if (playersWhosDead[i]) {
+                        continue;
+                    }
+                    System.out.println("position: x: " + players.get(i).getRobot().getX() + " y: " + players.get(i).getRobot().getY());
+                    boolean isRobotAlive = playMovementCard((MovementCard) prioritizedMovementCards.get(i).get(j), players.get(i));
+                    if (!isRobotAlive) {
+                        playersWhosDead[i] = true;
+                    }
+                }
+            }
+            robotLasersFire();
+        }
+    }
+
+    public boolean endGameAI(boolean gameOver) {
+        for (Player player : players) {
+            if (player.getRobot().getPowerDown()) {
+                player.powerDown();
+                player.getRobot().finishPowerdown();
+            } else {
+                Position pos = player.getRobot().getPosition();
+                ArrayList list = map.getBoardObjects(pos);
+
+                for (Object boardObject : list) {
+
+                    // Sjekker om det er et flag i posisjonen roboten står
+                    if (boardObject instanceof Flag) {
+                        player.getRobot().dropBackUpAtCurrentPosition(); //oppdaterer backup position uansett hvilket flag den står på
+                        if (updateFlag(player, (Flag) boardObject)) {
+                            gameOver = true;
+                            System.out.println("You have defeeted !");
+                        }
+                    }
+                }
+
+                boolean playerPowerDown = player.choosePowerdownAI();
+
+                if (playerPowerDown) {
+                    player.getRobot().takePowerdown();
+                }
+            }
+        }
+        return gameOver;
+    }
+
+    public void playGameWithOthers() {
+        boolean gameOver = false;
+
         while (!gameOver) {
             //getting movement cards from player/s making array List of prioritized listing of our movement cards from player class
-            ArrayList<ArrayList> PrioritizedMovementCards = new ArrayList<>();
+            ArrayList<ArrayList> prioritizedMovementCards = new ArrayList<>();
             for (int i = 0; i < players.size(); i++) {
                 if (!players.get(i).getRobot().isAlive()) {
                     players.remove(i);
@@ -51,11 +154,13 @@ public class RoboRally {
                 if(!players.get(i).getRobot().getPowerDown()){
                     System.out.println("Player " + (i + 1) + " choose your cards!");
                     movementCardsToBeExecuted = players.get(i).theMovementCardsThePlayerChose();
-                    PrioritizedMovementCards.add(movementCardsToBeExecuted);
+                    prioritizedMovementCards.add(movementCardsToBeExecuted);
                 }
             }
             MovementCardDeck.dealOutMovementCards(players);
 
+            //playing movement cards from players'
+            playingMovementCards(prioritizedMovementCards);
             //playing movement cards from players'
             boolean[] playersWhosDead = new boolean[players.size()];
             for (int j = 0; j < 5; j++) {//the max number for this for loop chooses how many movementcards is supposed to be played
@@ -66,7 +171,7 @@ public class RoboRally {
                             continue;
                         }
                         System.out.println("position: x: " + players.get(i).getRobot().getX() + " y: " + players.get(i).getRobot().getY());
-                        boolean isRobotAlive = playMovementCard((MovementCard) PrioritizedMovementCards.get(i).get(j), players.get(i));
+                        boolean isRobotAlive = playMovementCard((MovementCard) prioritizedMovementCards.get(i).get(j), players.get(i));
                         if (!isRobotAlive) {
                             playersWhosDead[i] = true;
                         }
@@ -104,6 +209,28 @@ public class RoboRally {
                 }
             }
         }
+    }
+
+    /**
+     * Make the player choose the playing methode
+     *
+     * @return methode
+     */
+
+    public int makeGameChoice() {
+        Scanner scn = new Scanner(System.in);
+        System.out.println("Hi and welcome to RoboRally!");
+        System.out.println();
+        System.out.println("Before we start please choose one of the following:");
+        System.out.println("1: Play against AI's");
+        System.out.println("2: Play against friends on the same computer");
+        int c = scn.nextInt();
+
+        while (c < 1 && c > 2) {
+            System.out.println("The number you selected is not a choice. Pleas try again.");
+            c = scn.nextInt();
+        }
+        return c;
     }
 
     /**
@@ -328,7 +455,7 @@ public class RoboRally {
     /**
      * checking that given position is inside map, or not occupied by a wall or robot
      *
-     * @param position position to check                        
+     * @param position position to check
      * @return name of object
      */
     public String legalPosition(Position position) {

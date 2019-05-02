@@ -2,6 +2,7 @@ package inf112.skeleton.app;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Random;
 import java.util.Scanner;
 
 
@@ -9,15 +10,17 @@ public class Player {
     private boolean[] flagsVisited; //variable that collects flags that has been visited in a boolean array
     private String name;
     private Robot robot;
-    public ArrayList<MovementCard> theCardsToChooseYourProgramFrom;
-    private ArrayList<MovementCard> programForRobotToExecute = new ArrayList<>();
+    private ArrayList<MovementCard> theCardsToChooseYourProgramFrom;
+    private ArrayList<MovementCard> programForRobotToExecute;
 
 
 
     public Player(int numberOfFlags, Robot robot) {
         this.flagsVisited = new boolean[numberOfFlags];
         this.robot = robot;
-        theCardsToChooseYourProgramFrom = new ArrayList<>();
+        this.theCardsToChooseYourProgramFrom = new ArrayList<>();
+        programForRobotToExecute = new ArrayList<>();
+        this.name = "";
     }
 
     /**
@@ -28,6 +31,26 @@ public class Player {
      */
     public void giveMovementCards(MovementCard card) {
         this.theCardsToChooseYourProgramFrom.add(card);
+    }
+
+    public ArrayList<MovementCard> theMovementCardsThePlayerChoseAI() {
+
+        //TODO: AI random cards
+        //skla ikke trenge å tenke på memCap
+
+        Random rnd = new Random();
+        boolean[] choosen = new boolean[theCardsToChooseYourProgramFrom.size()];
+        int cards = 5;
+        while (cards > 1) {
+            int randomInt = rnd.nextInt(theCardsToChooseYourProgramFrom.size());
+            if (!choosen[randomInt]) {
+                programForRobotToExecute.add(theCardsToChooseYourProgramFrom.get(randomInt));
+                cards--;
+                choosen[randomInt] = true;
+            }
+        }
+
+        return programForRobotToExecute;
     }
 
     /**
@@ -109,7 +132,7 @@ public class Player {
 
 
     public boolean[] getFlagsVisited() {
-        return flagsVisited;
+        return this.flagsVisited;
     }
 
     public void setFlagsVisitedTrue(int pos) {
@@ -130,6 +153,15 @@ public class Player {
         String in = scn.nextLine().toLowerCase();
         return in.equals("yes");
     }
+
+
+    public boolean choosePowerdownAI() {
+        /*if(this.robot.getMemoryCapacity() <= 5){
+            return true;
+        }*/
+        return false;
+    }
+
 
     public int getX() {
         return robot.getX();
