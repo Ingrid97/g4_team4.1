@@ -339,13 +339,34 @@ public class RoboRally {
                 if (map.getBoardObject(newPos) instanceof Conveyor_belt) {
                     Directions direction = ((Conveyor_belt) map.getBoardObject(newPos)).getDirection();
                     if (((Conveyor_belt) map.getBoardObject(newPos)).isBlueBelt) {
+
                         Position p = CalculatePosition.movingForward(newPos, direction);
+                        String movingForwardResult = legalPosition(p);
+                        if (movingForwardResult.equals("dead")) {
+                            Position deadPos = player.getRobot().getBackUpPosition();
+                            player.getRobot().setPositionToBackUp();
+                            return deadPos;
+                        }
                         p = collidingWithAnotherRobot(p, player);
                         moveTheRobotAndUpdateMapGUI(player, p);
+
                         p = CalculatePosition.movingForward(p, direction);
+                        movingForwardResult = legalPosition(p);
+                        if (movingForwardResult.equals("dead")) {
+                            Position deadPos = player.getRobot().getBackUpPosition();
+                            player.getRobot().setPositionToBackUp();
+                            return deadPos;
+                        }
                         return collidingWithAnotherRobot(p, player);
                     }
                     try {
+                        Position p = CalculatePosition.movingForward(newPos, direction);
+                        String movingForwardResult = legalPosition(p);
+                        if (movingForwardResult.equals("dead")) {
+                            Position deadPos = player.getRobot().getBackUpPosition();
+                            player.getRobot().setPositionToBackUp();
+                            return deadPos;
+                        }
                         return collidingWithAnotherRobot(CalculatePosition.movingForward(newPos, direction), player);
                     } catch (IllegalArgumentException e) {
                         map.moveRobot(player.getRobot(), player.getRobot().getBackUpPosition());
