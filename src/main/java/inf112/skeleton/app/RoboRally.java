@@ -206,7 +206,6 @@ public class RoboRally {
         }
     }
 
-    // Litt usikker på om denne er helt riktig
 
     /**
      * method for updating the number of flags a player have touched and checks if the player has won
@@ -262,9 +261,7 @@ public class RoboRally {
                         } else if (movingForwardResult.equals("robot")) {
                             if (newPos.equals(collidingWithAnotherRobot(newPos, player))) {
                                 currentPos = newPos;
-                                System.out.println("DIDNT crash with another robot!");
                                 moveTheRobotAndUpdateMapGUI(player, newPos);
-                                currentPos = newPos;
                             } else {
                                 newPos = currentPos;
                                 System.out.println(player.getName() + " crashed with another robot!");
@@ -276,14 +273,16 @@ public class RoboRally {
                         }
                     }
                 } catch (IllegalArgumentException e) {
-                    System.out.println("A robot has fallen1"); //robot fell outside map, should be returned to backup position
+                    map.moveRobot(player.getRobot(), player.getRobot().getBackUpPosition());
+                    player.getRobot().setPositionToBackUp(); //robot fell outside map, should be returned to backup position
                 }
                 break;
             case DOWN://moving backward or turning 180degrees
                 try {
                     newPos = CalculatePosition.Uturn(movCard, player);
                 } catch (IllegalArgumentException e) {
-                    System.out.println("A robot has fallen2");    //robot fell outside map, should be returned to backup position
+                    map.moveRobot(player.getRobot(), player.getRobot().getBackUpPosition());
+                    player.getRobot().setPositionToBackUp();    //robot fell outside map, should be returned to backup position
                 }
                 break;
             case LEFT: //turning left
@@ -308,6 +307,13 @@ public class RoboRally {
         return true;
     }
 
+    /**
+     * Methodd for handling a collision between robots
+     *
+     * @param position The position a player is intending to move to
+     * @param player   the player who is intending to move
+     * @return returns the position to move to(A position 1000, 1000 if there is a collision)
+     */
     private Position collidingWithAnotherRobot(Position position, Player player) {
         ArrayList<IBoardObject> arrayList = map.getBoardObjects(position);
         for (IBoardObject boardObject : arrayList) {
@@ -322,9 +328,14 @@ public class RoboRally {
         return position;
     }
 
+    /**
+     * Method for the different board elements to play
+     * @param newPos the position a player is moving to
+     * @param player the player who is moving
+     * @return the position the player ended up in(plus damage, rotation etc.)
+     */
     private Position playingBoardElements(Position newPos, Player player) {
         String result = legalPosition(newPos);
-        System.out.println("RESULT: " + result);
         switch (result) {
             case "robot":
                 return collidingWithAnotherRobot(newPos, player);
@@ -371,8 +382,6 @@ public class RoboRally {
                     } catch (IllegalArgumentException e) {
                         map.moveRobot(player.getRobot(), player.getRobot().getBackUpPosition());
                         player.getRobot().setPositionToBackUp();
-                        System.out.println("deadPosition: x: " + newPos.getX() + " y: " + newPos.getY());
-                        System.out.println("ROBOT DEAD");
                         return null;
                     }
                 }
@@ -383,8 +392,6 @@ public class RoboRally {
             case "dead":
                 map.moveRobot(player.getRobot(), player.getRobot().getBackUpPosition());
                 player.getRobot().setPositionToBackUp();
-                System.out.println("deadPosition: x: " + newPos.getX() + " y: " + newPos.getY());
-                System.out.println("ROBOT DEAD");
                 return null;
             default://default is when none of the other case occurs, then it moves the robot to the actual position
                 return newPos;
@@ -411,7 +418,7 @@ public class RoboRally {
         try {
             TimeUnit.SECONDS.sleep(1);
         } catch (InterruptedException e) {
-            System.out.println("ERROROROROR");
+            e.printStackTrace();
         }
     }
 
@@ -443,6 +450,11 @@ public class RoboRally {
         }
     }
 
+    /**
+     * method for getting all the players
+     * only inteded to be used for testing
+     * @return arraylist of all the player in the game
+     */
     public ArrayList<Player> getPlayers() {
         return this.players;
     }

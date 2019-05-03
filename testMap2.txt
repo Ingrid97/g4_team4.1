@@ -15,9 +15,10 @@ b2, , , , , , , , , , , ,
 r, , , , , , , , , , ,y1,
 v, , , , , , , , , , ,r,
 
+Map used for testing in the RoboRallyTestClass
+DO NOT CHANGE!
 
-
-
+Description:
  'r' = Robot
  'v' = Void (hole)
  'l' = Laser with wall (1,2,3,4)
@@ -29,3 +30,7 @@ v, , , , , , , , , , ,r,
  'f' = Flag
  'p' = Rotating_belt
  ' ' = Nothing
+
+
+1: west, 2: north, 3:east, 4: south
+5: vertically, 6: horrisontalt
