@@ -259,17 +259,15 @@ public class RoboRally {
                             player.getRobot().setPositionToBackUp();
                             return false;
                         } else if (movingForwardResult.equals("robot")) {
-                            IBoardObject boardObject = map.getBoardObject(newPos);
-                            if (boardObject instanceof Robot) {
-                                if (boardObject != (player.getRobot())) {
-                                    newPos = currentPos;
-                                    System.out.println(player.getName() + " crashed with another robot!");
-                                    break;
-                                } else {
-                                    System.out.println("DIDNT crash with another robot!");
-                                    moveTheRobotAndUpdateMapGUI(player, newPos);
-                                    currentPos = newPos;
-                                }
+                            if (newPos.equals(collidingWithAnotherRobot(newPos, player))) {
+                                currentPos = newPos;
+                                System.out.println("DIDNT crash with another robot!");
+                                moveTheRobotAndUpdateMapGUI(player, newPos);
+                                currentPos = newPos;
+                            } else {
+                                newPos = currentPos;
+                                System.out.println(player.getName() + " crashed with another robot!");
+                                break;
                             }
                         } else {
                             moveTheRobotAndUpdateMapGUI(player, newPos);
@@ -309,19 +307,26 @@ public class RoboRally {
         return true;
     }
 
+    private Position collidingWithAnotherRobot(Position position, Player player) {
+        ArrayList<IBoardObject> arrayList = map.getBoardObjects(position);
+        for (IBoardObject boardObject : arrayList) {
+            if (boardObject instanceof Robot) {
+                if (boardObject != (player.getRobot())) {
+                    return new Position(1000, 1000);
+                } else {
+                    return position;
+                }
+            }
+        }
+        return position;
+    }
+
     private Position playingBoardElements(Position newPos, Player player) {
         String result = legalPosition(newPos);
         System.out.println("RESULT: " + result);
         switch (result) {
             case "robot":
-                IBoardObject boardObject = map.getBoardObject(newPos);
-                if (boardObject instanceof Robot) {
-                    if (boardObject != (player.getRobot())) {
-                        return new Position(1000, 1000);
-                    } else {
-                        return newPos;
-                    }
-                }
+                return collidingWithAnotherRobot(newPos, player);
 
             case "laser":
                 // The laser deals 1 damage to the robots
@@ -334,12 +339,13 @@ public class RoboRally {
                     Directions direction = ((Conveyor_belt) map.getBoardObject(newPos)).getDirection();
                     if (((Conveyor_belt) map.getBoardObject(newPos)).isBlueBelt) {
                         Position p = CalculatePosition.movingForward(newPos, direction);
+                        p = collidingWithAnotherRobot(p, player);
                         moveTheRobotAndUpdateMapGUI(player, p);
-                        return CalculatePosition.movingForward(p, direction);
+                        p = CalculatePosition.movingForward(p, direction);
+                        return collidingWithAnotherRobot(p, player);
                     }
                     try {
-
-                        return CalculatePosition.movingForward(newPos, direction);
+                        return collidingWithAnotherRobot(CalculatePosition.movingForward(newPos, direction), player);
                     } catch (IllegalArgumentException e) {
                         map.moveRobot(player.getRobot(), player.getRobot().getBackUpPosition());
                         player.getRobot().setPositionToBackUp();

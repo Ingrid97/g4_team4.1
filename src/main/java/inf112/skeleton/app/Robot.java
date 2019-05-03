@@ -12,6 +12,7 @@ public class Robot implements IRobot {
     private int pictureDir;
     private final int memCap = 9;
     private boolean powerdown;
+    private Player owner;
 
     public Robot(int x, int y, Directions direction) {
         this.positionOfRobot = new Position(x, y);
@@ -23,6 +24,15 @@ public class Robot implements IRobot {
         this.pictureDir = 1;
         this.alive = true;
         this.powerdown = false;
+
+    }
+
+    public Player getOwner() {
+        return this.owner;
+    }
+
+    public void setOwner(Player owner) {
+        this.owner = owner;
     }
 
     // Getters

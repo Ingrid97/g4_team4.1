@@ -137,6 +137,7 @@ public class Map {
                         map.add(new Wall(i, j), i, j);
                     } else if (l.contains("r")) {
                         Player player = new Player(3, new Robot(i, j, Directions.UP));
+                        player.getRobot().setOwner(player);
                         players.add(player);
                         map.add(player.getRobot(), i, j);
                     } else if (l.contains("v")) {
