@@ -162,7 +162,7 @@ public class RoboRally {
         System.out.println("2: Play against friends on the same computer");
         int c = scn.nextInt();
 
-        while (c < 1 && c > 2) {
+        while (c != 1 && c != 2) {
             System.out.println("The number you selected is not a choice. Pleas try again.");
             c = scn.nextInt();
         }
@@ -309,9 +309,8 @@ public class RoboRally {
 
     /**
      * Methodd for handling a collision between robots
-     *
      * @param position The position a player is intending to move to
-     * @param player   the player who is intending to move
+     * @param player the player who is intending to move
      * @return returns the position to move to(A position 1000, 1000 if there is a collision)
      */
     private Position collidingWithAnotherRobot(Position position, Player player) {

@@ -94,8 +94,6 @@ public class Map {
      * @return a robot if there is one, otherwise any other object if none returns null
      */
     public IBoardObject getBoardObject(Position position) {
-        // Dont know if the problem is here or, if it is in the logic moving the robot ?¿
-        // This needs to be changed! Throws exception
         if (isValidPosition(position)) {
             ArrayList listOfObjects = map[position.getX()][position.getY()];
             if (listOfObjects.size() == 0) {
@@ -199,7 +197,12 @@ public class Map {
      * @return true if empty
      */
     public boolean isEmpty(int x, int y) {
+        if (!isValidPosition(new Position(x, y))) return true;
+        if (map[x][y] == null) {
+            return true;
+        }
         return map[x][y].size() == 0;
+
     }
 
     /**

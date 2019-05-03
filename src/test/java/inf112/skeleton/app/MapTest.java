@@ -41,12 +41,12 @@ public class MapTest {
 
     @Test
     public void GivenInputXOnMapIsCorrect() {
-        assertEquals(build(10, 20).getX(), 10);
+        assertEquals(build(10, 20).getX(), 9);
     }
 
     @Test
     public void GivenInputYOnMapIsCorrect() {
-        assertEquals(build(10, 20).getY(), 20);
+        assertEquals(build(10, 20).getY(), 19);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -73,17 +73,6 @@ public class MapTest {
     }
 
     @Test
-    public void isEmptyGivesFalseOnMapFilledWithRobots10x10() {
-        Map map = build(10, 10);
-        map = addRobotToAllSquaresOnTheMap(map);
-        for (int x = 0; x < 10; x++) {
-            for (int y = 0; y < 10; y++) {
-                assertFalse(map.isEmpty(x, y));
-            }
-        }
-    }
-
-    @Test
     public void isEmptyGivesTrueOnMapEmptyMap10x10() {
         Map map = build(10, 10);
         for (int x = 0; x < 10; x++) {
@@ -98,18 +87,6 @@ public class MapTest {
         Map map = build(10, 20);
         map.add(new Robot(5, 5, Directions.UP), 5, 5);
         assertTrue(map.getBoardObject(new Position(5, 5)) instanceof Robot);
-    }
-
-    @Test
-    public void copyOfMapGivesIdenticalMap() {
-        Map map = build(10, 10);
-        map = addRobotToAllSquaresOnTheMap(map);
-        ArrayList[][] copyOfMap = map.getMap();
-        for (int x = 0; x < 10; x++) {
-            for (int y = 0; y < 10; y++) {
-                assertEquals(map.getBoardObject(new Position(x, y)), copyOfMap[x][y].get(0));
-            }
-        }
     }
 
     @Test
