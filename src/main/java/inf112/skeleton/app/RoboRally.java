@@ -102,10 +102,6 @@ public class RoboRally {
                     if (playersWhosDead[i]) {
                         continue;
                     }
-                    System.out.println("position: x: " + players.get(i).getRobot().getX() + " y: " + players.get(i).getRobot().getY());
-                    //System.out.println("1: \n" + "i: " + i + " length: " + prioritizedMovementCards.size());
-                    //System.out.println("j: " + j + " length: " + prioritizedMovementCards.get(i).size());
-                    //System.out.println("i: " + i + " length: " + players.size());
                     boolean isRobotAlive = playMovementCard((MovementCard) prioritizedMovementCards.get(i).get(j), players.get(i));
                     if (!isRobotAlive) {
                         playersWhosDead[i] = true;
@@ -163,7 +159,7 @@ public class RoboRally {
         int c = scn.nextInt();
 
         while (c != 1 && c != 2) {
-            System.out.println("The number you selected is not a choice. Pleas try again.");
+            System.out.println("The number you selected is not a choice. Please try again.");
             c = scn.nextInt();
         }
         return c;
