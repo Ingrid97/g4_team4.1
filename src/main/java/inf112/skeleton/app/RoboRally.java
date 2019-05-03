@@ -66,6 +66,7 @@ public class RoboRally {
             //playing movement cards from players'
             playingMovementCards(prioritizedMovementCards);
 
+            System.out.println("endGame");
             //part 3
             //end of round
             gameOver = endGame(gameOver);
@@ -102,9 +103,9 @@ public class RoboRally {
                         continue;
                     }
                     System.out.println("position: x: " + players.get(i).getRobot().getX() + " y: " + players.get(i).getRobot().getY());
-                    System.out.println("1: \n" + "i: " + i + " length: " + prioritizedMovementCards.size());
-                    System.out.println("j: " + j + " length: " + prioritizedMovementCards.get(i).size());
-                    System.out.println("i: " + i + " length: " + players.size());
+                    //System.out.println("1: \n" + "i: " + i + " length: " + prioritizedMovementCards.size());
+                    //System.out.println("j: " + j + " length: " + prioritizedMovementCards.get(i).size());
+                    //System.out.println("i: " + i + " length: " + players.size());
                     boolean isRobotAlive = playMovementCard((MovementCard) prioritizedMovementCards.get(i).get(j), players.get(i));
                     if (!isRobotAlive) {
                         playersWhosDead[i] = true;
