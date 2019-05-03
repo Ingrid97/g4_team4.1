@@ -6,7 +6,6 @@ public class Main {
         roboRally.playGame();
         System.out.println("The game is over");
 
-        //TODO: finne en måte å avskutte spillet på!
         //dette krasjer spillet men ellers blir det aldri avsluttet!
         System.exit(0);
     }

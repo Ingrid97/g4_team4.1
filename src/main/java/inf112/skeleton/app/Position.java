@@ -31,18 +31,6 @@ public class Position {
         return new Position(x, y);
     }
 
-    /**
-     * TODO! Can we remove the redundant methods in Position?
-     * Gets the distance to another Position as the difference of X and Y
-     *
-     * @param another
-     * @return dist
-     */
-
-    public int distanceTo(Position another) {
-        return Math.abs(this.x - another.x) + Math.abs(this.y - another.y);
-    }
-
 
     /**
      * get X coordinate

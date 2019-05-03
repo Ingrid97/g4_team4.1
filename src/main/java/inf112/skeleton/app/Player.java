@@ -88,7 +88,6 @@ public class Player {
             // Nå må MemoryCapacity være 4 eller mindre
             numberOfSlotsInRegister = this.robot.getMemoryCapacity();
             // Skal slette alt utenom det som er over MemoryCapacity
-            // TODO! Funker ikke helt, IndexOutOfBoundsException når memCap går ned
             for (int i = 0; i < this.robot.getMemoryCapacity(); i++) {
                 this.programForRobotToExecute.remove(i);
             }
@@ -170,9 +169,7 @@ public class Player {
     }
 
     public boolean choosePowerdownAI() {
-        if (this.robot.getMemoryCapacity() <= 5)
-            return true;
-        return false;
+        return this.robot.getMemoryCapacity() <= 5;
     }
 
 

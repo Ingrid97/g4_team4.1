@@ -38,7 +38,6 @@ public class RoboRally {
      * Initiates the game and runs continuosly while the game runs, in loops of rounds and phases of the game.
      */
 
-    //TODO: Veldig rotetet I KNOW!! men eg jobber med det!
     public void playGame() {
 
         int choice = makeGameChoice();
@@ -406,7 +405,6 @@ public class RoboRally {
         if (player.getRobot().isAlive()) {
             map.moveRobot(player.getRobot(), newPos);
         } else {
-            // TODO! Hva gjør vi med robotene når de ikke lenger er i live?
         }
         player.getRobot().setPosition(newPos);
         mapGUI.updateMap(map);
