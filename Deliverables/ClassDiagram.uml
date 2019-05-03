@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>inf112.skeleton.app</OriginalElement>
+  <nodes>
+    <node x="437.04166666666674" y="0.0">inf112.skeleton.app.Position</node>
+    <node x="436.5879432624113" y="2437.0">inf112.skeleton.app.Main</node>
+    <node x="375.29166666666663" y="398.0">inf112.skeleton.app.Robot</node>
+    <node x="100.91666666666669" y="993.0">inf112.skeleton.app.Player</node>
+    <node x="36.5" y="607.0">inf112.skeleton.app.MovementCard</node>
+    <node x="530.9166666666667" y="1446.0">inf112.skeleton.app.Map</node>
+    <node x="414.79166666666674" y="231.0">inf112.skeleton.app.IRobot</node>
+    <node x="336.0879432624113" y="2050.0">inf112.skeleton.app.RoboRally</node>
+    <node x="384.459219858156" y="1787.0">inf112.skeleton.app.MapGUI</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="inf112.skeleton.app.Map" target="inf112.skeleton.app.Player">
+      <point x="-135.60000000000002" y="-135.5" />
+      <point x="564.8166666666667" y="1426.0" />
+      <point x="407.6666666666667" y="1426.0" />
+      <point x="102.25" y="201.5" />
+    </edge>
+    <edge source="inf112.skeleton.app.IRobot" target="inf112.skeleton.app.Position">
+      <point x="0.0" y="-58.5" />
+      <point x="509.79166666666674" y="211.0" />
+      <point x="546.8541666666667" y="211.0" />
+      <point x="-15.6875" y="80.5" />
+    </edge>
+    <edge source="inf112.skeleton.app.Map" target="inf112.skeleton.app.Robot">
+      <point x="0.0" y="-135.5" />
+      <point x="700.4166666666667" y="1426.0" />
+      <point x="728.8166666666667" y="1426.0" />
+      <point x="728.8166666666667" y="973.0" />
+      <point x="552.6666666666667" y="973.0" />
+      <point x="48.37500000000006" y="267.5" />
+    </edge>
+    <edge source="inf112.skeleton.app.Robot" target="inf112.skeleton.app.Position">
+      <point x="-51.599999999999966" y="-267.5" />
+      <point x="452.69166666666666" y="368.0" />
+      <point x="404.29166666666674" y="368.0" />
+      <point x="404.29166666666674" y="201.0" />
+      <point x="515.4791666666667" y="201.0" />
+      <point x="-47.0625" y="80.5" />
+    </edge>
+    <edge source="inf112.skeleton.app.RoboRally" target="inf112.skeleton.app.Position">
+      <point x="-164.25" y="-168.5" />
+      <point x="354.3379432624113" y="2030.0" />
+      <point x="26.0" y="2030.0" />
+      <point x="26.0" y="181.0" />
+      <point x="452.72916666666674" y="181.0" />
+      <point x="-109.8125" y="80.5" />
+    </edge>
+    <edge source="inf112.skeleton.app.Robot" target="inf112.skeleton.app.IRobot">
+      <point x="5.6843418860808015E-14" y="-267.5" />
+      <point x="504.2916666666667" y="378.0" />
+      <point x="462.29166666666674" y="378.0" />
+      <point x="-47.5" y="58.5" />
+    </edge>
+    <edge source="inf112.skeleton.app.Robot" target="inf112.skeleton.app.Player">
+      <point x="-48.375" y="267.5" />
+      <point x="455.91666666666663" y="973.0" />
+      <point x="407.6666666666667" y="973.0" />
+      <point x="102.25" y="-201.5" />
+    </edge>
+    <edge source="inf112.skeleton.app.RoboRally" target="inf112.skeleton.app.Map">
+      <point x="54.75" y="-168.5" />
+      <point x="573.3379432624113" y="2000.0" />
+      <point x="757.4363475177305" y="2000.0" />
+      <point x="757.4363475177305" y="1757.0" />
+      <point x="742.7916666666667" y="1757.0" />
+      <point x="42.375" y="135.5" />
+    </edge>
+    <edge source="inf112.skeleton.app.RoboRally" target="inf112.skeleton.app.MovementCard">
+      <point x="-127.75" y="-168.5" />
+      <point x="390.8379432624113" y="2020.0" />
+      <point x="63.70833333333337" y="2020.0" />
+      <point x="63.70833333333337" y="973.0" />
+      <point x="69.33333333333331" y="973.0" />
+      <point x="-65.66666666666669" y="58.5" />
+    </edge>
+    <edge source="inf112.skeleton.app.MapGUI" target="inf112.skeleton.app.Player">
+      <point x="-82.5" y="-91.5" />
+      <point x="400.959219858156" y="1767.0" />
+      <point x="275.04255319148933" y="1767.0" />
+      <point x="275.04255319148933" y="1426.0" />
+      <point x="271.3333333333333" y="1426.0" />
+      <point x="-34.08333333333337" y="201.5" />
+    </edge>
+    <edge source="inf112.skeleton.app.RoboRally" target="inf112.skeleton.app.MapGUI">
+      <point x="18.25" y="-168.5" />
+      <point x="536.8379432624113" y="2030.0" />
+      <point x="532.9592198581561" y="2030.0" />
+      <point x="49.5" y="91.5" />
+    </edge>
+    <edge source="inf112.skeleton.app.Player" target="inf112.skeleton.app.MovementCard">
+      <point x="-102.25" y="-201.5" />
+      <point x="203.16666666666669" y="973.0" />
+      <point x="200.66666666666669" y="973.0" />
+      <point x="65.66666666666669" y="58.5" />
+    </edge>
+    <edge source="inf112.skeleton.app.Map" target="inf112.skeleton.app.Position">
+      <point x="135.60000000000002" y="-135.5" />
+      <point x="836.0166666666668" y="1426.0" />
+      <point x="891.4166666666667" y="1426.0" />
+      <point x="891.4166666666667" y="201.0" />
+      <point x="609.6041666666667" y="201.0" />
+      <point x="47.0625" y="80.5" />
+    </edge>
+    <edge source="inf112.skeleton.app.MapGUI" target="inf112.skeleton.app.Robot">
+      <point x="-16.5" y="-91.5" />
+      <point x="466.959219858156" y="1737.0" />
+      <point x="520.4166666666667" y="1737.0" />
+      <point x="16.125000000000057" y="267.5" />
+    </edge>
+    <edge source="inf112.skeleton.app.Main" target="inf112.skeleton.app.RoboRally">
+      <point x="41.0" y="-25.5" />
+      <point x="559.5879432624113" y="2412.0" />
+      <point x="609.8379432624113" y="2412.0" />
+      <point x="91.25" y="168.5" />
+    </edge>
+    <edge source="inf112.skeleton.app.IRobot" target="inf112.skeleton.app.Robot">
+      <point x="47.5" y="58.5" />
+      <point x="557.2916666666667" y="378.0" />
+      <point x="555.8916666666667" y="378.0" />
+      <point x="51.60000000000008" y="-267.5" />
+    </edge>
+    <edge source="inf112.skeleton.app.MapGUI" target="inf112.skeleton.app.Map">
+      <point x="16.5" y="-91.5" />
+      <point x="499.959219858156" y="1747.0" />
+      <point x="573.2916666666667" y="1747.0" />
+      <point x="-127.125" y="135.5" />
+    </edge>
+    <edge source="inf112.skeleton.app.MapGUI" target="inf112.skeleton.app.Position">
+      <point x="82.5" y="-91.5" />
+      <point x="565.9592198581561" y="1767.0" />
+      <point x="902.4166666666667" y="1767.0" />
+      <point x="902.4166666666667" y="191.0" />
+      <point x="640.9791666666666" y="191.0" />
+      <point x="78.43749999999994" y="80.5" />
+    </edge>
+    <edge source="inf112.skeleton.app.RoboRally" target="inf112.skeleton.app.Robot">
+      <point x="127.75" y="-168.5" />
+      <point x="646.3379432624113" y="2020.0" />
+      <point x="880.4166666666667" y="2020.0" />
+      <point x="880.4166666666667" y="953.0" />
+      <point x="617.1666666666667" y="953.0" />
+      <point x="112.87500000000006" y="267.5" />
+    </edge>
+    <edge source="inf112.skeleton.app.RoboRally" target="inf112.skeleton.app.Player">
+      <point x="-54.75" y="-168.5" />
+      <point x="463.8379432624113" y="2000.0" />
+      <point x="213.4212765957446" y="2000.0" />
+      <point x="213.4212765957446" y="1416.0" />
+      <point x="203.16666666666669" y="1416.0" />
+      <point x="-102.25" y="201.5" />
+    </edge>
+    <edge source="inf112.skeleton.app.Player" target="inf112.skeleton.app.Robot">
+      <point x="-34.083333333333314" y="-201.5" />
+      <point x="271.33333333333337" y="953.0" />
+      <point x="391.41666666666663" y="953.0" />
+      <point x="-112.875" y="267.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.7000000000000001" x="821.0476190476193" y="575.0" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
