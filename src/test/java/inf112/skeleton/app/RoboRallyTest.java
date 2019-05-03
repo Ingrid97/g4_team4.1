@@ -31,6 +31,13 @@ public class RoboRallyTest {
     }
 
     @Test
+    public void robotOnConveyorBeltBlue() {
+        roboRally.playMovementCard(new MovementCard(Directions.NODIRECTION, 1, 1), roboRally.getPlayers().get(3));
+        assertEquals(11, roboRally.getPlayers().get(3).getX());
+        assertEquals(0, roboRally.getPlayers().get(3).getY());
+    }
+
+    @Test
     public void robotMovingBackwardsIntoVoid() {
         ArrayList<Player> players = roboRally.getPlayers();
         players.get(3).getRobot().setPosition(new Position(4, 4));
@@ -65,6 +72,14 @@ public class RoboRallyTest {
         assertEquals(0, roboRally.getPlayers().get(0).getRobot().getPosition().getX());
         assertEquals(0, roboRally.getPlayers().get(0).getRobot().getPosition().getY());
         assertEquals(2, roboRally.getPlayers().get(0).getRobot().getHealthPoints());
+    }
+
+    @Test
+    public void robotMoveOutsideMapConveyorBelt() {
+        roboRally.playMovementCard(new MovementCard(Directions.DOWN, 1, 1), roboRally.getPlayers().get(1));
+        assertEquals(2, roboRally.getPlayers().get(1).getRobot().getPosition().getX());
+        assertEquals(0, roboRally.getPlayers().get(1).getRobot().getPosition().getY());
+        assertEquals(2, roboRally.getPlayers().get(1).getRobot().getHealthPoints());
     }
 
     @Test
