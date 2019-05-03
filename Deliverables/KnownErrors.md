@@ -7,3 +7,6 @@
 - If some robots choose powerdown while others doesn't you get a IndexOutOfBoundsException when the second robot makes a move.
 
 - When you win the game it exits with a error.
+
+- Some diagonal movement when two robots are close to eachother/and or on a conveor belt
+

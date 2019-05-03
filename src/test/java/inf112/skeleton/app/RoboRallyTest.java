@@ -71,7 +71,7 @@ public class RoboRallyTest {
         roboRally.playMovementCard(new MovementCard(Directions.NODIRECTION, 1, 1), roboRally.getPlayers().get(0));
         assertEquals(0, roboRally.getPlayers().get(0).getRobot().getPosition().getX());
         assertEquals(0, roboRally.getPlayers().get(0).getRobot().getPosition().getY());
-        assertEquals(2, roboRally.getPlayers().get(0).getRobot().getHealthPoints());
+        assertEquals(1, roboRally.getPlayers().get(0).getRobot().getHealthPoints());
     }
 
     @Test
