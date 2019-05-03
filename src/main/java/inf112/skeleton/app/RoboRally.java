@@ -415,6 +415,7 @@ public class RoboRally {
         }
     }
 
+
     /**
      * checking that given position is inside map, or not occupied by a wall or robot
      *
