@@ -45,9 +45,6 @@ public class Player {
 
     public ArrayList<MovementCard> movementCardsAI() {
 
-        //TODO: AI random cards
-        //skla ikke trenge å tenke på memCap
-
         Random rnd = new Random();
         boolean[] choosen = new boolean[theCardsToChooseYourProgramFrom.size()];
         int cards = 5;
